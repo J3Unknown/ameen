@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
-            height: screenHeight - MediaQuery.of(context).viewPadding.top,
+            height: screenHeight,
             child: Stack(
               children: [
                 Row(
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         DefaultTextInputField(
                           controller: _passwordController,
                           keyboardType: TextInputType.visiblePassword,
-                          hint: '********',
+                          hint: StringsManager.passwordHint,
                           onSuffixPressed: (){
                             setState(()  => isEyeVisible = !isEyeVisible);
                           },

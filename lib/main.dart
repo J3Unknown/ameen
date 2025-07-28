@@ -1,25 +1,39 @@
-import 'package:ameen/splashScreen/presentation/SplashScreen.dart';
+import 'dart:developer';
+
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/local/localization/localization_helper.dart';
-import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:ameen/utill/local/shared_preferences.dart';
+import 'package:ameen/utill/shared/constants_manager.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
+import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/themes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'languagePage/presentation/LanguagePage.dart';
-import 'loginScreen/presentation/LoginScreen.dart';
-
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await AppLocalizations().init();
+  await CacheHelper.init();
+  
+  // await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
+  // await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
+
+  _loadCaches();
+
   runApp(const MyApp());
+}
+
+void _loadCaches() async{
+  AppConstants.isAuthenticated = await CacheHelper.getData(key: KeysManager.isAuthenticated)??false;
+  AppConstants.isGuest = await CacheHelper.getData(key: KeysManager.isGuest)??false;
+  log('Authenticated: ${AppConstants.isAuthenticated}');
+  log('Guest: ${AppConstants.isGuest}');
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MyHomePage();
@@ -77,7 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
           navigatorKey: navKey,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
-           // AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
@@ -102,7 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: widget!,
             );
           },
-          home: LoginScreen(),
+          onGenerateRoute: RoutesGenerator.getRoute,
+          initialRoute: Routes.splashScreen,
         );
       },
     );

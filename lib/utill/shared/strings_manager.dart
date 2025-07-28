@@ -10,6 +10,12 @@ class StringsManager{
   static const String skip = 'Skip';
   static const String login = 'Login';
   static const String register = 'Register';
+  static const String passwordHint = '********';
   static const String dontHaveAccount = "Don't have account? ";
   static const String emptyFieldMessage = "This Field Can't be Empty";
+}
+
+class KeysManager{
+  static const String isAuthenticated = 'isAuthenticated';
+  static const String isGuest = 'isGuest';
 }

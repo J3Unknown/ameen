@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../utill/local/localization/app_localization.dart';
 import '../../utill/shared/BaseComponent.dart';
+import '../../utill/shared/assets_manager.dart';
+import '../../utill/shared/colors_manager.dart';
+import '../../utill/shared/constants_manager.dart';
+import '../../utill/shared/icons_manager.dart';
+import '../../utill/shared/routes_manager.dart';
+import '../../utill/shared/strings_manager.dart';
+import '../../utill/shared/values_manager.dart';
 
 class LanguagePage extends StatefulWidget {
   final String? img;
@@ -13,52 +22,23 @@ class LanguagePage extends StatefulWidget {
 }
 
 class _LanguagePageState extends State<LanguagePage> {
+
   @override
   Widget build(BuildContext context) {
+
+  final screenHeight = AppConstants.screenSize(context).height;
+  final screenWidth = AppConstants.screenSize(context).width;
     return Scaffold(
-      // body:BaseComponent(
-      //   img:"world.png",
-      //   widgets:[
-      //     Text("Choose your language",style:TextStyle(fontWeight:FontWeight.bold,fontSize:18.sp)),
-      //     SizedBox(height:20.h),
-      //
-      //     InputContainer(
-      //         widget:Row(
-      //           children:[
-      //             SizedBox(width:10.w),
-      //             Container(
-      //               width:30.w,
-      //               height:30.h,
-      //               decoration:BoxDecoration(
-      //                 image:DecorationImage(
-      //                   image:AssetImage("assets/image/arabic.png")
-      //                 )
-      //               )
-      //             ),
-      //             SizedBox(width:10.w),
-      //             Text("العربية",style:TextStyle(fontWeight:FontWeight.bold,fontSize:16.sp))
-      //           ]
-      //         )),
-      //     SizedBox(height:30.h),
-      //     InputContainer(
-      //         widget:Row(
-      //             children:[
-      //               SizedBox(width:10.w),
-      //               Container(
-      //                   width:30.w,
-      //                   height:30.h,
-      //                   decoration:BoxDecoration(
-      //                       image:DecorationImage(
-      //                           image:AssetImage("assets/image/english.png")
-      //                       )
-      //                   )
-      //               ),
-      //               SizedBox(width:10.w),
-      //               Text("العربية",style:TextStyle(fontWeight:FontWeight.bold,fontSize:16.sp))
-      //             ]
-      //         )),
-      //   ]
-      // )
+      body: SafeArea(
+        child: SizedBox(
+          height: screenHeight,
+          child: Stack(
+            children: [
+
+            ],
+          ),
+        )
+      ),
     );
   }
 }

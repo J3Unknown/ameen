@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppSizes{
   static final int s2 = 2;
+  static final int s3 = 3;
   static final int s8 = 8;
   static final int s18 = 18;
 
