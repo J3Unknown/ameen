@@ -2,6 +2,7 @@ import 'package:ameen/splashScreen/presentation/SplashScreen.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/local/localization/localization_helper.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:ameen/utill/shared/themes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -94,12 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
             }
             return supportedLocales.first;
           },
-          theme: ThemeData(
-            textTheme: TextTheme(labelLarge: TextStyle(fontSize: 18.sp)),
-            appBarTheme: const AppBarTheme(
-              iconTheme: IconThemeData(color: Colors.black),
-            ),
-          ),
+          theme: lightTheme(),
           builder: (context, widget) {
             return MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
