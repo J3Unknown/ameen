@@ -115,17 +115,21 @@ class DefaultButton extends StatefulWidget {
     this.height = 60,
     this.backgroundColor = ColorsManager.PRIMARY_COLOR,
     this.foregroundColor = ColorsManager.WHITE,
-    this.borderColor = ColorsManager.RED
+    this.borderColor = ColorsManager.RED,
+    this.isInfiniteWidth = true,
+    this.width = double.infinity
   });
   final VoidCallback onPressed;
   final bool isLoading;
   final double height;
+  final double width;
   final bool hasBorder;
   final double borderRadius;
   final String title;
   final Color backgroundColor;
   final Color foregroundColor;
   final Color borderColor;
+  final bool isInfiniteWidth;
 
   @override
   State<DefaultButton> createState() => _DefaultButtonState();
@@ -135,8 +139,8 @@ class _DefaultButtonState extends State<DefaultButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-        height: AppSizesDouble.s60,
+      width: widget.width,
+        height: widget.height,
         child: !widget.isLoading?ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: widget.backgroundColor,
@@ -146,7 +150,7 @@ class _DefaultButtonState extends State<DefaultButton> {
             ):null
           ),
           onPressed: widget.onPressed,
-          child: Text(AppLocalizations.translate(widget.title), style: Theme.of(context).textTheme.titleLarge!.copyWith(color: widget.foregroundColor),)
+          child: Text(AppLocalizations.translate(widget.title), style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: widget.foregroundColor),)
         ):Center(child: CircularProgressIndicator())
     );
   }
@@ -199,9 +203,9 @@ class DefaultRadioTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: ColorsManager.WHITE,
-          borderRadius: BorderRadius.circular(AppSizesDouble.s35),
-          border: Border.all(color: ColorsManager.BLACK)
+        color: ColorsManager.WHITE,
+        borderRadius: BorderRadius.circular(AppSizesDouble.s35),
+        border: Border.all(color: ColorsManager.BLACK)
       ),
       padding: EdgeInsets.symmetric(vertical: AppPaddings.p10, horizontal: AppPaddings.p15),
       child: Row(

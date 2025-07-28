@@ -7,4 +7,5 @@ class AppConstants{
 
   static bool isAuthenticated = false;
   static bool isGuest = true;
+  static bool isArabic = false;
 }

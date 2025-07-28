@@ -5,10 +5,6 @@ import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../utill/shared/colors_manager.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,9 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateAfterSplash(){
     if(AppConstants.isGuest || AppConstants.isAuthenticated){
-      Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)));
+      Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)));
     } else {
-      Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.languageScreen)));
+      Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.languageScreen)));
     }
   }
 

@@ -1,24 +1,28 @@
-import 'package:ameen/utill/local/localization/app_localization.dart';
-import 'package:ameen/utill/shared/assets_manager.dart';
-import 'package:ameen/utill/shared/colors_manager.dart';
-import 'package:ameen/utill/shared/constants_manager.dart';
-import 'package:ameen/utill/shared/icons_manager.dart';
-import 'package:ameen/utill/shared/routes_manager.dart';
-import 'package:ameen/utill/shared/strings_manager.dart';
-import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../otp_screen/data/otp_arguments.dart';
+import '../../utill/local/localization/app_localization.dart';
 import '../../utill/shared/BaseComponent.dart';
+import '../../utill/shared/assets_manager.dart';
+import '../../utill/shared/colors_manager.dart';
+import '../../utill/shared/constants_manager.dart';
+import '../../utill/shared/icons_manager.dart';
+import '../../utill/shared/routes_manager.dart';
+import '../../utill/shared/strings_manager.dart';
+import '../../utill/shared/values_manager.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -27,8 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-  final screenHeight = AppConstants.screenSize(context).height;
-  final screenWidth = AppConstants.screenSize(context).width;
+    final screenHeight = AppConstants.screenSize(context).height;
     return Scaffold(
       backgroundColor: ColorsManager.GREY1,
       body: SafeArea(
@@ -44,11 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     icon: Icon(IconsManager.backButton)
                   ),
-                  SvgPicture.asset(
-                    fit: BoxFit.contain,
-                    width: AppSizesDouble.s40,
-                    AssetsManager.deliveryMotorcycle
-                  ),
                   Spacer(),
                   TextButton(
                     onPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false),
@@ -57,29 +55,41 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.all(AppPaddings.p20),
+                padding: EdgeInsets.all(AppPaddings.p20 ),
                 child: SizedBox(
-                  height: screenWidth,
-                  child: SvgPicture.asset(AssetsManager.loginImage, fit: BoxFit.contain,)
+                  height: screenHeight / AppSizes.s3,
+                  child: Center(child: SvgPicture.asset(AssetsManager.registerImage, fit: BoxFit.contain,)),
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: AppPaddings.p10, horizontal: AppPaddings.p15),
-                  height: screenHeight / AppSizes.s2,
+                  height: screenHeight / AppSizesDouble.s1_8,
                   decoration: BoxDecoration(
                     color: ColorsManager.WHITE,
                     borderRadius: BorderRadius.circular(AppSizesDouble.s20),
                   ),
-                  child: Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
+                  child: SingleChildScrollView(
+                    child: Form(
+                      key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(AppLocalizations.translate(StringsManager.userLogin), style: Theme.of(context).textTheme.labelLarge),
+                          Text(AppLocalizations.translate(StringsManager.createAccount), style: Theme.of(context).textTheme.labelLarge),
                           SizedBox(height: AppSizesDouble.s15,),
+                          DefaultTextInputField(
+                            controller: _nameController,
+                            title: StringsManager.name,
+                            isRequired: true,
+                            validator: (value) {
+                              if(value == null || value.isEmpty){
+                                return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: AppSizesDouble.s15),
                           DefaultTextInputField(
                             controller: _phoneNumberController,
                             keyboardType: TextInputType.phone,
@@ -94,7 +104,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             maxLength: AppSizes.s8,
                           ),
-                          SizedBox(height: AppSizesDouble.s5),
+                          DefaultTextInputField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            title: StringsManager.email,
+                            isRequired: true,
+                            validator: (value) {
+                              if(value == null || value.isEmpty){
+                                return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: AppSizesDouble.s15),
                           DefaultTextInputField(
                             controller: _passwordController,
                             keyboardType: TextInputType.visiblePassword,
@@ -114,26 +136,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                           ),
-                          Align(
-                            alignment: AlignmentDirectional.centerEnd,
-                            child: TextButton(
-                              onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.forgotPassword))), //TODO: create forgot password screen
-                              child: Text(AppLocalizations.translate(StringsManager.forgotPassword), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.COLUMBIA_BLUE),)
-                            ),
-                          ),
+                          SizedBox(height: AppSizesDouble.s25,),
                           DefaultButton(
-                            title: StringsManager.login,
+                            title: StringsManager.next,
                             onPressed: () {
-                              if(_formKey.currentState!.validate()){
-                                //TODO: link with login action
-                              }
-                            },
+                              Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: OtpArguments(true))));
+                            }, //TODO: link with register action
                             isLoading: false,
                           ),
                           DefaultTextWithTextButton(
-                            title: StringsManager.dontHaveAccount,
-                            buttonTitle: StringsManager.register,
-                            onButtonPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.signUp)), (route) => route.settings.name == Routes.languageScreen),
+                            title: StringsManager.alreadyHaveAccount,
+                            buttonTitle: StringsManager.login,
+                            onButtonPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => route.settings.name == Routes.languageScreen),
                           )
                         ],
                       ),
@@ -143,9 +157,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-        ),
+        )
       ),
     );
   }
 }
-

@@ -1,4 +1,5 @@
 import 'package:ameen/utill/local/localization/localization_helper.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../utill/local/localization/app_localization.dart';
@@ -19,14 +20,19 @@ class LanguagePage extends StatefulWidget {
 }
 
 class _LanguagePageState extends State<LanguagePage> {
-  bool isArabic = false;
+  late bool isArabic;
 
+  @override
+  void initState() {
+    isArabic = AppConstants.isArabic;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
   final screenHeight = AppConstants.screenSize(context).height;
   final screenWidth = AppConstants.screenSize(context).width;
     return Scaffold(
-      backgroundColor: ColorsManager.GREY,
+      backgroundColor: ColorsManager.GREY1,
       body: SafeArea(
         child: SizedBox(
           height: screenHeight,
@@ -43,7 +49,7 @@ class _LanguagePageState extends State<LanguagePage> {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: AppPaddings.p10, horizontal: AppPaddings.p15),
-                  height: screenHeight / AppSizes.s2,
+                  height: screenHeight / AppSizesDouble.s2_5,
                   decoration: BoxDecoration(
                     color: ColorsManager.WHITE,
                     borderRadius: BorderRadius.circular(AppSizesDouble.s20),
@@ -77,6 +83,11 @@ class _LanguagePageState extends State<LanguagePage> {
                           setLocale('en');
                         },
                         icon: AssetsManager.english,
+                      ),
+                      SizedBox(height: AppSizesDouble.s35,),
+                      DefaultButton(
+                        title: StringsManager.next,
+                        onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)))
                       )
                     ],
                   ),

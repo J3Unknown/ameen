@@ -4,10 +4,19 @@
   "Forgot Password?": "Forgot Password?",
   "Password": "Password",
   "User Login": "User Login",
+  "Name": "Name",
+  "Email": "Email",
+  "Confirm": "Confirm",
+  "Please enter the code": "Please enter the code",
+  "Create Account": "Create Account",
   "Skip": "Skip",
   "Login":"Login",
   "Register":"Register",
   "Don't have account? ":"Don't have account? ",
   "This Field Can't be Empty":"This Field Can't be Empty",
-  "Choose Your language": "Choose Your language"
+  "Choose Your language": "Choose Your language",
+  "Next": "Next",
+  "Send Again": "Send Again",
+  "Not received yet? ": "Not received yet? ",
+  "Already have account? ": "Already have account? "
 }

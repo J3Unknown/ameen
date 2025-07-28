@@ -4,10 +4,19 @@
   "Forgot Password?": "هل نسيت كلمة المرور؟",
   "Password": "كلمة المرور",
   "User Login": "تسجيل دخول المستخدم",
+  "Create Account": "انشاء حساب جديد",
   "Skip": "تخطي",
   "Login": "تسجيل دخول",
-  "Register": "انشاء حساب",
+  "Name": "الأسم",
+  "Email": "البريد الإلكتروني",
+  "Confirm": "تأكيد",
+  "Please enter the code": "برجاء ادخال كود التأكيد",
+  "Register": "تسجيل",
   "Don't have account? ": "لا تمتلك حساب؟ ",
   "This Field Can't be Empty": "هذه الخانة لا يمكن تركها فارغة",
-  "Choose Your language": "اختر لغتك"
+  "Choose Your language": "اختر لغتك",
+  "Next": "التالي",
+  "Send Again": "أرسل مجددا",
+  "Not received yet? ": "لم يصلك بعد؟ ",
+  "Already have account? ": "لديك حساب بالفعل"
 }

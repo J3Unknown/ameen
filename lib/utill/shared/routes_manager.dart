@@ -1,6 +1,12 @@
+import 'package:ameen/forgot_password/presentation/forgot_password_screen.dart';
+import 'package:ameen/home_layout/presentation/home_layout.dart';
 import 'package:ameen/languagePage/presentation/LanguagePage.dart';
+import 'package:ameen/loginScreen/presentation/LoginScreen.dart';
+import 'package:ameen/otp_screen/presentation/otp_screen.dart';
+import 'package:ameen/register/presentation/register_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../otp_screen/data/otp_arguments.dart';
 import '../../splashScreen/presentation/SplashScreen.dart';
 
 class Routes{
@@ -33,7 +39,17 @@ class RoutesGenerator{
       case Routes.splashScreen:
         return  MaterialPageRoute(builder: (_) => SplashScreen());
       case Routes.languageScreen:
-        return  MaterialPageRoute(builder: (_) => LanguagePage());
+        return  MaterialPageRoute(builder: (_) => LanguagePage(), settings: settings);
+      case Routes.login:
+        return  MaterialPageRoute(builder: (_) => LoginScreen(), settings: settings);
+      case Routes.signUp:
+        return  MaterialPageRoute(builder: (_) => RegisterScreen(), settings: settings);
+      case Routes.forgotPassword:
+        return  MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
+      case Routes.otp:
+        return  MaterialPageRoute(builder: (_) => OtpScreen(arguments: settings.arguments! as OtpArguments,));
+      case Routes.home:
+        return  MaterialPageRoute(builder: (_) => HomeLayout());
       default:
         return unDefinedRoute();
     }

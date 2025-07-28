@@ -19,6 +19,7 @@ void main() async{
   
   // await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
   // await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
+  // await CacheHelper.saveData(key: KeysManager.isArabic, value: false);
 
   _loadCaches();
 
@@ -28,8 +29,7 @@ void main() async{
 void _loadCaches() async{
   AppConstants.isAuthenticated = await CacheHelper.getData(key: KeysManager.isAuthenticated)??false;
   AppConstants.isGuest = await CacheHelper.getData(key: KeysManager.isGuest)??false;
-  log('Authenticated: ${AppConstants.isAuthenticated}');
-  log('Guest: ${AppConstants.isGuest}');
+  AppConstants.isArabic = await CacheHelper.getData(key: KeysManager.isArabic)??false;
 }
 
 class MyApp extends StatelessWidget {
