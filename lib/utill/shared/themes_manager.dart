@@ -8,7 +8,9 @@ ThemeData lightTheme(){
     textTheme: TextTheme(
       labelLarge: TextStyle(fontSize: AppSizesDouble.s18),
       labelMedium: TextStyle(fontSize: AppSizesDouble.s16),
-      titleSmall: TextStyle(fontSize: AppSizesDouble.s14),
+      titleLarge: TextStyle(fontSize: AppSizesDouble.s14),
+      titleMedium: TextStyle(fontSize: AppSizesDouble.s13),
+      titleSmall: TextStyle(fontSize: AppSizesDouble.s12),
     ),
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: ColorsManager.BLACK),

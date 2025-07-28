@@ -5,4 +5,6 @@ class AssetsManager{
   static const String languageImage = '${AppConstants.imagePath}languagePageImage.svg';
   static const String deliveryMotorcycle = '${AppConstants.imagePath}DeliveryMotorcycle.svg';
   static const String splashScreenImage = '${AppConstants.imagePath}splashScreen.png';
+  static const String arabic = '${AppConstants.imagePath}arabic.svg';
+  static const String english = '${AppConstants.imagePath}english.svg';
 }

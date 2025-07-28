@@ -2,6 +2,7 @@ import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'colors_manager.dart';
 
@@ -182,6 +183,43 @@ class DefaultTextWithTextButton extends StatelessWidget {
           child: Text(AppLocalizations.translate(buttonTitle)),
         )
       ],
+    );
+  }
+}
+
+class DefaultRadioTile extends StatelessWidget {
+  const DefaultRadioTile({super.key, this.icon, required this.title, required this.value, required this.groupValue, required this.onChanged});
+  final ValueChanged onChanged;
+  final dynamic groupValue;
+  final dynamic value;
+  final String title;
+  final String? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: ColorsManager.WHITE,
+          borderRadius: BorderRadius.circular(AppSizesDouble.s35),
+          border: Border.all(color: ColorsManager.BLACK)
+      ),
+      padding: EdgeInsets.symmetric(vertical: AppPaddings.p10, horizontal: AppPaddings.p15),
+      child: Row(
+        children: [
+          if(icon != null)
+          SvgPicture.asset(icon!, fit: BoxFit.contain, width: AppSizesDouble.s35,),
+          if(icon != null)
+          SizedBox(width: AppSizesDouble.s10,),
+          Text(title, style: Theme.of(context).textTheme.headlineMedium,),
+          Spacer(),
+          Radio.adaptive(
+            value: value,
+            groupValue: groupValue,
+            activeColor: ColorsManager.PRIMARY_COLOR,
+            onChanged: onChanged
+          ),
+        ],
+      ),
     );
   }
 }

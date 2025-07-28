@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(AppLocalizations.translate(StringsManager.userLogin),style:TextStyle(fontWeight:FontWeight.bold,fontSize:18.sp)),
+                        Text(AppLocalizations.translate(StringsManager.userLogin), style: Theme.of(context).textTheme.labelLarge),
                         SizedBox(height: AppSizesDouble.s15,),
                         DefaultTextInputField(
                           controller: _phoneNumberController,

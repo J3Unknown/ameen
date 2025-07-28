@@ -20,6 +20,8 @@ class AppSizesDouble{
   static final double s6 = 6.sp;
   static final double s8 = 8.sp;
   static final double s10 = 10.sp;
+  static final double s12 = 12.sp;
+  static final double s13 = 13.sp;
   static final double s14 = 14.sp;
   static final double s15 = 15.sp;
   static final double s16 = 16.sp;
