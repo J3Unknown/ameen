@@ -18,5 +18,16 @@
   "Next": "Next",
   "Send Again": "Send Again",
   "Not received yet? ": "Not received yet? ",
-  "Already have account? ": "Already have account? "
+  "Please enter a valid OTP": "Please enter a valid OTP",
+  "Already have account? ": "Already have account? ",
+  "More": "More",
+  "Wallet": "Wallet",
+  "Orders": "Orders",
+  "Home": "Home",
+  "Hello": "Hello",
+  "Hello Guest": "Hello Guest",
+  "Welcome to AMEEN app": "Welcome to AMEEN app",
+  "Item Delivery": "Item Delivery",
+  "Sahl Request": "Sahl Request",
+  "My Orders": "My Orders"
 }

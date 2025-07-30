@@ -38,10 +38,12 @@ class ColorsManager {
   static const Color WHITE_GREY = Color(0xffF4F5F6);
   static const Color BLACK = Color(0xff000000);
   static const Color WHITE = Color(0xffFFFFFF);
+  static const Color TRANSPARENT = Color(0x00FFFFFF);
   static const Color LIGHT_GREY = Color(0xffEBF1F5);
   static const Color CYAN = Color(0xff4FC6CB);
   static const Color PURPLE = Color(0xff8A56AC);
   static const Color COLOR_BLUE = Color(0xff00ADE3);
+  static const Color DEEP_BLUE = Color(0xff172a42);
   static const Color COLUMBIA_BLUE = Color(0xff00ADE3);
   static const Color LIGHT_SKY_BLUE = Color(0xff8DBFF6);
   static const Color HARLEQUIN = Color(0xff3FCC01);

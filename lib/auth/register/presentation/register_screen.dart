@@ -1,16 +1,17 @@
+import 'package:ameen/utill/local/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../otp_screen/data/otp_arguments.dart';
-import '../../utill/local/localization/app_localization.dart';
-import '../../utill/shared/BaseComponent.dart';
-import '../../utill/shared/assets_manager.dart';
-import '../../utill/shared/colors_manager.dart';
-import '../../utill/shared/constants_manager.dart';
-import '../../utill/shared/icons_manager.dart';
-import '../../utill/shared/routes_manager.dart';
-import '../../utill/shared/strings_manager.dart';
-import '../../utill/shared/values_manager.dart';
+import '../../../utill/local/localization/app_localization.dart';
+import '../../../utill/shared/BaseComponent.dart';
+import '../../../utill/shared/assets_manager.dart';
+import '../../../utill/shared/colors_manager.dart';
+import '../../../utill/shared/constants_manager.dart';
+import '../../../utill/shared/icons_manager.dart';
+import '../../../utill/shared/routes_manager.dart';
+import '../../../utill/shared/strings_manager.dart';
+import '../../../utill/shared/values_manager.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -28,6 +29,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool isEyeVisible = false;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneNumberController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +59,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Spacer(),
                   TextButton(
-                    onPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false),
+                    onPressed: () async {
+                      await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
+                      await CacheHelper.saveData(key: KeysManager.isGuest, value: true);
+                      Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
+                    },
                     child: Text(AppLocalizations.translate(StringsManager.skip), style: TextStyle(color: ColorsManager.BLACK),)
                   )
                 ],
@@ -140,7 +154,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           DefaultButton(
                             title: StringsManager.next,
                             onPressed: () {
-                              Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: OtpArguments(true))));
+                              if(_formKey.currentState!.validate()){
+                                Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: OtpArguments(true))));
+                              }
                             }, //TODO: link with register action
                             isLoading: false,
                           ),

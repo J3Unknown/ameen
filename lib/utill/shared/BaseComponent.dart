@@ -4,6 +4,8 @@ import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../home_layout/cubit/main_cubit.dart';
+import 'assets_manager.dart';
 import 'colors_manager.dart';
 
 class DefaultTextInputField extends StatefulWidget {
@@ -228,3 +230,45 @@ class DefaultRadioTile extends StatelessWidget {
   }
 }
 
+class CustomNavbar extends StatelessWidget {
+  const CustomNavbar({super.key, required this.cubit});
+
+  final MainCubit cubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16, left: 16, right: 16, top: 1),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border.all(color: ColorsManager.BLACK, width: 2),
+        borderRadius: BorderRadius.circular(35),
+      ),
+      child: BottomNavigationBar(
+        currentIndex: cubit.screenIndex,
+        items: [
+          BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.home, colorFilter: ColorFilter.mode(getColor(AppSizes.s0, cubit.screenIndex), BlendMode.srcIn),), label: StringsManager.home,),
+          BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.orders, colorFilter: ColorFilter.mode(getColor(AppSizes.s1, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.orders,),
+          BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.wallet, colorFilter: ColorFilter.mode(getColor(AppSizes.s2, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.wallet,),
+          BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.more, colorFilter: ColorFilter.mode(getColor(AppSizes.s3, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.more,),
+        ],
+        backgroundColor: ColorsManager.TRANSPARENT,
+        elevation: AppSizesDouble.s0,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: ColorsManager.BLACK,
+        onTap: (index){
+          cubit.changeBottomNavBarIndex(index);
+        },
+        selectedIconTheme: IconThemeData(color: ColorsManager.BLACK),
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+      )
+    );
+  }
+
+  Color getColor(int index, int cubitIndex){
+    return index == cubitIndex? ColorsManager.BLACK:ColorsManager.DARK_GREY;
+  }
+}

@@ -5,4 +5,7 @@ class IconsManager{
   static const IconData eyeIcon = Icons.visibility;
   static const IconData eyeOffIcon = Icons.visibility_off;
   static IconData backButton = CupertinoIcons.left_chevron;
+  static IconData notificationIcon = Icons.notifications_none_rounded;
+  static IconData notificationFilledIcon = Icons.notifications;
+  static IconData downArrow = Icons.arrow_downward;
 }

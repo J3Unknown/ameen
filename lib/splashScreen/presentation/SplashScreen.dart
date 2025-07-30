@@ -1,16 +1,18 @@
 import 'dart:async';
 
 import 'package:ameen/utill/shared/assets_manager.dart';
+import 'package:ameen/utill/shared/colors_manager.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -32,7 +34,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(child: Image.asset(AssetsManager.splashScreenImage, fit: BoxFit.cover,),)
+      backgroundColor: ColorsManager.DEEP_BLUE,
+      body: SizedBox.expand(child: SvgPicture.asset(AssetsManager.logo, fit: BoxFit.cover, width: 400,),) //TODO: get the logo
     );
   }
 }

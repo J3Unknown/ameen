@@ -16,15 +16,15 @@ class LanguagePage extends StatefulWidget {
   const LanguagePage({super.key,this.img,this.widgets});
 
   @override
-  _LanguagePageState createState() => _LanguagePageState();
+  State<LanguagePage> createState() => _LanguagePageState();
 }
 
 class _LanguagePageState extends State<LanguagePage> {
-  late bool isArabic;
+  late String locale;
 
   @override
   void initState() {
-    isArabic = AppConstants.isArabic;
+    locale = AppConstants.locale;
     super.initState();
   }
   @override
@@ -61,26 +61,26 @@ class _LanguagePageState extends State<LanguagePage> {
                       SizedBox(height: AppSizesDouble.s15,),
                       DefaultRadioTile(
                         title: StringsManager.arabic,
-                        value: true,
-                        groupValue: isArabic,
+                        value: 'SA',
+                        groupValue: locale,
                         onChanged: (value){
                           setState(() {
-                            isArabic = true;
+                            locale = 'SA';
                           });
-                          setLocale('ar');
+                          setLocale('SA');
                         },
-                        icon: AssetsManager.arabic,
+                        icon: AssetsManager.arabic, //TODO: get the arabic logo
                       ),
                       SizedBox(height: AppSizesDouble.s35,),
                       DefaultRadioTile(
                         title: StringsManager.english,
-                        value: false,
-                        groupValue: isArabic,
+                        value: 'EN',
+                        groupValue: locale,
                         onChanged: (value){
                           setState(() {
-                            isArabic = false;
+                            locale = 'EN';
                           });
-                          setLocale('en');
+                          setLocale('EN');
                         },
                         icon: AssetsManager.english,
                       ),

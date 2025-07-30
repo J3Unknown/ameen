@@ -14,6 +14,7 @@ ThemeData lightTheme(){
     ),
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: ColorsManager.BLACK),
+      backgroundColor: ColorsManager.WHITE
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(
       circularTrackColor: ColorsManager.WHITE,

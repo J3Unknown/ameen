@@ -3,6 +3,18 @@ class StringsManager{
   static const String phoneCode = '965';
   static const String next = 'Next';
   static const String confirm = 'Confirm';
+  static const String home = 'Home';
+  static const String orders = 'Orders';
+  static const String wallet = 'Wallet';
+  static const String more = 'More';
+  static const String hello = 'Hello';
+  static const String helloGuest = 'Hello Guest';
+  static const String welcomeToAmeen = 'Welcome to AMEEN app';
+
+  //*home
+  static const String itemDelivery = 'Item Delivery';
+  static const String myOrders = 'My Orders';
+  static const String sahlRequest = 'Sahl Request';
 
   //*Auth
   static const String whatsappNumber = 'Whatsapp number';
@@ -23,6 +35,7 @@ class StringsManager{
   static const String email = 'Email';
   static const String notReceivedYet = 'Not received yet? ';
   static const String sendAgain = 'Send Again';
+  static const String validOtpMessage = 'Please enter a valid OTP';
 
   //*language
   static const String arabic = 'عربي';
@@ -32,5 +45,5 @@ class StringsManager{
 class KeysManager{
   static const String isAuthenticated = 'isAuthenticated';
   static const String isGuest = 'isGuest';
-  static const String isArabic = 'isArabic';
+  static const String locale = 'locale';
 }

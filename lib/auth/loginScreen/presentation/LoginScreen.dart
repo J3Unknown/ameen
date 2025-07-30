@@ -9,13 +9,14 @@ import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../utill/shared/BaseComponent.dart';
+import '../../../utill/local/shared_preferences.dart';
+import '../../../utill/shared/BaseComponent.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -24,6 +25,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool isEyeVisible = false;
+
+  @override
+  void dispose() {
+   _phoneNumberController.dispose();
+   _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Spacer(),
                   TextButton(
-                    onPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false),
+                    onPressed: () async{
+                      await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
+                      await CacheHelper.saveData(key: KeysManager.isGuest, value: true);
+                      Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
+                    },
                     child: Text(AppLocalizations.translate(StringsManager.skip), style: TextStyle(color: ColorsManager.BLACK),)
                   )
                 ],

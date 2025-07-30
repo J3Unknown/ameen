@@ -1,14 +1,19 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppSizes{
-  static final int s2 = 2;
-  static final int s3 = 3;
-  static final int s8 = 8;
-  static final int s18 = 18;
+  static const int s0 = 0;
+  static const int s1 = 1;
+  static const int s2 = 2;
+  static const int s3 = 3;
+  static const int s4 = 4;
+  static const int s8 = 8;
+  static const int s18 = 18;
+  static const int s60 = 60;
 
 }
 
 class AppSizesDouble{
+  static const double s0 = 0;
   static final double s0_5 = 0.5.sp;
   static final double s1 = 1.sp;
   static final double s1_1 = 1.1.sp;
@@ -27,6 +32,7 @@ class AppSizesDouble{
   static final double s6 = 6.sp;
   static final double s8 = 8.sp;
   static final double s10 = 10.sp;
+  static final double s11 = 11.sp;
   static final double s12 = 12.sp;
   static final double s13 = 13.sp;
   static final double s14 = 14.sp;
@@ -37,8 +43,14 @@ class AppSizesDouble{
   static final double s25 = 25.sp;
   static final double s35 = 35.sp;
   static final double s40 = 40.sp;
+  static final double s45 = 45.sp;
+  static final double s50 = 50.sp;
   static final double s60 = 60.sp;
+  static final double s65 = 65.sp;
+  static final double s80 = 80.sp;
   static final double s100 = 100.sp;
+  static final double s120 = 120.sp;
+  static final double s150 = 150.sp;
   static final double s270 = 270.sp;
 }
 

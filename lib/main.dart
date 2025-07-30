@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:ameen/auth/cubit/auth_cubit.dart';
+import 'package:ameen/home_layout/cubit/main_cubit.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/local/localization/localization_helper.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
@@ -9,6 +11,7 @@ import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/themes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +22,7 @@ void main() async{
   
   // await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
   // await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
-  // await CacheHelper.saveData(key: KeysManager.isArabic, value: false);
+  // await CacheHelper.saveData(key: KeysManager.locale, value: 'EN');
 
   _loadCaches();
 
@@ -29,7 +32,7 @@ void main() async{
 void _loadCaches() async{
   AppConstants.isAuthenticated = await CacheHelper.getData(key: KeysManager.isAuthenticated)??false;
   AppConstants.isGuest = await CacheHelper.getData(key: KeysManager.isGuest)??false;
-  AppConstants.isArabic = await CacheHelper.getData(key: KeysManager.isArabic)??false;
+  AppConstants.locale = await CacheHelper.getData(key: KeysManager.locale)??'EN';
 }
 
 class MyApp extends StatelessWidget {
@@ -87,36 +90,42 @@ class _MyHomePageState extends State<MyHomePage> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          navigatorKey: navKey,
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context)=> AuthCubit()),
+            BlocProvider(create: (context)=> MainCubit()),
           ],
-          supportedLocales: const [
-            Locale('en', ''),
-            Locale('ar', ''),
-          ],
-          localeResolutionCallback: (locale, supportedLocales) {
-            for (var supportedLocale in supportedLocales) {
-              if (supportedLocale.languageCode == locale?.languageCode &&
-                  supportedLocale.countryCode == locale?.countryCode) {
-                return supportedLocale;
+          child: MaterialApp(
+            navigatorKey: navKey,
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''),
+              Locale('ar', ''),
+            ],
+            localeResolutionCallback: (locale, supportedLocales) {
+              for (var supportedLocale in supportedLocales) {
+                if (supportedLocale.languageCode == locale?.languageCode &&
+                    supportedLocale.countryCode == locale?.countryCode) {
+                  return supportedLocale;
+                }
               }
-            }
-            return supportedLocales.first;
-          },
-          theme: lightTheme(),
-          builder: (context, widget) {
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
-              child: widget!,
-            );
-          },
-          onGenerateRoute: RoutesGenerator.getRoute,
-          initialRoute: Routes.splashScreen,
+              return supportedLocales.first;
+            },
+            theme: lightTheme(),
+            builder: (context, widget) {
+              return MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+                child: widget!,
+              );
+            },
+            onGenerateRoute: RoutesGenerator.getRoute,
+            initialRoute: Routes.splashScreen,
+          ),
         );
       },
     );

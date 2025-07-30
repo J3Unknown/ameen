@@ -18,5 +18,16 @@
   "Next": "التالي",
   "Send Again": "أرسل مجددا",
   "Not received yet? ": "لم يصلك بعد؟ ",
-  "Already have account? ": "لديك حساب بالفعل"
+  "Please enter a valid OTP": "ادخل رمز تحقق صحيح",
+  "Already have account? ": "لديك حساب بالفعل",
+  "More": "المزيد",
+  "Wallet": "محفظتي",
+  "Orders": "الطلبات",
+  "Home": "الرئيسية",
+  "Hello": "أهلا",
+  "Hello Guest": "أهلا أيها الزائر",
+  "Welcome to AMEEN app": "أهلا بك في تطبيق أمين",
+  "Item Delivery": "توصيل الطلبات",
+  "Sahl Request": "طلبات سهل",
+  "My Orders": "طلباتي"
 }
