@@ -79,7 +79,7 @@ class _DefaultTextInputFieldState extends State<DefaultTextInputField> {
               borderRadius: BorderRadius.circular(widget.borderRadius)
             ),
             hintText: AppLocalizations.translate(widget.hint??''),
-            hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(color: ColorsManager.DARK_GREY),
+            hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.DARK_GREY),
             prefixIcon: widget.keyboardType == TextInputType.phone?SizedBox(
               width: AppSizesDouble.s60,
               child: Row(
@@ -152,7 +152,7 @@ class _DefaultButtonState extends State<DefaultButton> {
             ):null
           ),
           onPressed: widget.onPressed,
-          child: Text(AppLocalizations.translate(widget.title), style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: widget.foregroundColor),)
+          child: Text(AppLocalizations.translate(widget.title), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: widget.foregroundColor),)
         ):Center(child: CircularProgressIndicator())
     );
   }
@@ -271,4 +271,78 @@ class CustomNavbar extends StatelessWidget {
   Color getColor(int index, int cubitIndex){
     return index == cubitIndex? ColorsManager.BLACK:ColorsManager.DARK_GREY;
   }
+}
+
+class DefaultDropDownMenu extends StatefulWidget {
+  const DefaultDropDownMenu({super.key, required this.value, required this.title, required this.items, required this.onChanged});
+  final dynamic value;
+  final String title;
+  final List<dynamic> items;
+  final ValueChanged onChanged;
+
+  @override
+  State<DefaultDropDownMenu> createState() => _DefaultDropDownMenuState();
+}
+
+class _DefaultDropDownMenuState extends State<DefaultDropDownMenu> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: AppSizesDouble.s70,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppSizesDouble.s35),
+        border: Border.all(color: ColorsManager.BLACK)
+      ),
+      padding: EdgeInsets.symmetric(horizontal: AppPaddings.p10),
+      child: DropdownButton(
+        value: widget.value,
+        dropdownColor: ColorsManager.WHITE,
+        elevation: 0,
+        underline: SizedBox(),
+        hint: Text(AppLocalizations.translate(widget.title), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+        isExpanded: true,
+        items: widget.items.map((e) => DropdownMenuItem(value: e['title'],child: Text(e['title']??'', style: Theme.of(context).textTheme.labelLarge,),)).toList(),
+        onChanged: (value) => widget.onChanged(value),
+      ),
+    );
+  }
+}
+
+class DefaultRoundedIconButton extends StatefulWidget {
+  const DefaultRoundedIconButton({super.key, required this.icon, this.iconColor = ColorsManager.BLACK, this.borderColor = ColorsManager.BLACK, this.filled = false, this.backgroundColor = ColorsManager.WHITE, required this.onPressed, this.hasBorder = true});
+  final Color borderColor;
+  final Color backgroundColor;
+  final Color iconColor;
+  final IconData icon;
+  final VoidCallback onPressed;
+  final bool hasBorder;
+  final bool filled;
+  @override
+  State<DefaultRoundedIconButton> createState() => _DefaultRoundedIconButtonState();
+}
+
+class _DefaultRoundedIconButtonState extends State<DefaultRoundedIconButton> {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      style: IconButton.styleFrom(
+        backgroundColor: widget.filled?widget.backgroundColor:null,
+        shape: widget.hasBorder?RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSizesDouble.s40),
+          side: BorderSide(color: widget.borderColor)
+        ):null
+      ),
+      onPressed: widget.onPressed,
+      icon: Icon(widget.icon, color: widget.iconColor,)
+    );
+  }
+}
+
+
+void showSnackBar(context, String message){
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text(message)),
+    snackBarAnimationStyle: AnimationStyle(reverseCurve: Curves.fastEaseInToSlowEaseOut, curve: Curves.fastEaseInToSlowEaseOut),
+  );
 }

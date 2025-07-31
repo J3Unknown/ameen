@@ -1,0 +1,138 @@
+import 'package:ameen/utill/local/localization/app_localization.dart';
+import 'package:ameen/utill/shared/BaseComponent.dart';
+import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:ameen/utill/shared/constants_manager.dart';
+import 'package:ameen/utill/shared/strings_manager.dart';
+import 'package:ameen/utill/shared/values_manager.dart';
+import 'package:flutter/material.dart';
+
+class AddAddressAlert extends StatefulWidget {
+  const AddAddressAlert({super.key, required this.title});
+  final String title;
+  @override
+  State<AddAddressAlert> createState() => _AddAddressAlertState();
+}
+
+class _AddAddressAlertState extends State<AddAddressAlert> {
+  String? selectedGovernance;
+  String? selectedCity;
+  final TextEditingController _blockController = TextEditingController();
+  final TextEditingController _streetController = TextEditingController();
+  final TextEditingController _buildingController = TextEditingController();
+  final TextEditingController _floorController = TextEditingController();
+  final TextEditingController _landMarkController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      contentPadding: EdgeInsets.symmetric(horizontal: AppPaddings.p15, vertical: AppPaddings.p25),
+      actions: [
+        DefaultButton(
+          title: StringsManager.addAddress,
+          onPressed: (){
+            if(_formKey.currentState!.validate()){
+
+            }
+          }
+        )
+      ],
+      backgroundColor: ColorsManager.WHITE,
+      title: Text(AppLocalizations.translate(widget.title)),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            DefaultDropDownMenu(
+              value: selectedGovernance,
+              title: StringsManager.governance,
+              items: AppConstants.items,
+              onChanged: (value){
+                if(value != null){
+                  setState(() {
+                    selectedGovernance = value;
+                  });
+                }
+              }
+            ),
+            SizedBox(height: AppSizesDouble.s10,),
+            DefaultDropDownMenu(
+              value: selectedCity,
+              title: StringsManager.city,
+              items: AppConstants.items,
+              onChanged: (value){
+                if(value != null){
+                  setState(() {
+                    selectedCity = value;
+                  });
+                }
+              }
+            ),
+            SizedBox(height: AppSizesDouble.s10,),
+            DefaultTextInputField(
+              controller: _blockController,
+              hint: StringsManager.block,
+              isRequired: true,
+              validator: (value){
+                if(value == null || value.isEmpty){
+                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: AppSizesDouble.s10,),
+            DefaultTextInputField(
+              controller: _streetController,
+              hint: StringsManager.street,
+              isRequired: true,
+              validator: (value){
+                if(value == null || value.isEmpty){
+                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: AppSizesDouble.s10,),
+            DefaultTextInputField(
+              controller: _buildingController,
+              hint: StringsManager.building,
+              isRequired: true,
+              validator: (value){
+                if(value == null || value.isEmpty){
+                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: AppSizesDouble.s10,),
+            DefaultTextInputField(
+              controller: _floorController,
+              hint: StringsManager.floor,
+              keyboardType: TextInputType.number,
+              isRequired: true,
+              validator: (value){
+                if(value == null || value.isEmpty){
+                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: AppSizesDouble.s10,),
+            DefaultTextInputField(
+              controller: _landMarkController,
+              hint: StringsManager.landmark,
+              isRequired: true,
+              validator: (value){
+                if(value == null || value.isEmpty){
+                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

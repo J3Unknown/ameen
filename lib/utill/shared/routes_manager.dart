@@ -1,7 +1,8 @@
 import 'package:ameen/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:ameen/home_layout/presentation/home_layout.dart';
-import 'package:ameen/item_delivery_screen.dart';
+import 'package:ameen/item_delivery_screen/presentation/item_delivery_screen.dart';
 import 'package:ameen/languagePage/presentation/LanguagePage.dart';
+import 'package:ameen/payment/presentation/payment_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../auth/loginScreen/presentation/LoginScreen.dart';
@@ -53,6 +54,8 @@ class RoutesGenerator{
         return  MaterialPageRoute(builder: (_) => HomeLayout());
       case Routes.itemDelivery:
         return  MaterialPageRoute(builder: (_) => ItemDeliveryScreen());
+      case Routes.payment:
+        return  MaterialPageRoute(builder: (_) => PaymentScreen());
       default:
         return unDefinedRoute();
     }

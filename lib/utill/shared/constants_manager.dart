@@ -7,6 +7,14 @@ class AppConstants{
   static const String basePlaceholderImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHnKw8zTPIFvZRGE-bMtIlRXjsUW2BDyw9Pw&s';
   static Size screenSize(context) => MediaQuery.of(context).size;
 
+  static const List<String> supportedImageFormats = ['jpg', 'jpeg', 'png', 'webp'];
+  static const List<Map<String, String>> items = [
+    {'title':'nigga'},
+    {'title':'bitch'},
+    {'title':'asshole'},
+  ];
+
+
   //* caches
   static bool isAuthenticated = false;
   static bool isGuest = true;

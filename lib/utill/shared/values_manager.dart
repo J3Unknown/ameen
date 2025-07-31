@@ -6,6 +6,8 @@ class AppSizes{
   static const int s2 = 2;
   static const int s3 = 3;
   static const int s4 = 4;
+  static const int s5 = 5;
+  static const int s6 = 6;
   static const int s8 = 8;
   static const int s18 = 18;
   static const int s60 = 60;
@@ -28,6 +30,7 @@ class AppSizesDouble{
   static final double s2_7 = 2.7.sp;
   static final double s2_8 = 2.8.sp;
   static final double s2_9 = 2.9.sp;
+  static final double s4 = 4.sp;
   static final double s5 = 5.sp;
   static final double s6 = 6.sp;
   static final double s8 = 8.sp;
@@ -47,6 +50,7 @@ class AppSizesDouble{
   static final double s50 = 50.sp;
   static final double s60 = 60.sp;
   static final double s65 = 65.sp;
+  static final double s70 = 70.sp;
   static final double s80 = 80.sp;
   static final double s100 = 100.sp;
   static final double s120 = 120.sp;
@@ -55,7 +59,9 @@ class AppSizesDouble{
 }
 
 class AppPaddings{
+  static final double p5 = 5.sp;
   static final double p10 = 10.sp;
   static final double p15 = 15.sp;
   static final double p20 = 20.sp;
+  static final double p25 = 25.sp;
 }

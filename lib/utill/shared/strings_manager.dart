@@ -9,12 +9,35 @@ class StringsManager{
   static const String more = 'More';
   static const String hello = 'Hello';
   static const String helloGuest = 'Hello Guest';
+  static const String add = 'Add';
+  static const String deliveryDate = 'Delivery Date';
   static const String welcomeToAmeen = 'Welcome to AMEEN app';
+  static const String category = 'Category';
+  static const String itemDescription = 'Item Description';
+  static const String governance = 'Governance';
+  static const String city = 'City';
+  static const String block = 'Block';
+  static const String street = 'Street';
+  static const String building = 'Building';
+  static const String floor = 'Floor';
+  static const String landmark = 'Landmark';
+  static const String addAddress = 'Add Address';
+  static const String dateFormat = 'dd - MMM - yyyy';
 
   //*home
   static const String itemDelivery = 'Item Delivery';
   static const String myOrders = 'My Orders';
   static const String sahlRequest = 'Sahl Request';
+  static const String now = 'Now';
+  static const String later = 'Later';
+  static const String title = 'Title';
+  static const String imagePickingWarning = 'The maximum file size accepted is 2MB, \nand the accepted formats are JPG, PNG, and WEBP.\n\nNote: the first image is the Main Preview Image.';
+  static const String theImage = 'The Image:';
+  static const String greaterThanOneMB = 'is greater than 2 MB';
+  static const String unsupportedFormat = 'has an unsupported format!';
+  static const String addOriginAddress = 'Add Origin Address';
+  static const String addDestinationAddress = 'Add Destination Address';
+  static const String notes = 'Notes';
 
   //*Auth
   static const String whatsappNumber = 'Whatsapp number';
@@ -36,6 +59,7 @@ class StringsManager{
   static const String notReceivedYet = 'Not received yet? ';
   static const String sendAgain = 'Send Again';
   static const String validOtpMessage = 'Please enter a valid OTP';
+  static const String phoneNumberRangeError = 'Please enter an 8 digits Phone Number';
 
   //*language
   static const String arabic = 'عربي';

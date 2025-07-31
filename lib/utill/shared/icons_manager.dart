@@ -8,4 +8,7 @@ class IconsManager{
   static IconData notificationIcon = Icons.notifications_none_rounded;
   static IconData notificationFilledIcon = Icons.notifications;
   static IconData downArrow = Icons.arrow_downward;
+  static IconData addIcon = Icons.add;
+  static IconData date = Icons.date_range;
+  static IconData location = Icons.location_on_rounded;
 }

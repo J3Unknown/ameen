@@ -113,6 +113,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             validator: (value) {
                               if(value == null || value.isEmpty){
                                 return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                              } else if(value.length < AppSizes.s8){
+                                return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
                               }
                               return null;
                             },

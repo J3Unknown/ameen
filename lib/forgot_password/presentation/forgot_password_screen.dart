@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../utill/local/localization/app_localization.dart';
 import '../../utill/shared/BaseComponent.dart';
@@ -77,6 +76,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           validator: (value) {
                             if(value == null || value.isEmpty){
                               return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                            } else if(value.length < AppSizes.s8){
+                              return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
                             }
                             return null;
                           },

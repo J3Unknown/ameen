@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     icon: Icon(IconsManager.backButton)
                   ),
+                  //TODO: convert into button and make it change between consumer and delivery login
                   SvgPicture.asset(
                     fit: BoxFit.contain,
                     width: AppSizesDouble.s40,
@@ -101,6 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             validator: (value) {
                               if(value == null || value.isEmpty){
                                 return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                              } else if(value.length < AppSizes.s8){
+                                return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
                               }
                               return null;
                             },

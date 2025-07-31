@@ -20,4 +20,6 @@ class AssetsManager{
   static const String itemDelivery = '${AppConstants.imagePath}itemDelivery.png';
   // static const String sahlRequest = '${AppConstants.imagePath}sahlRequest.svg';
   static const String sahlRequest = '${AppConstants.imagePath}sahlRequest.png';
+  static const String addImage = '${AppConstants.imagePath}addPhoto.svg';
+  static const String date = '${AppConstants.imagePath}date.svg';
 }

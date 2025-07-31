@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
+import '../../../utill/shared/BaseComponent.dart';
 import '../widgets/default_home_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,15 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               SvgPicture.asset(AssetsManager.logo, width: AppSizesDouble.s80,),
               Spacer(),
-              IconButton(
-                style: IconButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppSizesDouble.s40),
-                    side: BorderSide(color: ColorsManager.BLACK)
-                  )
-                ),
+              DefaultRoundedIconButton(
                 onPressed: (){},
-                icon: Icon(IconsManager.notificationIcon)
+                icon: IconsManager.notificationIcon,
               )
             ],
           ),
@@ -60,13 +55,13 @@ class _HomeScreenState extends State<HomeScreen> {
               DefaultHomeCard(
                 title: StringsManager.sahlRequest,
                 image: AssetsManager.sahlRequest,
-                onTap: (){},
+                onTap: (){}, //TODO: link with Sahl screen
               ),
             ],
           ),
           SizedBox(height: AppSizesDouble.s10,),
           InkWell(
-            onTap: (){},
+            onTap: (){}, //TODO: Link with image redirecting action
             child: Container(
               width: double.infinity,
               height: AppSizesDouble.s100,
@@ -104,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(AppLocalizations.translate(StringsManager.myOrders), style: Theme.of(context).textTheme.labelLarge,),
                       Spacer(),
-                      TextButton(onPressed: () => MainCubit.get(context).changeBottomNavBarIndex(AppSizes.s1), child: Text(AppLocalizations.translate(StringsManager.more)))
+                      TextButton(onPressed: () => MainCubit.get(context).changeBottomNavBarIndex(AppSizes.s1), child: Text(AppLocalizations.translate(StringsManager.more), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY),))
                     ],
                   ),
                   Expanded(
