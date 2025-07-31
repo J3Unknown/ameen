@@ -22,4 +22,7 @@ class AssetsManager{
   static const String sahlRequest = '${AppConstants.imagePath}sahlRequest.png';
   static const String addImage = '${AppConstants.imagePath}addPhoto.svg';
   static const String date = '${AppConstants.imagePath}date.svg';
+  static const String creditCard = '${AppConstants.imagePath}creditCard.svg';
+  static const String paymentSuccess = '${AppConstants.imagePath}paymentSuccessImage.svg';
+  static const String paymentFailed = '${AppConstants.imagePath}paymentFailedImage.svg';
 }

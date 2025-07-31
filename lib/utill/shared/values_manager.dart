@@ -59,6 +59,7 @@ class AppSizesDouble{
 }
 
 class AppPaddings{
+  static final double p4 = 4.sp;
   static final double p5 = 5.sp;
   static final double p10 = 10.sp;
   static final double p15 = 15.sp;

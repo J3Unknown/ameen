@@ -52,5 +52,8 @@
   "Building": "Building",
   "Floor": "Floor",
   "Landmark": "Landmark",
-  "Add Address": "Add Address"
+  "Add Address": "Add Address",
+  "Payment": "Payment",
+  "KWD": "KWD",
+  "Apply": "Apply"
 }

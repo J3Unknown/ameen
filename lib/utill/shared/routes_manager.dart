@@ -2,6 +2,8 @@ import 'package:ameen/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:ameen/home_layout/presentation/home_layout.dart';
 import 'package:ameen/item_delivery_screen/presentation/item_delivery_screen.dart';
 import 'package:ameen/languagePage/presentation/LanguagePage.dart';
+import 'package:ameen/payment/data/payment_result_arguments.dart';
+import 'package:ameen/payment/presentation/payment_result_screen.dart';
 import 'package:ameen/payment/presentation/payment_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +23,7 @@ class Routes{
   static const String home = '/home';
   static const String itemDelivery = '/itemDelivery';
   static const String payment = '/payment';
-  static const String paymentSuccess = '/payment/success';
-  static const String paymentFailed = '/payment/failed';
+  static const String paymentResult = '/payment/result';
   static const String orderTracking = '/orderTracking';
   static const String orderCancellation = '/orderCancellation';
   static const String orderReporting = '/orderReporting';
@@ -56,6 +57,8 @@ class RoutesGenerator{
         return  MaterialPageRoute(builder: (_) => ItemDeliveryScreen());
       case Routes.payment:
         return  MaterialPageRoute(builder: (_) => PaymentScreen());
+      case Routes.paymentResult:
+        return  MaterialPageRoute(builder: (_) => PaymentResultScreen(arguments: settings.arguments! as PaymentResultArguments,));
       default:
         return unDefinedRoute();
     }

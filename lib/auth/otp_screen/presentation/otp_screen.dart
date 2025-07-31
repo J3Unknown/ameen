@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -139,7 +140,11 @@ class _OtpScreenState extends State<OtpScreen> {
                             onPressed: () {
                               //TODO: add otp check action
                               if(_formKey.currentState!.validate()){
+                                if(isRegisterOtp){
 
+                                } else {
+                                  Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.payment)));
+                                }
                               }
                             },
                             isLoading: false,

@@ -1,3 +1,4 @@
+import 'package:ameen/auth/otp_screen/data/otp_arguments.dart';
 import 'package:ameen/home_layout/cubit/main_cubit.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
@@ -261,7 +262,7 @@ class _ItemDeliveryScreenState extends State<ItemDeliveryScreen> {
                 title: StringsManager.confirm,
                 onPressed: (){
                   if(!_formKey.currentState!.validate()){
-                    Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.payment)));
+                    Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: OtpArguments(false))));
                   }
                 }
               )

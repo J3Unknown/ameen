@@ -22,6 +22,9 @@ class StringsManager{
   static const String floor = 'Floor';
   static const String landmark = 'Landmark';
   static const String addAddress = 'Add Address';
+  static const String payment = 'Payment';
+  static const String kwd = 'KWD';
+  static const String apply = 'Apply';
   static const String dateFormat = 'dd - MMM - yyyy';
 
   //*home

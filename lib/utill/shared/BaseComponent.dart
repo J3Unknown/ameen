@@ -194,19 +194,20 @@ class DefaultTextWithTextButton extends StatelessWidget {
 }
 
 class DefaultRadioTile extends StatelessWidget {
-  const DefaultRadioTile({super.key, this.icon, required this.title, required this.value, required this.groupValue, required this.onChanged});
+  const DefaultRadioTile({super.key, this.borderRadius = 35, this.icon, required this.title, required this.value, required this.groupValue, required this.onChanged});
   final ValueChanged onChanged;
   final dynamic groupValue;
   final dynamic value;
   final String title;
   final String? icon;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: ColorsManager.WHITE,
-        borderRadius: BorderRadius.circular(AppSizesDouble.s35),
+        borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(color: ColorsManager.BLACK)
       ),
       padding: EdgeInsets.symmetric(vertical: AppPaddings.p10, horizontal: AppPaddings.p15),
@@ -216,7 +217,7 @@ class DefaultRadioTile extends StatelessWidget {
           SvgPicture.asset(icon!, fit: BoxFit.contain, width: AppSizesDouble.s35,),
           if(icon != null)
           SizedBox(width: AppSizesDouble.s10,),
-          Text(title, style: Theme.of(context).textTheme.headlineMedium,),
+          Text(title, style: Theme.of(context).textTheme.labelLarge,),
           Spacer(),
           Radio.adaptive(
             value: value,
