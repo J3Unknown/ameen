@@ -2,6 +2,8 @@ import 'package:ameen/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:ameen/home_layout/presentation/home_layout.dart';
 import 'package:ameen/item_delivery_screen/presentation/item_delivery_screen.dart';
 import 'package:ameen/languagePage/presentation/LanguagePage.dart';
+import 'package:ameen/order_details_screens/presentation/order_cancellation_screen.dart';
+import 'package:ameen/order_details_screens/presentation/order_reporting_screen.dart';
 import 'package:ameen/payment/data/payment_result_arguments.dart';
 import 'package:ameen/payment/presentation/payment_result_screen.dart';
 import 'package:ameen/payment/presentation/payment_screen.dart';
@@ -59,6 +61,10 @@ class RoutesGenerator{
         return  MaterialPageRoute(builder: (_) => PaymentScreen());
       case Routes.paymentResult:
         return  MaterialPageRoute(builder: (_) => PaymentResultScreen(arguments: settings.arguments! as PaymentResultArguments,));
+      case Routes.orderReporting:
+        return  MaterialPageRoute(builder: (_) => OrderReportingScreen());
+      case Routes.orderCancellation:
+        return  MaterialPageRoute(builder: (_) => OrderCancellationScreen());
       default:
         return unDefinedRoute();
     }

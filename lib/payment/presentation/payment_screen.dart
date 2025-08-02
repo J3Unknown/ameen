@@ -35,11 +35,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Order Details', style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),),
+            Text(AppLocalizations.translate(StringsManager.orderDetails), style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),),
             SizedBox(height: AppSizesDouble.s10,),
             Row(
               children: [
-                Text('Total items', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY)),
+                Text(AppLocalizations.translate(StringsManager.totalItems), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY)),
                 Spacer(),
                 Text(AppLocalizations.translate(StringsManager.itemDelivery), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY, fontWeight: FontWeight.bold)),
               ],
@@ -47,7 +47,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             SizedBox(height: AppSizesDouble.s15,),
             Row(
               children: [
-                Text('Sub Total', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY)),
+                Text(AppLocalizations.translate(StringsManager.subTotal), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY)),
                 Spacer(),
                 Text('30 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY, fontWeight: FontWeight.bold)),
               ],
@@ -55,7 +55,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             SizedBox(height: AppSizesDouble.s15,),
             Row(
               children: [
-                Text('Shipping Charge', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY)),
+                Text(AppLocalizations.translate(StringsManager.shippingCharge), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY)),
                 Spacer(),
                 Text('1.5 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREY, fontWeight: FontWeight.bold)),
               ],
@@ -66,13 +66,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
             ),
             Row(
               children: [
-                Text('Bag Total', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREEN)),
+                Text(AppLocalizations.translate(StringsManager.bagTotal), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREEN)),
                 Spacer(),
                 Text('30 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.DARK_GREEN, fontWeight: FontWeight.bold)),
               ],
             ),
             SizedBox(height: AppSizesDouble.s25,),
-            Text('Coupon Codes', style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),),
+            Text(AppLocalizations.translate(StringsManager.couponCodes), style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),),
             SizedBox(height: AppSizesDouble.s10,),
             Container(
               decoration: BoxDecoration(
@@ -80,9 +80,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 boxShadow: [
                   BoxShadow(
                     color: ColorsManager.COLOR_LIGHT_BLACK,
-                    offset: Offset(0, 0),
-                    spreadRadius: 0,
-                    blurRadius: 3,
+                    offset: Offset(AppSizesDouble.s0, AppSizesDouble.s0),
+                    spreadRadius: AppSizesDouble.s0,
+                    blurRadius: AppSizesDouble.s3,
                     blurStyle: BlurStyle.outer
                   )
                 ]
@@ -117,13 +117,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             SizedBox(height: AppSizesDouble.s25,),
-            Text('Payment', style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),),
+            Text(AppLocalizations.translate(StringsManager.payment), style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.bold),),
             SizedBox(height: AppSizesDouble.s10,),
             DefaultRadioTile(
               icon: AssetsManager.creditCard,
-              title: 'Credit Card/Debit Card',
-              value: 0,
-              borderRadius: 10,
+              title: StringsManager.creditCardOrDebitCard,
+              value: AppSizes.s0,
+              borderRadius: AppSizesDouble.s10,
               groupValue: selectedPayment,
               onChanged: (value){
                 setState(() {
@@ -134,9 +134,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
             SizedBox(height: AppSizesDouble.s10,),
             DefaultRadioTile(
               icon: AssetsManager.creditCard,
-              title: 'Knet',
-              value: 1,
-              borderRadius: 10,
+              title: StringsManager.knet,
+              value: AppSizes.s1,
+              borderRadius: AppSizesDouble.s10,
               groupValue: selectedPayment,
               onChanged: (value){
                 setState(() {
@@ -147,9 +147,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
             SizedBox(height: AppSizesDouble.s10,),
             DefaultRadioTile(
               icon: AssetsManager.creditCard,
-              title: 'Wallet',
-              value: 2,
-              borderRadius: 10,
+              title: StringsManager.wallet,
+              value: AppSizes.s2,
+              borderRadius: AppSizesDouble.s10,
               groupValue: selectedPayment,
               onChanged: (value){
                 setState(() {

@@ -1,12 +1,15 @@
 import 'package:ameen/utill/local/localization/app_localization.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../home_layout/cubit/main_cubit.dart';
 import 'assets_manager.dart';
 import 'colors_manager.dart';
+import 'icons_manager.dart';
 
 class DefaultTextInputField extends StatefulWidget {
   const DefaultTextInputField({
@@ -54,7 +57,7 @@ class _DefaultTextInputFieldState extends State<DefaultTextInputField> {
         if(widget.title != null)
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AppPaddings.p20),
-          child: Text('${AppLocalizations.translate(widget.title??' ')} ${widget.isRequired?'*':''}'),
+          child: Text('${AppLocalizations.translate(widget.title??' ')} ${widget.isRequired?'*':''}', style: Theme.of(context).textTheme.labelMedium),
         ),
         TextFormField(
           textAlignVertical: TextAlignVertical.center,
@@ -275,9 +278,10 @@ class CustomNavbar extends StatelessWidget {
 }
 
 class DefaultDropDownMenu extends StatefulWidget {
-  const DefaultDropDownMenu({super.key, required this.value, required this.title, required this.items, required this.onChanged});
+  const DefaultDropDownMenu({super.key, this.title, required this.value, required this.hint, required this.items, required this.onChanged});
   final dynamic value;
-  final String title;
+  final String hint;
+  final String? title;
   final List<dynamic> items;
   final ValueChanged onChanged;
 
@@ -288,37 +292,49 @@ class DefaultDropDownMenu extends StatefulWidget {
 class _DefaultDropDownMenuState extends State<DefaultDropDownMenu> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: AppSizesDouble.s70,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppSizesDouble.s35),
-        border: Border.all(color: ColorsManager.BLACK)
-      ),
-      padding: EdgeInsets.symmetric(horizontal: AppPaddings.p10),
-      child: DropdownButton(
-        value: widget.value,
-        dropdownColor: ColorsManager.WHITE,
-        elevation: 0,
-        underline: SizedBox(),
-        hint: Text(AppLocalizations.translate(widget.title), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.DARK_GREY)),
-        isExpanded: true,
-        items: widget.items.map((e) => DropdownMenuItem(value: e['title'],child: Text(e['title']??'', style: Theme.of(context).textTheme.labelLarge,),)).toList(),
-        onChanged: (value) => widget.onChanged(value),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if(widget.title != null)
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppPaddings.p20),
+          child: FittedBox(child: Text(AppLocalizations.translate(widget.title!), style: Theme.of(context).textTheme.labelMedium,)),
+        ),
+        Container(
+          height: AppSizesDouble.s70,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppSizesDouble.s35),
+            border: Border.all(color: ColorsManager.BLACK)
+          ),
+          padding: EdgeInsets.symmetric(horizontal: AppPaddings.p10),
+          child: DropdownButton(
+            value: widget.value,
+            dropdownColor: ColorsManager.WHITE,
+            elevation: 0,
+            underline: SizedBox(),
+            hint: Text(AppLocalizations.translate(widget.hint), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+            isExpanded: true,
+            items: widget.items.map((e) => DropdownMenuItem(value: e['title'],child: Text(e['title']??'', style: Theme.of(context).textTheme.labelLarge,),)).toList(),
+            onChanged: (value) => widget.onChanged(value),
+          ),
+        ),
+      ],
     );
   }
 }
 
 class DefaultRoundedIconButton extends StatefulWidget {
-  const DefaultRoundedIconButton({super.key, required this.icon, this.iconColor = ColorsManager.BLACK, this.borderColor = ColorsManager.BLACK, this.filled = false, this.backgroundColor = ColorsManager.WHITE, required this.onPressed, this.hasBorder = true});
+  const DefaultRoundedIconButton({super.key, this.svgIcon, this.isSvg = false, this.icon, this.iconColor = ColorsManager.BLACK, this.borderColor = ColorsManager.BLACK, this.filled = false, this.backgroundColor = ColorsManager.WHITE, required this.onPressed, this.hasBorder = true});
   final Color borderColor;
   final Color backgroundColor;
   final Color iconColor;
-  final IconData icon;
+  final IconData? icon;
+  final String? svgIcon;
   final VoidCallback onPressed;
   final bool hasBorder;
   final bool filled;
+  final bool isSvg;
   @override
   State<DefaultRoundedIconButton> createState() => _DefaultRoundedIconButtonState();
 }
@@ -326,6 +342,9 @@ class DefaultRoundedIconButton extends StatefulWidget {
 class _DefaultRoundedIconButtonState extends State<DefaultRoundedIconButton> {
   @override
   Widget build(BuildContext context) {
+    if(widget.isSvg) assert(widget.svgIcon != null);
+    if(!widget.isSvg) assert(widget.icon != null);
+
     return IconButton(
       style: IconButton.styleFrom(
         backgroundColor: widget.filled?widget.backgroundColor:null,
@@ -335,7 +354,7 @@ class _DefaultRoundedIconButtonState extends State<DefaultRoundedIconButton> {
         ):null
       ),
       onPressed: widget.onPressed,
-      icon: Icon(widget.icon, color: widget.iconColor,)
+      icon: !widget.isSvg?Icon(widget.icon, color: widget.iconColor,):SvgPicture.asset(widget.svgIcon!, colorFilter: ColorFilter.mode(widget.iconColor, BlendMode.srcIn),)
     );
   }
 }
@@ -346,4 +365,65 @@ void showSnackBar(context, String message){
     SnackBar(content: Text(message)),
     snackBarAnimationStyle: AnimationStyle(reverseCurve: Curves.fastEaseInToSlowEaseOut, curve: Curves.fastEaseInToSlowEaseOut),
   );
+}
+
+
+class DefaultItemCard extends StatefulWidget {
+  const DefaultItemCard({super.key, required this.index});
+  final int index;
+
+  @override
+  State<DefaultItemCard> createState() => _DefaultItemCardState();
+}
+
+class _DefaultItemCardState extends State<DefaultItemCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(AppPaddings.p10),
+      decoration: BoxDecoration(
+          color: ColorsManager.GREY1,
+          borderRadius: BorderRadius.circular(AppSizesDouble.s15)
+      ),
+      width: double.infinity,
+      height: AppSizesDouble.s150,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SvgPicture.asset(AssetsManager.itemIcon),
+          SizedBox(width: AppSizesDouble.s5,),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('This is a very big title which has to reach the end of the item', style: Theme.of(context).textTheme.labelLarge, maxLines: 2, overflow: TextOverflow.ellipsis,),
+                SizedBox(height: AppSizesDouble.s10,),
+                Text('${AppLocalizations.translate(StringsManager.deliveryDate)} ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.now())}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
+                Text('${AppLocalizations.translate(StringsManager.orderFee)} 12 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+                Row(
+                  children: [
+                    Text(AppLocalizations.translate(StringsManager.status), style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+                    Text(' Received', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.YELLOW)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: AppSizesDouble.s5,),
+          getIcon(widget.index % 2 == 0? 'Received':widget.index % 3 == 0?'Delivered':'Out for Delivery')
+        ],
+      ),
+    );
+  }
+
+  DefaultRoundedIconButton getIcon(String status){
+    if(status == 'Received') {
+      return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation))));
+    } else if(status == 'Delivered'){
+      return DefaultRoundedIconButton(isSvg: true, svgIcon: AssetsManager.deliveredIcon, hasBorder: false, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting))));
+    } else if(status == 'Delivery Guy'){
+      return DefaultRoundedIconButton(icon: IconsManager.rightArrow, hasBorder: true, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting)))); //TODO: change this to delivery Guy Details Screen
+    }
+    return DefaultRoundedIconButton(icon: IconsManager.location, filled: true, backgroundColor: ColorsManager.GREEN, hasBorder: false, iconColor: ColorsManager.WHITE, onPressed: (){});
+  }
 }

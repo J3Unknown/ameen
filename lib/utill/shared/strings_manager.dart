@@ -10,10 +10,11 @@ class StringsManager{
   static const String hello = 'Hello';
   static const String helloGuest = 'Hello Guest';
   static const String add = 'Add';
-  static const String deliveryDate = 'Delivery Date';
+  static const String deliveryDate = 'Delivery Date:';
   static const String welcomeToAmeen = 'Welcome to AMEEN app';
   static const String category = 'Category';
   static const String itemDescription = 'Item Description';
+  static const String description = 'Description';
   static const String governance = 'Governance';
   static const String city = 'City';
   static const String block = 'Block';
@@ -26,6 +27,44 @@ class StringsManager{
   static const String kwd = 'KWD';
   static const String apply = 'Apply';
   static const String dateFormat = 'dd - MMM - yyyy';
+  static const String orderFee = 'Order Fee:';
+  static const String status = 'Status:';
+
+  //*Order Cancellation Screen
+  static const String orderCancellation = 'Order Cancellation';
+  static const String confirmCancellation = 'Confirm Cancellation';
+  static const String reason = 'Reason';
+
+  //*wallet Screen
+  static const String yourWalletBalance = 'Your Wallet Balance';
+  static const String addBalance = 'Add Balance';
+  static const String transactions = 'Transactions';
+
+  //*Order Reporting Screen
+  static const String orderReporting = 'Order Reporting';
+  static const String oneToTen = '1 to 10';
+  static const String overallRate = 'Rate overall experience with Ameen';
+  static const String deliveryTimeRate = 'Rate delivery time';
+  static const String deliveryAgentRate = 'Rate our delivery agent';
+  static const String describeYourExperience = 'Describe you experience with order';
+  static const String sendRating = 'Send Rating';
+
+  //*payment
+  static const String orderDetails = 'Order Details';
+  static const String totalItems = 'Total items';
+  static const String subTotal = 'Sub Total';
+  static const String shippingCharge = 'Shipping Charge';
+  static const String bagTotal = 'Bag Total';
+  static const String couponCodes = 'Coupon Codes';
+  static const String creditCardOrDebitCard = 'Credit Card/Debit Card';
+  static const String knet = 'Knet';
+  static const String orderConfirmationMessage = 'YOUR ORDER WAS CONFIRMED!';
+  static const String yourOrderCode = 'your order code:';
+  static const String thanksMessage = 'Thank You for choosing our App!';
+  static const String trackOrder = 'Track Order';
+  static const String ops = 'OPS!';
+  static const String orderConfirmationErrorMessage = 'Error while confirming your payment/order';
+  static const String tryAgain = 'Try Again';
 
   //*home
   static const String itemDelivery = 'Item Delivery';

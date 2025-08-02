@@ -11,4 +11,6 @@ class IconsManager{
   static IconData addIcon = Icons.add;
   static IconData date = Icons.date_range;
   static IconData location = Icons.location_on_rounded;
+  static IconData close = Icons.close;
+  static IconData rightArrow = Icons.chevron_right;
 }

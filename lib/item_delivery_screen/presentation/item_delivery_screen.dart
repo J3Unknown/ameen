@@ -94,7 +94,7 @@ class _ItemDeliveryScreenState extends State<ItemDeliveryScreen> {
               SizedBox(height: AppSizesDouble.s10,),
               DefaultDropDownMenu(
                 value: selectedCategory,
-                title: StringsManager.category,
+                hint: StringsManager.category,
                 items: AppConstants.items,
                 onChanged: (value){
                   setState(() {

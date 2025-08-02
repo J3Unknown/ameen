@@ -25,4 +25,6 @@ class AssetsManager{
   static const String creditCard = '${AppConstants.imagePath}creditCard.svg';
   static const String paymentSuccess = '${AppConstants.imagePath}paymentSuccessImage.svg';
   static const String paymentFailed = '${AppConstants.imagePath}paymentFailedImage.svg';
+  static const String deliveredIcon = '${AppConstants.imagePath}deliveredIcon.svg';
+  static const String itemIcon = '${AppConstants.imagePath}itemIcon.svg';
 }

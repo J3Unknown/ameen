@@ -46,7 +46,7 @@ class _AddAddressAlertState extends State<AddAddressAlert> {
           children: [
             DefaultDropDownMenu(
               value: selectedGovernance,
-              title: StringsManager.governance,
+              hint: StringsManager.governance,
               items: AppConstants.items,
               onChanged: (value){
                 if(value != null){
@@ -59,7 +59,7 @@ class _AddAddressAlertState extends State<AddAddressAlert> {
             SizedBox(height: AppSizesDouble.s10,),
             DefaultDropDownMenu(
               value: selectedCity,
-              title: StringsManager.city,
+              hint: StringsManager.city,
               items: AppConstants.items,
               onChanged: (value){
                 if(value != null){
