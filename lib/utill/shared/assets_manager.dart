@@ -27,4 +27,20 @@ class AssetsManager{
   static const String paymentFailed = '${AppConstants.imagePath}paymentFailedImage.svg';
   static const String deliveredIcon = '${AppConstants.imagePath}deliveredIcon.svg';
   static const String itemIcon = '${AppConstants.imagePath}itemIcon.svg';
+  static const String language = '${AppConstants.imagePath}globeIcon.svg';
+  static const String myOrders = '${AppConstants.imagePath}numberedListIcon.svg';
+  static const String profile = '${AppConstants.imagePath}personIcon.svg';
+  static const String support = '${AppConstants.imagePath}supportIcon.svg';
+  static const String termsAndConditions = '${AppConstants.imagePath}termsAndConditionsIcon.svg';
+  static const String aboutUs = '${AppConstants.imagePath}aboutIcon.svg';
+  static const String addImageIcon = '${AppConstants.imagePath}addImageIcon.svg';
+  static const String whatsapp = '${AppConstants.imagePath}whatsapp.svg';
+  static const String facebook = '${AppConstants.imagePath}facebook.svg';
+  static const String instagram = '${AppConstants.imagePath}instagram.svg';
+  static const String call = '${AppConstants.imagePath}call.svg';
+  static const String sahlId = '${AppConstants.imagePath}sahlId.svg';
+  static const String license = '${AppConstants.imagePath}license.svg';
+  static const String userTopLoginIcon = '${AppConstants.imagePath}userTopLoginIcon.svg';
+  static const String representativeLoginIcon = '${AppConstants.imagePath}representativeLoginImage.svg';
+  static const String alertIcon = '${AppConstants.imagePath}alertIcon.svg';
 }

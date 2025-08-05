@@ -6,6 +6,7 @@ ThemeData lightTheme(){
   return ThemeData(
     scaffoldBackgroundColor: ColorsManager.WHITE,
     textTheme: TextTheme(
+      displaySmall: TextStyle(fontSize: AppSizesDouble.s20),
       labelLarge: TextStyle(fontSize: AppSizesDouble.s18),
       labelMedium: TextStyle(fontSize: AppSizesDouble.s16),
       titleLarge: TextStyle(fontSize: AppSizesDouble.s14),

@@ -29,6 +29,8 @@
   "Welcome to AMEEN app": "Welcome to AMEEN app",
   "Item Delivery": "Item Delivery",
   "Sahl Request": "Sahl Request",
+  "Mobile Number": "Mobile Number",
+  "Sahl Requests": "Sahl Requests",
   "My Orders": "My Orders",
   "Please enter an 8 digits Phone Number": "Please enter an 8 digits Phone Number",
   "Now": "Now",
@@ -82,5 +84,7 @@
   "Track Order": "Track Order",
   "OPS!": "OPS!",
   "Error while confirming your payment/order": "Error while confirming your payment/order",
-  "Try Again": "Try Again"
+  "Try Again": "Try Again",
+  "You have to login first before proceeding into this action": "You have to login first before proceeding into this action",
+  "Cancel": "Cancel"
 }

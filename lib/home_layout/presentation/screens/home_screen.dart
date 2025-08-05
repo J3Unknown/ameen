@@ -55,7 +55,13 @@ class _HomeScreenState extends State<HomeScreen> {
               DefaultHomeCard(
                 title: StringsManager.sahlRequest,
                 image: AssetsManager.sahlRequest,
-                onTap: (){}, //TODO: link with Sahl screen
+                onTap: () {
+                  if(true){
+                    Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.sahl)));
+                  } else {
+                    Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.civilIdCheck)));
+                  }
+                },
               ),
             ],
           ),

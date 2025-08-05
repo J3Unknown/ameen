@@ -25,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool isEyeVisible = false;
+  bool isUser = true;
 
   @override
   void dispose() {
@@ -52,16 +53,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     icon: Icon(IconsManager.backButton)
                   ),
-                  //TODO: convert into button and make it change between consumer and delivery login
-                  SvgPicture.asset(
-                    fit: BoxFit.contain,
-                    width: AppSizesDouble.s40,
-                    AssetsManager.deliveryMotorcycle
+                  DefaultRoundedIconButton(
+                    iconColored: false,
+                    hasBorder: false,
+                    onPressed: () {
+                      setState(() {
+                        isUser = !isUser;
+                      });
+                    },
+                    isSvg: true,
+                    svgIcon: isUser? AssetsManager.deliveryMotorcycle:AssetsManager.userTopLoginIcon,
                   ),
+                  if(isUser)
                   Spacer(),
+                  if(isUser)
                   TextButton(
                     onPressed: () async{
                       await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
+                      await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: false);
                       await CacheHelper.saveData(key: KeysManager.isGuest, value: true);
                       Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
                     },
@@ -73,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.all(AppPaddings.p20),
                 child: SizedBox(
                   height: screenWidth,
-                  child: SvgPicture.asset(AssetsManager.loginImage, fit: BoxFit.contain,)
+                  child: Center(child: SvgPicture.asset(isUser?AssetsManager.loginImage:AssetsManager.representativeLoginIcon, fit: BoxFit.contain,))
                 ),
               ),
               Align(
@@ -91,7 +100,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if(isUser)
                           Text(AppLocalizations.translate(StringsManager.userLogin), style: Theme.of(context).textTheme.labelLarge),
+                          if(!isUser)
+                          Text(AppLocalizations.translate('representative login'), style: Theme.of(context).textTheme.labelLarge),
                           SizedBox(height: AppSizesDouble.s15,),
                           DefaultTextInputField(
                             controller: _phoneNumberController,
@@ -132,19 +144,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           Align(
                             alignment: AlignmentDirectional.centerEnd,
                             child: TextButton(
-                              onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.forgotPassword))), //TODO: create forgot password screen
+                              onPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.forgotPassword)), (route) => false), //TODO: create forgot password screen
                               child: Text(AppLocalizations.translate(StringsManager.forgotPassword), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.COLUMBIA_BLUE),)
                             ),
                           ),
                           DefaultButton(
                             title: StringsManager.login,
-                            onPressed: () {
-                              if(_formKey.currentState!.validate()){
-                                //TODO: link with login action
+                            onPressed: () async{
+                              if(_formKey.currentState!.validate()) {
+                                if(isUser){
+                                  await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
+                                  await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: false);
+                                  await CacheHelper.saveData(key: KeysManager.isGuest, value: true);
+                                  Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
+                                } else{
+                                  await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
+                                  await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: true);
+                                  await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
+                                  Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeHome)), (route) => false);
+                                }
                               }
                             },
                             isLoading: false,
                           ),
+                          if(isUser)
                           DefaultTextWithTextButton(
                             title: StringsManager.dontHaveAccount,
                             buttonTitle: StringsManager.register,

@@ -1,4 +1,6 @@
 import 'package:ameen/utill/local/localization/app_localization.dart';
+import 'package:ameen/utill/local/shared_preferences.dart';
+import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
@@ -149,13 +151,13 @@ class _DefaultButtonState extends State<DefaultButton> {
         child: !widget.isLoading?ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: widget.backgroundColor,
-            shape: widget.hasBorder?RoundedRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius),
-              side: BorderSide(color: widget.borderColor)
-            ):null
+              side: widget.hasBorder?BorderSide(color: widget.borderColor):BorderSide(color: ColorsManager.TRANSPARENT)
+            )
           ),
           onPressed: widget.onPressed,
-          child: Text(AppLocalizations.translate(widget.title), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: widget.foregroundColor),)
+          child: FittedBox(child: Text(AppLocalizations.translate(widget.title), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: widget.foregroundColor),))
         ):Center(child: CircularProgressIndicator())
     );
   }
@@ -237,12 +239,12 @@ class DefaultRadioTile extends StatelessWidget {
 class CustomNavbar extends StatelessWidget {
   const CustomNavbar({super.key, required this.cubit});
 
-  final MainCubit cubit;
+  final dynamic cubit;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16, left: 16, right: 16, top: 1),
+      margin: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -253,8 +255,8 @@ class CustomNavbar extends StatelessWidget {
         currentIndex: cubit.screenIndex,
         items: [
           BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.home, colorFilter: ColorFilter.mode(getColor(AppSizes.s0, cubit.screenIndex), BlendMode.srcIn),), label: StringsManager.home,),
-          BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.orders, colorFilter: ColorFilter.mode(getColor(AppSizes.s1, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.orders,),
-          BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.wallet, colorFilter: ColorFilter.mode(getColor(AppSizes.s2, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.wallet,),
+          if(!AppConstants.isRepresentativeAuthenticated)BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.orders, colorFilter: ColorFilter.mode(getColor(AppSizes.s1, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.orders,),
+          if(!AppConstants.isRepresentativeAuthenticated)BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.wallet, colorFilter: ColorFilter.mode(getColor(AppSizes.s2, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.wallet,),
           BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.more, colorFilter: ColorFilter.mode(getColor(AppSizes.s3, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.more,),
         ],
         backgroundColor: ColorsManager.TRANSPARENT,
@@ -325,7 +327,7 @@ class _DefaultDropDownMenuState extends State<DefaultDropDownMenu> {
 }
 
 class DefaultRoundedIconButton extends StatefulWidget {
-  const DefaultRoundedIconButton({super.key, this.svgIcon, this.isSvg = false, this.icon, this.iconColor = ColorsManager.BLACK, this.borderColor = ColorsManager.BLACK, this.filled = false, this.backgroundColor = ColorsManager.WHITE, required this.onPressed, this.hasBorder = true});
+  const DefaultRoundedIconButton({super.key, this.iconColored = true, this.svgIcon, this.isSvg = false, this.icon, this.iconColor = ColorsManager.BLACK, this.borderColor = ColorsManager.BLACK, this.filled = false, this.backgroundColor = ColorsManager.WHITE, required this.onPressed, this.hasBorder = true});
   final Color borderColor;
   final Color backgroundColor;
   final Color iconColor;
@@ -334,6 +336,7 @@ class DefaultRoundedIconButton extends StatefulWidget {
   final VoidCallback onPressed;
   final bool hasBorder;
   final bool filled;
+  final bool iconColored;
   final bool isSvg;
   @override
   State<DefaultRoundedIconButton> createState() => _DefaultRoundedIconButtonState();
@@ -354,7 +357,7 @@ class _DefaultRoundedIconButtonState extends State<DefaultRoundedIconButton> {
         ):null
       ),
       onPressed: widget.onPressed,
-      icon: !widget.isSvg?Icon(widget.icon, color: widget.iconColor,):SvgPicture.asset(widget.svgIcon!, colorFilter: ColorFilter.mode(widget.iconColor, BlendMode.srcIn),)
+      icon: !widget.isSvg?Icon(widget.icon, color: widget.iconColored?widget.iconColor:null,):SvgPicture.asset(widget.svgIcon!, colorFilter: widget.iconColored?ColorFilter.mode(widget.iconColor, BlendMode.srcIn):null,)
     );
   }
 }
@@ -382,8 +385,8 @@ class _DefaultItemCardState extends State<DefaultItemCard> {
     return Container(
       padding: EdgeInsets.all(AppPaddings.p10),
       decoration: BoxDecoration(
-          color: ColorsManager.GREY1,
-          borderRadius: BorderRadius.circular(AppSizesDouble.s15)
+        color: ColorsManager.GREY1,
+        borderRadius: BorderRadius.circular(AppSizesDouble.s15)
       ),
       width: double.infinity,
       height: AppSizesDouble.s150,
@@ -426,4 +429,12 @@ class _DefaultItemCardState extends State<DefaultItemCard> {
     }
     return DefaultRoundedIconButton(icon: IconsManager.location, filled: true, backgroundColor: ColorsManager.GREEN, hasBorder: false, iconColor: ColorsManager.WHITE, onPressed: (){});
   }
+}
+
+void navigateToAuth(context) async{
+  await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
+  await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
+  AppConstants.isAuthenticated = false;
+  AppConstants.isGuest = false;
+  Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
 }

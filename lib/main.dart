@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:ameen/auth/cubit/auth_cubit.dart';
 import 'package:ameen/home_layout/cubit/main_cubit.dart';
+import 'package:ameen/representitive/home_layout/cubit/representative_cubit.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/local/localization/localization_helper.dart';
+import 'package:ameen/utill/local/observer.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
@@ -19,6 +21,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await AppLocalizations().init();
   await CacheHelper.init();
+  Bloc.observer = MainBlocObserver();
   
   // await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
   // await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
@@ -31,6 +34,7 @@ void main() async{
 
 void _loadCaches() async{
   AppConstants.isAuthenticated = await CacheHelper.getData(key: KeysManager.isAuthenticated)??false;
+  AppConstants.isRepresentativeAuthenticated = await CacheHelper.getData(key: KeysManager.isRepresentativeAuthenticated)??false;
   AppConstants.isGuest = await CacheHelper.getData(key: KeysManager.isGuest)??false;
   AppConstants.locale = await CacheHelper.getData(key: KeysManager.locale)??'EN';
 }
@@ -94,6 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
           providers: [
             BlocProvider(create: (context)=> AuthCubit()),
             BlocProvider(create: (context)=> MainCubit()),
+            BlocProvider(create: (context) => RepresentativeCubit()),
           ],
           child: MaterialApp(
             navigatorKey: navKey,

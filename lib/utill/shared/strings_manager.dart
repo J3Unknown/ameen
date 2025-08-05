@@ -29,6 +29,8 @@ class StringsManager{
   static const String dateFormat = 'dd - MMM - yyyy';
   static const String orderFee = 'Order Fee:';
   static const String status = 'Status:';
+  static const String loginAlert = 'You have to login first before proceeding into this action';
+  static const String cancel = 'Cancel';
 
   //*Order Cancellation Screen
   static const String orderCancellation = 'Order Cancellation';
@@ -48,6 +50,24 @@ class StringsManager{
   static const String deliveryAgentRate = 'Rate our delivery agent';
   static const String describeYourExperience = 'Describe you experience with order';
   static const String sendRating = 'Send Rating';
+
+  //*more Screen
+  static const String welcomeGuest = 'Welcome Guest';
+  static const String welcome = 'Welcome';
+  static const String logout = 'Log out';
+  static const String profile = 'Profile';
+  static const String language = 'Language';
+  static const String support = 'Support';
+  static const String termsAndConditions = 'Terms and Conditions';
+  static const String aboutAmeen = 'About Ameen';
+
+  //*update
+  static const String update = 'Update';
+  static const String deleteAccount = 'DeleteAccount';
+
+  //*Support
+  static const String message = 'Message';
+  static const String send = 'Send';
 
   //*payment
   static const String orderDetails = 'Order Details';
@@ -69,6 +89,7 @@ class StringsManager{
   //*home
   static const String itemDelivery = 'Item Delivery';
   static const String myOrders = 'My Orders';
+  static const String sahlRequests = 'Sahl Requests';
   static const String sahlRequest = 'Sahl Request';
   static const String now = 'Now';
   static const String later = 'Later';
@@ -83,6 +104,7 @@ class StringsManager{
 
   //*Auth
   static const String whatsappNumber = 'Whatsapp number';
+  static const String phoneNumber = 'Mobile Number';
   static const String forgotPassword = 'Forgot Password?';
   static const String pleaseEnterTheCode = 'Please enter the code';
   static const String createAccount = 'Create Account';
@@ -110,6 +132,7 @@ class StringsManager{
 
 class KeysManager{
   static const String isAuthenticated = 'isAuthenticated';
+  static const String isRepresentativeAuthenticated = 'isRepresentativeAuthenticated';
   static const String isGuest = 'isGuest';
   static const String locale = 'locale';
 }

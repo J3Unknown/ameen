@@ -13,4 +13,5 @@ class IconsManager{
   static IconData location = Icons.location_on_rounded;
   static IconData close = Icons.close;
   static IconData rightArrow = Icons.chevron_right;
+  static IconData check = Icons.check_box_outlined;
 }

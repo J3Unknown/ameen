@@ -30,6 +30,7 @@ class AppConstants{
 
   //* caches
   static bool isAuthenticated = false;
+  static bool isRepresentativeAuthenticated = false;
   static bool isGuest = true;
   static String locale = 'EN';
 

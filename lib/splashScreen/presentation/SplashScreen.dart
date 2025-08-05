@@ -25,9 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigateAfterSplash(){
     if(AppConstants.isGuest || AppConstants.isAuthenticated){
-      Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)));
-    } else {
-      Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.languageScreen)));
+      Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
+    } else if(AppConstants.isRepresentativeAuthenticated) {
+      Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeHome)), (route) => false);
+    }else {
+      Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.languageScreen)), (route) => false);
     }
   }
 

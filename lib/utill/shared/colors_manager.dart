@@ -47,8 +47,10 @@ class ColorsManager {
   static const Color COLUMBIA_BLUE = Color(0xff00ADE3);
   static const Color LIGHT_SKY_BLUE = Color(0xff8DBFF6);
   static const Color HARLEQUIN = Color(0xff3FCC01);
+  static const Color SOFT_GREEN = Color(0xff74C67B);
   static const Color DARK_GREEN = Color(0xff204F38);
   static const Color CERISE = Color(0xffE2206B);
+  static const Color SOFT_RED = Color(0xffDC584C);
   static const Color GREY = Color(0xffF1F1F1);
   static const Color GREY1 = Color(0xffE8EAEC);
   static const Color RED = Color(0xFFD32F2F);

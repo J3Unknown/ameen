@@ -1,10 +1,12 @@
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
+import 'package:ameen/utill/shared/assets_manager.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AddAddressAlert extends StatefulWidget {
   const AddAddressAlert({super.key, required this.title});
@@ -133,6 +135,112 @@ class _AddAddressAlertState extends State<AddAddressAlert> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class LoginAlert extends StatelessWidget {
+  const LoginAlert({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(AppLocalizations.translate(StringsManager.login), style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),
+      content: Text(AppLocalizations.translate(StringsManager.loginAlert), style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center,),
+      backgroundColor: ColorsManager.WHITE,
+      actions: [
+        DefaultButton(title: StringsManager.login, onPressed: (){}), //TODO: Link with login action
+        SizedBox(height: AppSizesDouble.s20,),
+        DefaultButton(
+          title: StringsManager.cancel,
+          backgroundColor: ColorsManager.WHITE,
+          hasBorder: true,
+          borderColor: ColorsManager.WHITE,
+          foregroundColor: ColorsManager.DARK_GREY,
+          onPressed: () => Navigator.pop(context)
+        )
+      ],
+    );
+  }
+}
+
+
+class LanguageAlert extends StatefulWidget {
+  const LanguageAlert({super.key});
+
+  @override
+  State<LanguageAlert> createState() => _LanguageAlertState();
+}
+
+class _LanguageAlertState extends State<LanguageAlert> {
+  String selectedLang = AppConstants.locale;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(AppLocalizations.translate(StringsManager.language), style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),
+      backgroundColor: ColorsManager.WHITE,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DefaultRadioTile(
+            title: StringsManager.arabic,
+            value: 'SA',
+            groupValue: selectedLang,
+            onChanged: (value){
+              setState(() {
+                selectedLang = value;
+              });
+            }
+          ),
+          SizedBox(height: AppSizesDouble.s10,),
+          DefaultRadioTile(
+            title: StringsManager.english,
+            value: 'EN',
+            groupValue: selectedLang,
+            onChanged: (value){
+              setState(() {
+                selectedLang = value;
+              });
+            }
+          )
+        ],
+      ),
+      actions: [
+        DefaultButton(title: StringsManager.apply, onPressed: (){}), //TODO: Link with apply action
+        SizedBox(height: AppSizesDouble.s20,),
+        DefaultButton(
+          title: StringsManager.cancel,
+          backgroundColor: ColorsManager.WHITE,
+          hasBorder: false,
+          foregroundColor: ColorsManager.DARK_GREY,
+          onPressed: () => Navigator.pop(context)
+        )
+      ],
+    );
+  }
+}
+
+class DefaultRepresentativeChangeState extends StatelessWidget {
+  const DefaultRepresentativeChangeState({super.key, required this.state});
+  final String state;
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      icon: SvgPicture.asset(AssetsManager.alertIcon),
+      content: Text('Are You ready to change order status to "${state.toUpperCase()}"', style: Theme.of(context).textTheme.displaySmall,),
+      actions: [
+        DefaultButton(title: 'Yes', onPressed: (){}, backgroundColor: ColorsManager.RED,), //TODO: Link with apply action
+        SizedBox(height: AppSizesDouble.s20,),
+        DefaultButton(
+          title: StringsManager.cancel,
+          backgroundColor: ColorsManager.WHITE,
+          hasBorder: true,
+          borderColor: ColorsManager.PRIMARY_COLOR,
+          foregroundColor: ColorsManager.PRIMARY_COLOR,
+          onPressed: () => Navigator.pop(context)
+        )
+      ],
     );
   }
 }

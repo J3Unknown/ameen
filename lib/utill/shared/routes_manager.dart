@@ -1,3 +1,6 @@
+import 'package:ameen/about_and_support/presentation/about_ameen.dart';
+import 'package:ameen/about_and_support/presentation/support_screen.dart';
+import 'package:ameen/about_and_support/presentation/terms_and_conditions.dart';
 import 'package:ameen/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:ameen/home_layout/presentation/home_layout.dart';
 import 'package:ameen/item_delivery_screen/presentation/item_delivery_screen.dart';
@@ -7,6 +10,12 @@ import 'package:ameen/order_details_screens/presentation/order_reporting_screen.
 import 'package:ameen/payment/data/payment_result_arguments.dart';
 import 'package:ameen/payment/presentation/payment_result_screen.dart';
 import 'package:ameen/payment/presentation/payment_screen.dart';
+import 'package:ameen/profile/presentation/profile_screen.dart';
+import 'package:ameen/representitive/home_layout/presentation/representative_home_layout.dart';
+import 'package:ameen/representitive/order_details/presentation/representative_order_details_screen.dart';
+import 'package:ameen/sahl/presentation/sahl_requests.dart';
+import 'package:ameen/sahl/presentation/sahl_reuest_screen.dart';
+import 'package:ameen/sahl/presentation/verification_screen/sahl_verification_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../auth/loginScreen/presentation/LoginScreen.dart';
@@ -36,6 +45,8 @@ class Routes{
   static const String sahlRequest = '/sahl/request';
   static const String aboutUs = '/aboutUs';
   static const String termsAndConditions = '/termsAndConditions';
+  static const String representativeHome = '/representativeHome';
+  static const String representativeOrderDetails = '/representativeOrderDetails';
 }
 
 class RoutesGenerator{
@@ -65,6 +76,24 @@ class RoutesGenerator{
         return  MaterialPageRoute(builder: (_) => OrderReportingScreen());
       case Routes.orderCancellation:
         return  MaterialPageRoute(builder: (_) => OrderCancellationScreen());
+      case Routes.profile:
+        return  MaterialPageRoute(builder: (_) => ProfileScreen());
+      case Routes.support:
+        return  MaterialPageRoute(builder: (_) => SupportScreen());
+      case Routes.termsAndConditions:
+        return  MaterialPageRoute(builder: (_) => TermsAndConditions());
+      case Routes.aboutUs:
+        return  MaterialPageRoute(builder: (_) => AboutAmeen());
+      case Routes.sahl:
+        return  MaterialPageRoute(builder: (_) => SahlRequests());
+      case Routes.sahlRequest:
+        return  MaterialPageRoute(builder: (_) => SahlReuestScreen());
+      case Routes.civilIdCheck:
+        return  MaterialPageRoute(builder: (_) => SahlVerificationScreen());
+      case Routes.representativeHome:
+        return  MaterialPageRoute(builder: (_) => RepresentativeHomeLayout());
+      case Routes.representativeOrderDetails:
+        return  MaterialPageRoute(builder: (_) => RepresentativeOrderDetailsScreen());
       default:
         return unDefinedRoute();
     }
