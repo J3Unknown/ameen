@@ -35,9 +35,9 @@ class DioHelper{
     Map<String, dynamic>? query,
   }) async {
     dio.options.headers = {
-      'Content-Type':'application/json',
-      'Accept':'application/json',
-      'lang':AppConstants.locale,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'lang': AppConstants.locale,
       'Authorization': 'Bearer ${AppConstants.token}',
     };
     return await dio.get(path, queryParameters: query ?? {}, data: data??{});
@@ -51,8 +51,8 @@ class DioHelper{
   }) async{
 
     dio.options.headers = {
-      'Content-Type':'application/json',
-      'lang' : AppConstants.locale,
+      'Content-Type': 'application/json',
+      'lang': AppConstants.locale,
       'Authorization': 'Bearer ${AppConstants.token}'
     };
 
@@ -68,9 +68,9 @@ class DioHelper{
     }) async
   {
     dio.options.headers = {
-      'Content-Type':'application/json',
-      'lang':AppConstants.locale,
-      'Authorization':'Bearer ${AppConstants.token}',
+      'Content-Type': 'application/json',
+      'lang': AppConstants.locale,
+      'Authorization': 'Bearer ${AppConstants.token}',
     };
     var response = dio.post(url, queryParameters: query, data: data??{}, options: options);
     return response;
@@ -82,9 +82,9 @@ class DioHelper{
     Map<String, dynamic>? query,
   }) async {
     dio.options.headers = {
-      'Content-Type':'application/json',
-      'lang':AppConstants.locale,
-      'Authorization':'Bearer ${AppConstants.token}'
+      'Content-Type': 'application/json',
+      'lang': AppConstants.locale,
+      'Authorization': 'Bearer ${AppConstants.token}'
     };
     return dio.delete(url,queryParameters: query??{}, data: data??{});
   }

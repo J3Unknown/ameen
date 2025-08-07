@@ -1,8 +1,10 @@
+import 'package:ameen/sahl/presentation/verification_screen/sahl_verification_screen.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:ameen/utill/shared/assets_manager.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
+import 'package:ameen/utill/shared/icons_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
@@ -228,9 +230,13 @@ class DefaultRepresentativeChangeState extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       icon: SvgPicture.asset(AssetsManager.alertIcon),
-      content: Text('Are You ready to change order status to "${state.toUpperCase()}"', style: Theme.of(context).textTheme.displaySmall,),
+      content: Text('${AppLocalizations.translate(StringsManager.changingOrderStateMessage)} "${AppLocalizations.translate(state).toUpperCase()}"', style: Theme.of(context).textTheme.displaySmall,),
       actions: [
-        DefaultButton(title: 'Yes', onPressed: (){}, backgroundColor: ColorsManager.RED,), //TODO: Link with apply action
+        DefaultButton(
+          title: StringsManager.yes,
+          onPressed: (){},
+          backgroundColor: ColorsManager.RED,
+        ), //TODO: Link with apply action
         SizedBox(height: AppSizesDouble.s20,),
         DefaultButton(
           title: StringsManager.cancel,
@@ -239,6 +245,35 @@ class DefaultRepresentativeChangeState extends StatelessWidget {
           borderColor: ColorsManager.PRIMARY_COLOR,
           foregroundColor: ColorsManager.PRIMARY_COLOR,
           onPressed: () => Navigator.pop(context)
+        )
+      ],
+    );
+  }
+}
+
+class SahlVerificationAlert extends StatelessWidget {
+  const SahlVerificationAlert({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Row(
+        children: [
+          DefaultRoundedIconButton(onPressed: null, icon: IconsManager.check,),
+          Text(AppLocalizations.translate(StringsManager.sahlVerificationCheckMessage), style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center,),
+        ],
+      ),
+      backgroundColor: ColorsManager.WHITE,
+      actions: [
+        DefaultButton(title: StringsManager.login, onPressed: (){}), //TODO: Link with login action
+        SizedBox(height: AppSizesDouble.s20,),
+        DefaultButton(
+            title: StringsManager.cancel,
+            backgroundColor: ColorsManager.WHITE,
+            hasBorder: true,
+            borderColor: ColorsManager.WHITE,
+            foregroundColor: ColorsManager.DARK_GREY,
+            onPressed: () => Navigator.pop(context)
         )
       ],
     );

@@ -51,19 +51,19 @@ class _RepresentativeHomeState extends State<RepresentativeHome> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: (){
-                        cubit.changeOrderTypeIndex(0);
+                        cubit.changeOrderTypeIndex(AppSizes.s0);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: cubit.ordersIndex == 0?ColorsManager.PRIMARY_COLOR:ColorsManager.WHITE,
+                        backgroundColor: cubit.ordersIndex == AppSizes.s0?ColorsManager.PRIMARY_COLOR:ColorsManager.WHITE,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(AppSizesDouble.s5),
-                              bottomRight: Radius.circular(AppSizesDouble.s11),
-                            ),
-                            side: cubit.ordersIndex == 0?BorderSide(color: ColorsManager.BLACK):BorderSide()
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(AppSizesDouble.s5),
+                            bottomRight: Radius.circular(AppSizesDouble.s11),
+                          ),
+                          side: cubit.ordersIndex == 0?BorderSide(color: ColorsManager.BLACK):BorderSide()
                         ),
                       ),
-                      child: FittedBox(child: Text(AppLocalizations.translate('New Orders'), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: cubit.ordersIndex == 0?ColorsManager.WHITE:ColorsManager.BLACK),)),
+                      child: FittedBox(child: Text(AppLocalizations.translate(StringsManager.newOrders), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: cubit.ordersIndex == 0?ColorsManager.WHITE:ColorsManager.BLACK),)),
                     ),
                   ),
                   Expanded(
@@ -77,25 +77,25 @@ class _RepresentativeHomeState extends State<RepresentativeHome> {
                             side: cubit.ordersIndex == 1?BorderSide(color: ColorsManager.BLACK):BorderSide()
                         ),
                       ),
-                      child: FittedBox(child: Text(AppLocalizations.translate('Delivered'), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: cubit.ordersIndex == 1?ColorsManager.WHITE:ColorsManager.BLACK),)),
+                      child: FittedBox(child: Text(AppLocalizations.translate(StringsManager.delivered), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: cubit.ordersIndex == 1?ColorsManager.WHITE:ColorsManager.BLACK),)),
                     ),
                   ),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: (){
-                          cubit.changeOrderTypeIndex(2);
+                        cubit.changeOrderTypeIndex(2);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cubit.ordersIndex == 2?ColorsManager.PRIMARY_COLOR:ColorsManager.WHITE,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(AppSizesDouble.s11),
-                              topRight: Radius.circular(AppSizesDouble.s5),
-                            ),
-                            side: cubit.ordersIndex == 2?BorderSide(color: ColorsManager.BLACK):BorderSide()
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(AppSizesDouble.s11),
+                            topRight: Radius.circular(AppSizesDouble.s5),
+                          ),
+                          side: cubit.ordersIndex == 2?BorderSide(color: ColorsManager.BLACK):BorderSide()
                         ),
                       ),
-                      child: FittedBox(child: Text(AppLocalizations.translate('Cancelled'), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: cubit.ordersIndex == 2?ColorsManager.WHITE:ColorsManager.BLACK),)),
+                      child: FittedBox(child: Text(AppLocalizations.translate(StringsManager.cancelled), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: cubit.ordersIndex == 2?ColorsManager.WHITE:ColorsManager.BLACK),)),
                     ),
                   ),
                 ],

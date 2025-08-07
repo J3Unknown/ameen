@@ -28,6 +28,10 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   late bool isRegisterOtp;
+  String? phone;
+  String? password;
+  String? email;
+  String? name;
   final TextEditingController _otpController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
   late final AuthCubit _authCubit;
@@ -35,13 +39,22 @@ class _OtpScreenState extends State<OtpScreen> {
   void initState() {
     _authCubit = AuthCubit.get(context);
     isRegisterOtp = widget.arguments.isRegisterOtp;
+    phone = widget.arguments.phone;
+    name = widget.arguments.name;
+    password = widget.arguments.password;
+    email = widget.arguments.email;
     _authCubit.initializeStream();
     _authCubit.timer();
+    _sendVerificationCode();
     super.initState();
   }
 
   void _sendVerificationCode(){
-    log('timer started');
+    if(isRegisterOtp){
+      AuthCubit.get(context).sendOtpRegister(phone!);
+    } else{
+      AuthCubit.get(context).sendOtpForgotPassword(phone!);
+    }
     _authCubit.timer();
   }
 
@@ -56,7 +69,11 @@ class _OtpScreenState extends State<OtpScreen> {
     return Scaffold(
       backgroundColor: ColorsManager.GREY1,
       body: BlocConsumer<AuthCubit, AuthCubitStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(state is AuthRegisterSuccessState){
+            Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
+          }
+        },
         builder: (context, state) => SafeArea(
           child: SizedBox(
             height: screenHeight - MediaQuery.of(context).viewPadding.top,
@@ -133,15 +150,14 @@ class _OtpScreenState extends State<OtpScreen> {
                                 return Text('${_authCubit.counter}', style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: ColorsManager.PRIMARY_COLOR, fontWeight: FontWeight.bold),);
                               }
                             ),
-                          ), //TODO: add the future builder with counter in it
+                          ),
                           SizedBox(height: AppSizesDouble.s15,),
                           DefaultButton(
                             title: StringsManager.confirm,
                             onPressed: () {
-                              //TODO: add otp check action
                               if(_formKey.currentState!.validate()){
                                 if(isRegisterOtp){
-
+                                  AuthCubit.get(context).register(phone!, password!, name!, _otpController.text, email!);
                                 } else {
                                   Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.payment)));
                                 }

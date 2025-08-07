@@ -28,13 +28,13 @@ class SahlRequests extends StatelessWidget {
               children: [
                 SvgPicture.asset(AssetsManager.sahlId),
                 SizedBox(width: AppSizesDouble.s10,),
-                FittedBox(child: Text(AppLocalizations.translate('ID verification with Hawity'), style: Theme.of(context).textTheme.displaySmall,)),
+                FittedBox(child: Text(AppLocalizations.translate(StringsManager.verifiedMessage), style: Theme.of(context).textTheme.displaySmall,)),
                 Spacer(),
                 Icon(IconsManager.check)
               ],
             ),
             SizedBox(height: AppSizesDouble.s40,),
-            Text(AppLocalizations.translate('requests'), style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontWeight: FontWeight.w500),),
+            Text(AppLocalizations.translate(StringsManager.requests), style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontWeight: FontWeight.w500),),
             SizedBox(height: AppSizesDouble.s20,),
             Expanded(
               child: ListView.separated(
@@ -54,15 +54,15 @@ class SahlRequests extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(AppLocalizations.translate('License Delivery')),
-                          Text('${AppLocalizations.translate('Delivery Fee:')} 10 ${AppLocalizations.translate(StringsManager.kwd)}'),
+                          Text(AppLocalizations.translate(StringsManager.licenseDelivery)),
+                          Text('${AppLocalizations.translate(StringsManager.deliveryFee)}: 10 ${AppLocalizations.translate(StringsManager.kwd)}'),
                         ],
                       ),
                       Spacer(),
                       ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: AppSizesDouble.s120),
                         child: DefaultButton(
-                          title: 'Proceed',
+                          title: StringsManager.proceed,
                           onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.sahlRequest))),
                           height: AppSizesDouble.s50,
                           isInfiniteWidth: false,

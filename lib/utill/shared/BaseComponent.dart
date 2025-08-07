@@ -244,12 +244,12 @@ class CustomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
+      margin: EdgeInsets.only(bottom: AppMargins.m16, left: AppMargins.m16, right: AppMargins.m16),
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: AppPaddings.p12, vertical: AppPaddings.p8),
       decoration: BoxDecoration(
-        border: Border.all(color: ColorsManager.BLACK, width: 2),
-        borderRadius: BorderRadius.circular(35),
+        border: Border.all(color: ColorsManager.BLACK, width: AppSizesDouble.s2),
+        borderRadius: BorderRadius.circular(AppSizesDouble.s35),
       ),
       child: BottomNavigationBar(
         currentIndex: cubit.screenIndex,
@@ -333,7 +333,7 @@ class DefaultRoundedIconButton extends StatefulWidget {
   final Color iconColor;
   final IconData? icon;
   final String? svgIcon;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool hasBorder;
   final bool filled;
   final bool iconColored;
@@ -399,21 +399,22 @@ class _DefaultItemCardState extends State<DefaultItemCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('This is a very big title which has to reach the end of the item', style: Theme.of(context).textTheme.labelLarge, maxLines: 2, overflow: TextOverflow.ellipsis,),
+                Text('This is a very big title which has to reach the end of the item', style: Theme.of(context).textTheme.labelLarge, maxLines: AppSizes.s2, overflow: TextOverflow.ellipsis,),
                 SizedBox(height: AppSizesDouble.s10,),
-                Text('${AppLocalizations.translate(StringsManager.deliveryDate)} ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.now())}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
-                Text('${AppLocalizations.translate(StringsManager.orderFee)} 12 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+                Text('${AppLocalizations.translate(StringsManager.deliveryDate)}: ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.now())}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
+                Text('${AppLocalizations.translate(StringsManager.orderFee)}: 12 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
                 Row(
                   children: [
                     Text(AppLocalizations.translate(StringsManager.status), style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
-                    Text(' Received', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.YELLOW)),
+                    SizedBox(width: AppSizesDouble.s10,),
+                    Text('Received', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.YELLOW)), //TODO: Change into the received Status
                   ],
                 ),
               ],
             ),
           ),
           SizedBox(width: AppSizesDouble.s5,),
-          getIcon(widget.index % 2 == 0? 'Received':widget.index % 3 == 0?'Delivered':'Out for Delivery')
+          getIcon(widget.index % 2 == 0? 'Received':widget.index % 3 == 0?'Delivered':'Out for Delivery') //TODO: also Send Status Here
         ],
       ),
     );
@@ -437,4 +438,22 @@ void navigateToAuth(context) async{
   AppConstants.isAuthenticated = false;
   AppConstants.isGuest = false;
   Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
+}
+
+Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false}) async{
+  await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
+  await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
+  await CacheHelper.saveData(key: KeysManager.isGuest, value: isGuest);
+  AppConstants.isAuthenticated = isAuthenticated;
+  AppConstants.isGuest = isGuest;
+  AppConstants.isRepresentativeAuthenticated = isRepresentative;
+}
+
+Future<void> clearCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false}) async{
+  await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
+  await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
+  await CacheHelper.saveData(key: KeysManager.isGuest, value: isGuest);
+  AppConstants.isAuthenticated = isAuthenticated;
+  AppConstants.isGuest = isGuest;
+  AppConstants.isRepresentativeAuthenticated = isRepresentative;
 }

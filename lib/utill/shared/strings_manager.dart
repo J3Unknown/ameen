@@ -10,7 +10,7 @@ class StringsManager{
   static const String hello = 'Hello';
   static const String helloGuest = 'Hello Guest';
   static const String add = 'Add';
-  static const String deliveryDate = 'Delivery Date:';
+  static const String deliveryDate = 'Delivery Date';
   static const String welcomeToAmeen = 'Welcome to AMEEN app';
   static const String category = 'Category';
   static const String itemDescription = 'Item Description';
@@ -27,10 +27,11 @@ class StringsManager{
   static const String kwd = 'KWD';
   static const String apply = 'Apply';
   static const String dateFormat = 'dd - MMM - yyyy';
-  static const String orderFee = 'Order Fee:';
+  static const String orderFee = 'Order Fee';
   static const String status = 'Status:';
   static const String loginAlert = 'You have to login first before proceeding into this action';
   static const String cancel = 'Cancel';
+  static const String yes = 'Yes';
 
   //*Order Cancellation Screen
   static const String orderCancellation = 'Order Cancellation';
@@ -51,6 +52,17 @@ class StringsManager{
   static const String describeYourExperience = 'Describe you experience with order';
   static const String sendRating = 'Send Rating';
 
+  //*sahl Screen
+  static const String licenseDelivery = 'License Delivery';
+  static const String deliveryFee = 'Delivery Fee';
+  static const String proceed = 'Proceed';
+  static const String requests = 'Requests';
+  static const String verifiedMessage = 'ID verification with Hawity';
+  static const String civilID = 'Civil ID';
+  static const String insertIdNumber = 'Please insert you ID number to Verify';
+  static const String sahlVerificationCheckMessage = 'Please check and Confirm Request on your Hawity App';
+  static const String gada = 'Gada';
+
   //*more Screen
   static const String welcomeGuest = 'Welcome Guest';
   static const String welcome = 'Welcome';
@@ -68,6 +80,24 @@ class StringsManager{
   //*Support
   static const String message = 'Message';
   static const String send = 'Send';
+
+  //*Representative Screen
+  static const String outForDelivery = 'Out For Delivery';
+  static const String orderDelivered = 'Order Delivered';
+  static const String delivered = 'Delivered';
+  static const String newOrders = 'New Orders';
+  static const String cancelled = 'Cancelled';
+  static const String cancelledTime = 'Cancelled Time';
+  static const String destination = 'Destination';
+  static const String destinationAddress = 'Destination Address';
+  static const String origin = 'Origin';
+  static const String call = 'Call';
+  static const String originAddress = 'Origin Address';
+  static const String clientDetails = 'Client Details';
+  static const String order = 'Order';
+  static const String changingOrderStateMessage = 'Are You ready to change order status to';
+  static const String deliveryTime = 'Delivery Time';
+  static const String representativeLogin = 'representative login';
 
   //*payment
   static const String orderDetails = 'Order Details';
@@ -131,6 +161,17 @@ class StringsManager{
 }
 
 class KeysManager{
+
+  //*Requests Keys
+  static const String success = 'success';
+  static const String result = 'result';
+  static const String phone = 'phone';
+  static const String password = 'password';
+  static const String name = 'name';
+  static const String otpCode = 'otpCode';
+  static const String type = 'type';
+
+  //*Cache
   static const String isAuthenticated = 'isAuthenticated';
   static const String isRepresentativeAuthenticated = 'isRepresentativeAuthenticated';
   static const String isGuest = 'isGuest';

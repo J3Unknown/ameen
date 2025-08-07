@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
+import 'package:ameen/utill/network/dio.dart';
+import 'package:ameen/utill/network/end_points.dart';
+import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../utill/shared/values_manager.dart';
@@ -51,5 +54,64 @@ class AuthCubit extends Cubit<AuthCubitStates>{
       _timerStreamController.close();
     }
     return super.close();
+  }
+
+  void login(String phone, String password){
+    emit(AuthLoginLoadingState());
+    DioHelper.postData(
+      url: EndPoints.login,
+      data: {
+        KeysManager.phone: phone,
+        KeysManager.password: password
+      }
+    ).then((value){
+      //if(value[KeysManager.success])
+      emit(AuthLoginSuccessState());
+      //TODO: Add the returned value into the profile repo
+    });
+  }
+
+  void register(String phone, String password, String name, String otpCode, String userType){
+    emit(AuthRegisterLoadingState());
+    DioHelper.postData(
+      url: EndPoints.register,
+      data: {
+        KeysManager.phone: phone,
+        KeysManager.password: password,
+        KeysManager.name: name,
+        KeysManager.otpCode: otpCode,
+        KeysManager.type: userType,
+      }
+    ).then((value){
+      //if(value[KeysManager.success])
+      emit(AuthRegisterSuccessState());
+      //TODO: Add the returned value into the profile repo
+    });
+  }
+
+  void sendOtpRegister(String phone){
+    emit(AuthSendOtpLoadingState());
+    DioHelper.postData(
+      url: EndPoints.register,
+      data: {
+        KeysManager.phone: phone,
+      }
+    ).then((value){
+      //if(value[KeysManager.success])
+      emit(AuthSendOtpSuccessState());
+    });
+  }
+
+  void sendOtpForgotPassword(String phone){
+    emit(AuthSendOtpLoadingState());
+    DioHelper.postData(
+      url: EndPoints.register,
+      data: {
+        KeysManager.phone: phone,
+      }
+    ).then((value){
+      //if(value[KeysManager.success])
+      emit(AuthSendOtpSuccessState());
+    });
   }
 }

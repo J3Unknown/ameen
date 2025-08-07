@@ -1,5 +1,8 @@
+import 'package:ameen/auth/cubit/auth_cubit.dart';
+import 'package:ameen/auth/cubit/auth_cubit_state.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../otp_screen/data/otp_arguments.dart';
@@ -44,138 +47,140 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final screenHeight = AppConstants.screenSize(context).height;
     return Scaffold(
       backgroundColor: ColorsManager.GREY1,
-      body: SafeArea(
-        child: SizedBox(
-          height: screenHeight - MediaQuery.of(context).viewPadding.top,
-          child: Stack(
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: (){
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(IconsManager.backButton)
-                  ),
-                  Spacer(),
-                  TextButton(
-                    onPressed: () async {
-                      await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
-                      await CacheHelper.saveData(key: KeysManager.isGuest, value: true);
-                      Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
-                    },
-                    child: Text(AppLocalizations.translate(StringsManager.skip), style: TextStyle(color: ColorsManager.BLACK),)
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(AppPaddings.p20 ),
-                child: SizedBox(
-                  height: screenHeight / AppSizes.s3,
-                  child: Center(child: SvgPicture.asset(AssetsManager.registerImage, fit: BoxFit.contain,)),
+      body: BlocConsumer<AuthCubit, AuthCubitStates>(
+        listener: (context, state) {},
+        builder: (context, state) => SafeArea(
+          child: SizedBox(
+            height: screenHeight - MediaQuery.of(context).viewPadding.top,
+            child: Stack(
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(IconsManager.backButton)
+                    ),
+                    Spacer(),
+                    TextButton(
+                      onPressed: () async {
+                       saveCaches(isGuest: true);
+                        Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
+                      },
+                      child: Text(AppLocalizations.translate(StringsManager.skip), style: TextStyle(color: ColorsManager.BLACK),)
+                    )
+                  ],
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: AppPaddings.p10, horizontal: AppPaddings.p15),
-                  height: screenHeight / AppSizesDouble.s1_8,
-                  decoration: BoxDecoration(
-                    color: ColorsManager.WHITE,
-                    borderRadius: BorderRadius.circular(AppSizesDouble.s20),
+                Padding(
+                  padding: EdgeInsets.all(AppPaddings.p20 ),
+                  child: SizedBox(
+                    height: screenHeight / AppSizes.s3,
+                    child: Center(child: SvgPicture.asset(AssetsManager.registerImage, fit: BoxFit.contain,)),
                   ),
-                  child: SingleChildScrollView(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(AppLocalizations.translate(StringsManager.createAccount), style: Theme.of(context).textTheme.labelLarge),
-                          SizedBox(height: AppSizesDouble.s15,),
-                          DefaultTextInputField(
-                            controller: _nameController,
-                            title: StringsManager.name,
-                            isRequired: true,
-                            validator: (value) {
-                              if(value == null || value.isEmpty){
-                                return AppLocalizations.translate(StringsManager.emptyFieldMessage);
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: AppSizesDouble.s15),
-                          DefaultTextInputField(
-                            controller: _phoneNumberController,
-                            keyboardType: TextInputType.phone,
-                            hint: 'xxxx xxxx',
-                            title: StringsManager.whatsappNumber,
-                            isRequired: true,
-                            validator: (value) {
-                              if(value == null || value.isEmpty){
-                                return AppLocalizations.translate(StringsManager.emptyFieldMessage);
-                              } else if(value.length < AppSizes.s8){
-                                return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
-                              }
-                              return null;
-                            },
-                            maxLength: AppSizes.s8,
-                          ),
-                          DefaultTextInputField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            title: StringsManager.email,
-                            isRequired: true,
-                            validator: (value) {
-                              if(value == null || value.isEmpty){
-                                return AppLocalizations.translate(StringsManager.emptyFieldMessage);
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: AppSizesDouble.s15),
-                          DefaultTextInputField(
-                            controller: _passwordController,
-                            keyboardType: TextInputType.visiblePassword,
-                            hint: StringsManager.passwordHint,
-                            onSuffixPressed: (){
-                              setState(()  => isEyeVisible = !isEyeVisible);
-                            },
-                            suffixActivated: isEyeVisible,
-                            suffixIconActivated: IconsManager.eyeOffIcon,
-                            suffixIconInActivated: IconsManager.eyeIcon,
-                            isRequired: true,
-                            title: StringsManager.forgotPassword,
-                            validator: (value) {
-                              if(value == null || value.isEmpty){
-                                return AppLocalizations.translate(StringsManager.emptyFieldMessage);
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: AppSizesDouble.s25,),
-                          DefaultButton(
-                            title: StringsManager.next,
-                            onPressed: () {
-                              if(_formKey.currentState!.validate()){
-                                Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: OtpArguments(true))));
-                              }
-                            }, //TODO: link with register action
-                            isLoading: false,
-                          ),
-                          DefaultTextWithTextButton(
-                            title: StringsManager.alreadyHaveAccount,
-                            buttonTitle: StringsManager.login,
-                            onButtonPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => route.settings.name == Routes.languageScreen),
-                          )
-                        ],
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: AppPaddings.p10, horizontal: AppPaddings.p15),
+                    height: screenHeight / AppSizesDouble.s1_8,
+                    decoration: BoxDecoration(
+                      color: ColorsManager.WHITE,
+                      borderRadius: BorderRadius.circular(AppSizesDouble.s20),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(AppLocalizations.translate(StringsManager.createAccount), style: Theme.of(context).textTheme.labelLarge),
+                            SizedBox(height: AppSizesDouble.s15,),
+                            DefaultTextInputField(
+                              controller: _nameController,
+                              title: StringsManager.name,
+                              isRequired: true,
+                              validator: (value) {
+                                if(value == null || value.isEmpty){
+                                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: AppSizesDouble.s15),
+                            DefaultTextInputField(
+                              controller: _phoneNumberController,
+                              keyboardType: TextInputType.phone,
+                              hint: 'xxxx xxxx',
+                              title: StringsManager.whatsappNumber,
+                              isRequired: true,
+                              validator: (value) {
+                                if(value == null || value.isEmpty){
+                                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                                } else if(value.length < AppSizes.s8){
+                                  return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
+                                }
+                                return null;
+                              },
+                              maxLength: AppSizes.s8,
+                            ),
+                            DefaultTextInputField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              title: StringsManager.email,
+                              isRequired: true,
+                              validator: (value) {
+                                if(value == null || value.isEmpty){
+                                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: AppSizesDouble.s15),
+                            DefaultTextInputField(
+                              controller: _passwordController,
+                              keyboardType: TextInputType.visiblePassword,
+                              hint: StringsManager.passwordHint,
+                              onSuffixPressed: (){
+                                setState(()  => isEyeVisible = !isEyeVisible);
+                              },
+                              suffixActivated: isEyeVisible,
+                              suffixIconActivated: IconsManager.eyeOffIcon,
+                              suffixIconInActivated: IconsManager.eyeIcon,
+                              isRequired: true,
+                              title: StringsManager.forgotPassword,
+                              validator: (value) {
+                                if(value == null || value.isEmpty){
+                                  return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: AppSizesDouble.s25,),
+                            DefaultButton(
+                              title: StringsManager.next,
+                              onPressed: () {
+                                if(_formKey.currentState!.validate()){
+                                  Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: OtpArguments(true, name: _nameController.text, email: _emailController.text, phone: _phoneNumberController.text, password: _passwordController.text))));
+                                }
+                              },
+                              isLoading: false,
+                            ),
+                            DefaultTextWithTextButton(
+                              title: StringsManager.alreadyHaveAccount,
+                              buttonTitle: StringsManager.login,
+                              onButtonPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => route.settings.name == Routes.languageScreen),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        )
+              ],
+            ),
+          )
+        ),
       ),
     );
   }

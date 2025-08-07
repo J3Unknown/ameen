@@ -32,12 +32,12 @@ class _MoreScreenState extends State<MoreScreen> {
             children: [
               Text(AppLocalizations.translate(StringsManager.more), style: Theme.of(context).textTheme.headlineSmall,),
               SizedBox(height: AppSizesDouble.s50,),
-              if(!AppConstants.isAuthenticated && !AppConstants.isRepresentativeAuthenticated)
+              if(AppConstants.isGuest)
               Center(child: Text(AppLocalizations.translate(StringsManager.welcomeGuest), style: Theme.of(context).textTheme.headlineSmall,)),
               if(AppConstants.isAuthenticated || AppConstants.isRepresentativeAuthenticated)
               Center(child: Text('${AppLocalizations.translate(StringsManager.welcome)} Nigga', style: Theme.of(context).textTheme.headlineSmall,)),
               SizedBox(height: AppSizesDouble.s20,),
-              if(!AppConstants.isAuthenticated  && !AppConstants.isRepresentativeAuthenticated)
+              if(AppConstants.isGuest)
               DefaultButton(
                 title: StringsManager.login,
                 onPressed: () => navigateToAuth(context),
@@ -46,7 +46,10 @@ class _MoreScreenState extends State<MoreScreen> {
               if(AppConstants.isAuthenticated || AppConstants.isRepresentativeAuthenticated)
               DefaultButton(
                 title: StringsManager.logout,
-                onPressed: (){},
+                onPressed: (){
+                  clearCaches();
+                  Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
+                },
                 borderRadius: AppSizesDouble.s11,
                 hasBorder: true,
                 backgroundColor: ColorsManager.WHITE,

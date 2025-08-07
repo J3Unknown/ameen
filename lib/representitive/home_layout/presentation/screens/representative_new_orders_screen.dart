@@ -48,10 +48,10 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('This is a very big title which has to reach the end of the item', style: Theme.of(context).textTheme.labelLarge, maxLines: 2, overflow: TextOverflow.ellipsis,),
+                          Text('This is a very big title which has to reach the end of the item', style: Theme.of(context).textTheme.labelLarge, maxLines: AppSizes.s2, overflow: TextOverflow.ellipsis,),
                           SizedBox(height: AppSizesDouble.s10,),
-                          Text('${AppLocalizations.translate(StringsManager.deliveryDate)} ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.now())}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
-                          Text('${AppLocalizations.translate(StringsManager.orderFee)} 12 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+                          Text('${AppLocalizations.translate(StringsManager.deliveryDate)}: ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.now())}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
+                          Text('${AppLocalizations.translate(StringsManager.orderFee)}: 12 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
                           Row(
                             children: [
                               Text('${AppLocalizations.translate(StringsManager.governance)}: ', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                           backgroundColor: ColorsManager.COLUMBIA_BLUE,
                           shape: RoundedRectangleBorder(),
                         ),
-                        child: FittedBox(child: Text(AppLocalizations.translate('Call'), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.WHITE),)),
+                        child: FittedBox(child: Text(AppLocalizations.translate(StringsManager.call), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.WHITE),)),
                       ),
                     ),
                     Expanded(
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                           backgroundColor: ColorsManager.SOFT_GREEN,
                           shape: RoundedRectangleBorder(),
                         ),
-                        child: FittedBox(child: Text(AppLocalizations.translate('Origin'), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.WHITE),)),
+                        child: FittedBox(child: Text(AppLocalizations.translate(StringsManager.origin), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.WHITE),)),
                       ),
                     ),
                     Expanded(
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                           backgroundColor: ColorsManager.SOFT_RED,
                           shape: RoundedRectangleBorder(),
                         ),
-                        child: FittedBox(child: Text(AppLocalizations.translate('Destination'), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.WHITE),)),
+                        child: FittedBox(child: Text(AppLocalizations.translate(StringsManager.destination), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.WHITE),)),
                       ),
                     ),
                   ],

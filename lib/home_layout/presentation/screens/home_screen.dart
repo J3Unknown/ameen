@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: StringsManager.sahlRequest,
                 image: AssetsManager.sahlRequest,
                 onTap: () {
-                  if(true){
+                  if(false){
                     Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.sahl)));
                   } else {
                     Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.civilIdCheck)));

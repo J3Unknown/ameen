@@ -64,7 +64,7 @@ class _SahlReuestScreenState extends State<SahlReuestScreen> {
                 Expanded(
                   child: DefaultTextInputField(
                     controller: _gadaController,
-                    hint: 'Gada',
+                    hint: StringsManager.gada,
                     isRequired: true,
                     validator: (value){
                       if(value == null || value.isEmpty){

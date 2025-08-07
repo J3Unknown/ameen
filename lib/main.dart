@@ -23,7 +23,8 @@ void main() async{
   await CacheHelper.init();
   Bloc.observer = MainBlocObserver();
   
-  // await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
+  await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: true);
+  // await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: true);
   // await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
   // await CacheHelper.saveData(key: KeysManager.locale, value: 'EN');
 
