@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:ameen/Repo/otp_reason_interface.dart';
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
@@ -17,32 +18,24 @@ import '../../../utill/shared/icons_manager.dart';
 import '../../../utill/shared/strings_manager.dart';
 import '../../../utill/shared/values_manager.dart';
 import '../../cubit/auth_cubit.dart';
-import '../data/otp_arguments.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key, required this.arguments});
-  final OtpArguments arguments;
+  const OtpScreen({super.key, required this.otpReasonInterface});
+  final OtpReasonInterface otpReasonInterface;
   @override
   State<OtpScreen> createState() => _OtpScreenState();
 }
 
 class _OtpScreenState extends State<OtpScreen> {
   late bool isRegisterOtp;
-  String? phone;
-  String? password;
-  String? email;
-  String? name;
+  late OtpReasonInterface otpReasonInterface;
   final TextEditingController _otpController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
   late final AuthCubit _authCubit;
   @override
   void initState() {
     _authCubit = AuthCubit.get(context);
-    isRegisterOtp = widget.arguments.isRegisterOtp;
-    phone = widget.arguments.phone;
-    name = widget.arguments.name;
-    password = widget.arguments.password;
-    email = widget.arguments.email;
+    otpReasonInterface = widget.otpReasonInterface;
     _authCubit.initializeStream();
     _authCubit.timer();
     _sendVerificationCode();
@@ -50,11 +43,7 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void _sendVerificationCode(){
-    if(isRegisterOtp){
-      AuthCubit.get(context).sendOtpRegister(phone!);
-    } else{
-      AuthCubit.get(context).sendOtpForgotPassword(phone!);
-    }
+    otpReasonInterface.request(context);
     _authCubit.timer();
   }
 
@@ -71,7 +60,7 @@ class _OtpScreenState extends State<OtpScreen> {
       body: BlocConsumer<AuthCubit, AuthCubitStates>(
         listener: (context, state) {
           if(state is AuthRegisterSuccessState){
-            Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
+            otpReasonInterface.onSuccess(context, token: state.profileDataModel.token);
           }
         },
         builder: (context, state) => SafeArea(
@@ -156,10 +145,10 @@ class _OtpScreenState extends State<OtpScreen> {
                             title: StringsManager.confirm,
                             onPressed: () {
                               if(_formKey.currentState!.validate()){
-                                if(isRegisterOtp){
-                                  AuthCubit.get(context).register(phone!, password!, name!, _otpController.text, email!);
+                                if(_authCubit.otpCode == int.parse(_otpController.text)){
+                                  otpReasonInterface.afterOtpValidation(context, otp: _otpController.text);
                                 } else {
-                                  Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.payment)));
+                                  showSnackBar(context, StringsManager.theOtpCodeIsIncorrect);
                                 }
                               }
                             },

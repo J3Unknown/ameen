@@ -1,3 +1,5 @@
+import 'package:ameen/Repo/profile_data_model.dart';
+
 class Repo{
-  //TODO: Create the Profile Object Repo
+  static ProfileDataModel? profileDataModel;
 }

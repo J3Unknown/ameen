@@ -3,7 +3,6 @@ class OtpArguments{
   final String? password;
   final String? phone;
   final String? email;
-  final bool isRegisterOtp;
 
-  OtpArguments(this.isRegisterOtp, {this.name, this.password, this.phone, this.email});
+  OtpArguments({this.name, this.password, this.phone, this.email});
 }

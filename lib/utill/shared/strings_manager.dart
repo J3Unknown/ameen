@@ -154,6 +154,9 @@ class StringsManager{
   static const String sendAgain = 'Send Again';
   static const String validOtpMessage = 'Please enter a valid OTP';
   static const String phoneNumberRangeError = 'Please enter an 8 digits Phone Number';
+  static const String emailFormatWarning = 'Email Must Follow this format: ';
+  static const String emailPlaceholder = 'user@example.com';
+  static const String theOtpCodeIsIncorrect = 'The otp code is Incorrect';
 
   //*language
   static const String arabic = 'عربي';
@@ -166,14 +169,18 @@ class KeysManager{
   static const String success = 'success';
   static const String result = 'result';
   static const String phone = 'phone';
+  static const String email = 'email';
   static const String password = 'password';
   static const String name = 'name';
   static const String otpCode = 'otpCode';
+  static const String otpUCode = 'otp_code';
   static const String type = 'type';
+  static const String id = 'id';
 
   //*Cache
   static const String isAuthenticated = 'isAuthenticated';
   static const String isRepresentativeAuthenticated = 'isRepresentativeAuthenticated';
   static const String isGuest = 'isGuest';
+  static const String token = 'token';
   static const String locale = 'locale';
 }

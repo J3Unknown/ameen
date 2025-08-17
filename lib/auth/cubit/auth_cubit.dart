@@ -1,9 +1,14 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:ameen/Repo/profile_data_model.dart';
+import 'package:ameen/Repo/repo.dart';
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
 import 'package:ameen/utill/network/dio.dart';
 import 'package:ameen/utill/network/end_points.dart';
+import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../utill/shared/values_manager.dart';
@@ -65,13 +70,14 @@ class AuthCubit extends Cubit<AuthCubitStates>{
         KeysManager.password: password
       }
     ).then((value){
-      //if(value[KeysManager.success])
-      emit(AuthLoginSuccessState());
-      //TODO: Add the returned value into the profile repo
+      if(value.data[KeysManager.success]){
+        Repo.profileDataModel = ProfileDataModel.fromJson(value.data[KeysManager.result]);
+      }
+      emit(AuthLoginSuccessState(Repo.profileDataModel!));
     });
   }
 
-  void register(String phone, String password, String name, String otpCode, String userType){
+  void register(String phone, String password, String name, String email, String otpCode){
     emit(AuthRegisterLoadingState());
     DioHelper.postData(
       url: EndPoints.register,
@@ -79,25 +85,30 @@ class AuthCubit extends Cubit<AuthCubitStates>{
         KeysManager.phone: phone,
         KeysManager.password: password,
         KeysManager.name: name,
+        KeysManager.email: email,
         KeysManager.otpCode: otpCode,
-        KeysManager.type: userType,
+        KeysManager.type: 'User',
       }
     ).then((value){
-      //if(value[KeysManager.success])
-      emit(AuthRegisterSuccessState());
-      //TODO: Add the returned value into the profile repo
+      if(value.data[KeysManager.success]){
+        Repo.profileDataModel = ProfileDataModel.fromJson(value.data[KeysManager.result]);
+      }
+      emit(AuthRegisterSuccessState(Repo.profileDataModel!));
     });
   }
 
+  int? otpCode;
   void sendOtpRegister(String phone){
     emit(AuthSendOtpLoadingState());
     DioHelper.postData(
-      url: EndPoints.register,
+      url: 'send_otp_register',
       data: {
-        KeysManager.phone: phone,
+        KeysManager.phone: int.parse(phone),
       }
     ).then((value){
-      //if(value[KeysManager.success])
+      if(value.data[KeysManager.success]){
+        otpCode = value.data[KeysManager.result][KeysManager.otpUCode];
+      }
       emit(AuthSendOtpSuccessState());
     });
   }
@@ -105,12 +116,11 @@ class AuthCubit extends Cubit<AuthCubitStates>{
   void sendOtpForgotPassword(String phone){
     emit(AuthSendOtpLoadingState());
     DioHelper.postData(
-      url: EndPoints.register,
+      url: EndPoints.otpForgotPassword,
       data: {
         KeysManager.phone: phone,
       }
     ).then((value){
-      //if(value[KeysManager.success])
       emit(AuthSendOtpSuccessState());
     });
   }

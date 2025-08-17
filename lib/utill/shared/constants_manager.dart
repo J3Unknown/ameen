@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 
 class AppConstants{
   static const String imagePath = 'assets/image/';
-  static const String baseUrl = ''; //TODO: provide the base req url
+  static const String baseUrl = 'https://ameenkw.com/ameen/public/api/';
 
   static const String basePlaceholderImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHnKw8zTPIFvZRGE-bMtIlRXjsUW2BDyw9Pw&s';
   static Size screenSize(context) => MediaQuery.of(context).size;
+
+  static RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
   static const List<String> supportedImageFormats = ['jpg', 'jpeg', 'png', 'webp'];
   static const List<Map<String, String>> items = [

@@ -1,11 +1,16 @@
 import 'dart:io';
 
+import 'package:ameen/Repo/cities_and_regions_data_model.dart';
+import 'package:ameen/Repo/profile_data_model.dart';
+import 'package:ameen/Repo/repo.dart';
 import 'package:ameen/home_layout/cubit/main_cubit_states.dart';
 import 'package:ameen/home_layout/presentation/screens/home_screen.dart';
 import 'package:ameen/home_layout/presentation/screens/more_screen.dart';
 import 'package:ameen/home_layout/presentation/screens/orders_screen.dart';
 import 'package:ameen/home_layout/presentation/screens/wallet_screen.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
+import 'package:ameen/utill/network/dio.dart';
+import 'package:ameen/utill/network/end_points.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,4 +76,63 @@ class MainCubit extends Cubit<MainCubitStates>{
       emit(MainPickItemDeliveryImagesSuccessState());
     }
   }
+
+  void getProfile(){
+    if(AppConstants.isAuthenticated || AppConstants.isRepresentativeAuthenticated){
+      emit(MainGetProfileLoadingState());
+      DioHelper.getData(path: EndPoints.profile).then((value){
+        Repo.profileDataModel = ProfileDataModel.fromJson(value.data[KeysManager.result]);
+        emit(MainGetProfileSuccessState());
+      });
+    }
+  }
+
+  void logout(){
+    emit(MainLogoutLoadingState());
+    DioHelper.getData(path: EndPoints.logout).then((value){
+      emit(MainLogoutSuccessState());
+    });
+  }
+
+  CitiesAndRegionsDataModel? cities;
+  void getCities(){
+    emit(MainLogoutLoadingState());
+    DioHelper.getData(path: EndPoints.cities).then((value){
+      cities = CitiesAndRegionsDataModel.fromJson(value.data[KeysManager.result]);
+      emit(MainLogoutSuccessState());
+    });
+  }
+
+  CitiesAndRegionsDataModel? regions;
+  void getRegions(int cityId){
+    emit(MainLogoutLoadingState());
+    DioHelper.getData(path: EndPoints.regions, query: {KeysManager.id:cityId}).then((value){
+      regions = CitiesAndRegionsDataModel.fromJson(value.data[KeysManager.result]);
+      emit(MainLogoutSuccessState());
+    });
+  }
+
+  void deleteAccount(){
+    emit(MainDeleteAccountLoadingState());
+    DioHelper.deleteData(url: EndPoints.profile).then((value){
+      emit(MainDeleteAccountSuccessState());
+    });
+  }
+
+  void updateAccount(BuildContext context, String name, String phone, {String? email, String? password}){
+    emit(MainDeleteAccountLoadingState());
+    DioHelper.postData(
+      url: EndPoints.editProfile,
+      data: {
+        KeysManager.name:name,
+        KeysManager.phone:phone,
+        if(email != null)KeysManager.email:email,
+        if(password != null)KeysManager.password:password,
+      }
+    ).then((value){
+      showSnackBar(context, 'Account Updated Successfully');
+      emit(MainDeleteAccountSuccessState());
+    });
+  }
+
 }

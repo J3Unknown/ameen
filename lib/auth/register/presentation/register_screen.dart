@@ -1,5 +1,6 @@
 import 'package:ameen/auth/cubit/auth_cubit.dart';
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
+import 'package:ameen/auth/otp_screen/data/registeration_otp_model.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -128,10 +129,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
                               title: StringsManager.email,
+                              hint: StringsManager.emailPlaceholder,
                               isRequired: true,
                               validator: (value) {
                                 if(value == null || value.isEmpty){
                                   return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                                } else if(!value.contains(AppConstants.emailRegex)){
+                                  return '${AppLocalizations.translate(StringsManager.emailFormatWarning)} ${StringsManager.emailPlaceholder}';
                                 }
                                 return null;
                               },
@@ -148,7 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               suffixIconActivated: IconsManager.eyeOffIcon,
                               suffixIconInActivated: IconsManager.eyeIcon,
                               isRequired: true,
-                              title: StringsManager.forgotPassword,
+                              title: StringsManager.password,
                               validator: (value) {
                                 if(value == null || value.isEmpty){
                                   return AppLocalizations.translate(StringsManager.emptyFieldMessage);
@@ -161,7 +165,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               title: StringsManager.next,
                               onPressed: () {
                                 if(_formKey.currentState!.validate()){
-                                  Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: OtpArguments(true, name: _nameController.text, email: _emailController.text, phone: _phoneNumberController.text, password: _passwordController.text))));
+                                  Navigator.push(
+                                    context,
+                                    RoutesGenerator.getRoute(
+                                      RouteSettings(
+                                        name: Routes.otp,
+                                        arguments: RegistrationOtpModel(
+                                          OtpArguments(
+                                            name: _nameController.text,
+                                            email: _emailController.text,
+                                            phone: _phoneNumberController.text,
+                                            password: _passwordController.text
+                                          ),
+                                        )
+                                      )
+                                    )
+                                  );
                                 }
                               },
                               isLoading: false,

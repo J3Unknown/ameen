@@ -1,11 +1,16 @@
+import 'package:ameen/Repo/repo.dart';
+import 'package:ameen/home_layout/cubit/main_cubit.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
+import 'package:ameen/utill/shared/alerts.dart';
 import 'package:ameen/utill/shared/assets_manager.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:ameen/utill/shared/icons_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../utill/local/localization/app_localization.dart';
+import '../../utill/shared/constants_manager.dart';
 import '../../utill/shared/strings_manager.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -16,9 +21,19 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  late final TextEditingController _nameController;
+  late final TextEditingController _phoneController;
+  late final TextEditingController _emailController;
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    _nameController = TextEditingController(text: Repo.profileDataModel!.name);
+    _phoneController = TextEditingController(text: Repo.profileDataModel!.phone);
+    _emailController = TextEditingController(text: Repo.profileDataModel!.email);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,38 +54,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           SizedBox(height: AppSizesDouble.s50,),
-          DefaultTextInputField(
-            controller: _nameController,
-            title: StringsManager.name,
-            isRequired: true,
-            validator: (value){
-              if(value == null || value.isEmpty){
-                return AppLocalizations.translate(StringsManager.emptyFieldMessage);
-              }
-              return null;
-            },
+          Form(
+            child: Column(
+              children: [
+                DefaultTextInputField(
+                  controller: _nameController,
+                  title: StringsManager.name,
+                  isRequired: true,
+                  validator: (value){
+                    if(value == null || value.isEmpty){
+                      return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: AppSizesDouble.s20,),
+                DefaultTextInputField(
+                  controller: _phoneController,
+                  title: StringsManager.whatsappNumber,
+                  keyboardType: TextInputType.phone,
+                  maxLength: AppSizes.s8,
+                  isRequired: true,
+                  validator: (value){
+                    if(value == null || value.isEmpty){
+                      return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                    } else if(value.length < AppSizes.s8){
+                      return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: AppSizesDouble.s20,),
+          SizedBox(height: AppSizesDouble.s10,),
           DefaultTextInputField(
-            controller: _phoneController,
-            title: StringsManager.whatsappNumber,
-            keyboardType: TextInputType.phone,
-            maxLength: 8,
-            isRequired: true,
+            controller: _emailController,
+            title: StringsManager.email,
             validator: (value){
               if(value == null || value.isEmpty){
                 return AppLocalizations.translate(StringsManager.emptyFieldMessage);
-              } else if(value.length < 8){
-                return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
+              } else if(!value.contains(AppConstants.emailRegex)){
+                return '${AppLocalizations.translate(StringsManager.emailFormatWarning)} ${StringsManager.emailPlaceholder}';
               }
               return null;
             },
           ),
           SizedBox(height: AppSizesDouble.s10,),
           DefaultTextInputField(
-            controller: _emailController,
-            title: StringsManager.email,
-            isRequired: true,
+            controller: _passwordController,
+            title: StringsManager.password,
+            hint: StringsManager.passwordHint,
+            isRequired: false,
+            suffixActivated: true,
+            keyboardType: TextInputType.visiblePassword,
+            suffixIconActivated: IconsManager.eyeIcon,
+            suffixIconInActivated: IconsManager.eyeOffIcon,
             validator: (value){
               if(value == null || value.isEmpty){
                 return AppLocalizations.translate(StringsManager.emptyFieldMessage);
@@ -81,14 +120,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: AppSizesDouble.s20,),
           DefaultButton(
             title: StringsManager.update,
-            onPressed: (){}
+            onPressed: (){
+              if(_formKey.currentState!.validate()){
+                MainCubit.get(context).updateAccount(
+                  context,
+                  _nameController.text,
+                  _phoneController.text,
+                  email: _emailController.text,
+                  password: _passwordController.text
+                );
+              }
+            }
           ),
           SizedBox(height: AppSizesDouble.s20,),
           DefaultButton(
             title: StringsManager.deleteAccount,
             hasBorder: false,
             backgroundColor: ColorsManager.RED,
-            onPressed: (){}
+            onPressed: () => showDialog(context: context, builder: (context) => DefaultDeleteAccountAlert())
           )
         ],
       )

@@ -47,10 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state){
           if(state is AuthLoginSuccessState){
             if(isUser){
-              saveCaches(isAuthenticated: true);
+              saveCaches(isAuthenticated: true, token: state.profileDataModel.token!);
               Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
             } else {
-              saveCaches(isRepresentative: true);
+              saveCaches(isRepresentative: true, token: state.profileDataModel.token!);
               Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeHome)), (route) => false);
             }
           }
@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               suffixIconActivated: IconsManager.eyeOffIcon,
                               suffixIconInActivated: IconsManager.eyeIcon,
                               isRequired: true,
-                              title: StringsManager.forgotPassword,
+                              title: StringsManager.password,
                               validator: (value) {
                                 if(value == null || value.isEmpty){
                                   return AppLocalizations.translate(StringsManager.emptyFieldMessage);

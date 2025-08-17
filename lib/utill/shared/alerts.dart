@@ -1,3 +1,5 @@
+import 'package:ameen/home_layout/cubit/main_cubit.dart';
+import 'package:ameen/home_layout/cubit/main_cubit_states.dart';
 import 'package:ameen/sahl/presentation/verification_screen/sahl_verification_screen.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
@@ -5,9 +7,11 @@ import 'package:ameen/utill/shared/assets_manager.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/icons_manager.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddAddressAlert extends StatefulWidget {
@@ -18,14 +22,20 @@ class AddAddressAlert extends StatefulWidget {
 }
 
 class _AddAddressAlertState extends State<AddAddressAlert> {
-  String? selectedGovernance;
-  String? selectedCity;
+  int? selectedGovernance;
+  int? selectedCity;
   final TextEditingController _blockController = TextEditingController();
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _buildingController = TextEditingController();
   final TextEditingController _floorController = TextEditingController();
   final TextEditingController _landMarkController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
+
+  @override
+  void initState() {
+    context.read<MainCubit>().getCities();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,23 +58,27 @@ class _AddAddressAlertState extends State<AddAddressAlert> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if(MainCubit.get(context).cities != null)
             DefaultDropDownMenu(
               value: selectedGovernance,
               hint: StringsManager.governance,
-              items: AppConstants.items,
+              items: MainCubit.get(context).cities!.objects,
               onChanged: (value){
                 if(value != null){
                   setState(() {
                     selectedGovernance = value;
+                    selectedCity = null;
+                    MainCubit.get(context).getRegions(selectedGovernance!);
                   });
                 }
               }
             ),
             SizedBox(height: AppSizesDouble.s10,),
+            if(MainCubit.get(context).regions != null)
             DefaultDropDownMenu(
               value: selectedCity,
               hint: StringsManager.city,
-              items: AppConstants.items,
+              items: MainCubit.get(context).regions!.objects,
               onChanged: (value){
                 if(value != null){
                   setState(() {
@@ -247,6 +261,42 @@ class DefaultRepresentativeChangeState extends StatelessWidget {
           onPressed: () => Navigator.pop(context)
         )
       ],
+    );
+  }
+}
+
+class DefaultDeleteAccountAlert extends StatelessWidget {
+  const DefaultDeleteAccountAlert({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener(
+      bloc: MainCubit.get(context),
+      listener: (context, state) {
+        if(state is MainDeleteAccountSuccessState){
+          clearCaches();
+          Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
+        }
+      },
+      child: AlertDialog(
+        icon: SvgPicture.asset(AssetsManager.alertIcon),
+        content: Text(AppLocalizations.translate('Are you Sure you want to DELETE your account!!'), style: Theme.of(context).textTheme.displaySmall,),
+        actions: [
+          DefaultButton(
+            title: StringsManager.deleteAccount,
+            onPressed: () => MainCubit.get(context).deleteAccount(),
+            backgroundColor: ColorsManager.RED,
+          ),
+          SizedBox(height: AppSizesDouble.s20,),
+          DefaultButton(
+            title: StringsManager.cancel,
+            backgroundColor: ColorsManager.WHITE,
+            hasBorder: true,
+            borderColor: ColorsManager.PRIMARY_COLOR,
+            foregroundColor: ColorsManager.PRIMARY_COLOR,
+            onPressed: () => Navigator.pop(context)
+          )
+        ],
+      ),
     );
   }
 }

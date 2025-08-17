@@ -7,6 +7,7 @@ import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/local/localization/localization_helper.dart';
 import 'package:ameen/utill/local/observer.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
+import 'package:ameen/utill/network/dio.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
@@ -21,9 +22,10 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await AppLocalizations().init();
   await CacheHelper.init();
+  DioHelper.init();
   Bloc.observer = MainBlocObserver();
   
-  await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: true);
+  // await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
   // await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: true);
   // await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
   // await CacheHelper.saveData(key: KeysManager.locale, value: 'EN');
@@ -38,6 +40,7 @@ void _loadCaches() async{
   AppConstants.isRepresentativeAuthenticated = await CacheHelper.getData(key: KeysManager.isRepresentativeAuthenticated)??false;
   AppConstants.isGuest = await CacheHelper.getData(key: KeysManager.isGuest)??false;
   AppConstants.locale = await CacheHelper.getData(key: KeysManager.locale)??'EN';
+  AppConstants.token = await CacheHelper.getData(key: KeysManager.token)??'';
 }
 
 class MyApp extends StatelessWidget {

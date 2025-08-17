@@ -1,3 +1,4 @@
+import 'package:ameen/Repo/repo.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
@@ -317,7 +318,7 @@ class _DefaultDropDownMenuState extends State<DefaultDropDownMenu> {
             underline: SizedBox(),
             hint: Text(AppLocalizations.translate(widget.hint), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.DARK_GREY)),
             isExpanded: true,
-            items: widget.items.map((e) => DropdownMenuItem(value: e['title'],child: Text(e['title']??'', style: Theme.of(context).textTheme.labelLarge,),)).toList(),
+            items: widget.items.map((e) => DropdownMenuItem(value: e.id,child: Text(e.name??'', style: Theme.of(context).textTheme.labelLarge,),)).toList(),
             onChanged: (value) => widget.onChanged(value),
           ),
         ),
@@ -440,20 +441,25 @@ void navigateToAuth(context) async{
   Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
 }
 
-Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false}) async{
+Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false, String token = ''}) async{
   await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
   await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
   await CacheHelper.saveData(key: KeysManager.isGuest, value: isGuest);
+  await CacheHelper.saveData(key: KeysManager.token, value: token);
   AppConstants.isAuthenticated = isAuthenticated;
   AppConstants.isGuest = isGuest;
   AppConstants.isRepresentativeAuthenticated = isRepresentative;
+  AppConstants.token = token;
 }
 
 Future<void> clearCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false}) async{
   await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
   await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
   await CacheHelper.saveData(key: KeysManager.isGuest, value: isGuest);
+  await CacheHelper.saveData(key: KeysManager.token, value: '');
   AppConstants.isAuthenticated = isAuthenticated;
+  AppConstants.token = '';
   AppConstants.isGuest = isGuest;
   AppConstants.isRepresentativeAuthenticated = isRepresentative;
+  Repo.profileDataModel = null;
 }

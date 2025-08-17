@@ -1,3 +1,4 @@
+import 'package:ameen/Repo/otp_reason_interface.dart';
 import 'package:ameen/about_and_support/presentation/about_ameen.dart';
 import 'package:ameen/about_and_support/presentation/support_screen.dart';
 import 'package:ameen/about_and_support/presentation/terms_and_conditions.dart';
@@ -63,7 +64,7 @@ class RoutesGenerator{
       case Routes.forgotPassword:
         return  MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
       case Routes.otp:
-        return  MaterialPageRoute(builder: (_) => OtpScreen(arguments: settings.arguments! as OtpArguments,));
+        return  MaterialPageRoute(builder: (_) => OtpScreen(otpReasonInterface: settings.arguments! as OtpReasonInterface,));
       case Routes.home:
         return  MaterialPageRoute(builder: (_) => HomeLayout());
       case Routes.itemDelivery:
