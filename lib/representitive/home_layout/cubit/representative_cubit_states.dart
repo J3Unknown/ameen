@@ -36,6 +36,11 @@ final class RepresentativeChangeDeliveredStatusLoadingState extends Representati
 
 final class RepresentativeChangeDeliveredStatusSuccessState extends RepresentativeCubitStates{}
 
+final class RepresentativeChangeDeliveredStatusErrorState extends RepresentativeCubitStates{
+  String message;
+  RepresentativeChangeDeliveredStatusErrorState(this.message);
+}
+
 final class RepresentativeCancelOrderLoadingState extends RepresentativeCubitStates{}
 
 final class RepresentativeCancelOrderSuccessState extends RepresentativeCubitStates{}

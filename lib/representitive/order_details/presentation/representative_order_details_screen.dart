@@ -53,6 +53,9 @@ class _RepresentativeOrderDetailsScreenState extends State<RepresentativeOrderDe
           RepresentativeCubit.get(context).newOrdersDataModel!.items.removeWhere((e) => e.id == widget.item.id);
           Navigator.pop(context);
         }
+        if(state is RepresentativeChangeDeliveredStatusErrorState){
+          showSnackBar(context, state.message);
+        }
       },
       builder: (context, state) => Scaffold(
         appBar: AppBar(

@@ -9,6 +9,7 @@ import 'package:ameen/representitive/home_layout/presentation/screens/representa
 import 'package:ameen/representitive/home_layout/presentation/screens/representative_delivered_screen.dart';
 import 'package:ameen/utill/network/dio.dart';
 import 'package:ameen/utill/network/end_points.dart';
+import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,7 +99,11 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
   void changeDeliveredStatus(int id){
     emit(RepresentativeChangeDeliveredStatusLoadingState());
     DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.delivered}').then((value){
-      emit(RepresentativeChangeDeliveredStatusSuccessState());
+      if(value.data[KeysManager.success]){
+        emit(RepresentativeChangeDeliveredStatusSuccessState());
+      } else {
+        emit(RepresentativeChangeDeliveredStatusErrorState(value.data['msg']));
+      }
     });
   }
 
