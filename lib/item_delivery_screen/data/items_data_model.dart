@@ -9,26 +9,26 @@ class ItemsDataModel {
 }
 
 class DeliveryItem{
-  int? id;
-  int? categoryId;
+  String? id;
+  String? categoryId;
   String? title;
   String? date;
   String? orderNumber;
   String? status;
-  int? userId;
-  int? originAddressId;
-  int? destinationAddressId;
-  double? originAddressLat;
-  double? originAddressLong;
-  double? destinationAddressLat;
-  double? destinationAddressLong;
+  String? userId;
+  String? originAddressId;
+  String? destinationAddressId;
+  String? originAddressLat;
+  String? originAddressLong;
+  String? destinationAddressLat;
+  String? destinationAddressLong;
   String? note;
   String? totalPrice;
   String? fee;
   String? paymentType;
   String? paymentMethod;
   String? paymentStatus;
-  int? deliveryId;
+  String? deliveryId;
   String? deliveryTime;
   String? actualDeliveryTime;
   String? outForDeliveryTime;
@@ -47,26 +47,26 @@ class DeliveryItem{
 
 
   DeliveryItem.fromJson(Map<String, dynamic> json){
-    id = json['id'];
-    categoryId = json['category_id'];
+    id = json['id'].toString();
+    categoryId = json['category_id'].toString();
     title = json['title'];
     date = json['delivery_date_description'];
-    orderNumber = json['order_number'];
+    orderNumber = json['order_number'].toString();
     status = json['status'];
-    userId = json['user_id'];
-    originAddressId = json['origin_address_id'];
-    destinationAddressId = json['destination_address_id'];
-    originAddressLat = json['origin_address_lat'];
-    originAddressLong = json['origin_address_lng'];
-    destinationAddressLat = json['destination_address_lat'];
-    destinationAddressLong = json['destination_address_lng'];
+    userId = json['user_id'].toString();
+    originAddressId = json['origin_address_id'].toString();
+    destinationAddressId = json['destination_address_id'].toString();
+    originAddressLat = json['origin_address_lat'].toString();
+    originAddressLong = json['origin_address_lng'].toString();
+    destinationAddressLat = json['destination_address_lat'].toString();
+    destinationAddressLong = json['destination_address_lng'].toString();
     note = json['note'];
-    totalPrice = json['total_price'];
-    fee = json['order_fee'];
+    totalPrice = json['total_price'].toString();
+    fee = json['order_fee'].toString();
     paymentType = json['payment_type'];
     paymentMethod = json['payment_method'];
     paymentStatus = json['payment_status'];
-    deliveryId = json['delivery_id'];
+    deliveryId = json['delivery_id'].toString();
     deliveryTime = json['delivery_time'];
     actualDeliveryTime = json['actual_delivery_time'];
     outForDeliveryTime = json['out_for_delivery_time'];
@@ -74,14 +74,14 @@ class DeliveryItem{
     cancellationTime = json['cancel_time'];
     cancellationReason = json['cancellation_reason'];
     cancellationDescription = json['cancellation_description'];
-    rateExperience = json['rate_experience'];
-    rateDeliveryTime = json['rate_delivery_time'];
-    rateDeliveryTime = json['rate_delivery_time'];
-    rateAgent = json['rate_agent'];
-    rateDescription = json['rate_description'];
+    rateExperience = json['rate_experience'].toString();
+    rateDeliveryTime = json['rate_delivery_time'].toString();
+    rateDeliveryTime = json['rate_delivery_time'].toString();
+    rateAgent = json['rate_agent'].toString();
+    rateDescription = json['rate_description'].toString();
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    deliveryFee = json['delivery_fee'];
+    deliveryFee = json['delivery_fee'].toString();
     if(json['user'] != null){
       user = User.fromJson(json['user']);
     }

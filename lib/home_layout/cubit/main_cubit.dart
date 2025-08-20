@@ -248,7 +248,7 @@ class MainCubit extends Cubit<MainCubitStates>{
   DeliveryItem? createdItem;
   void createItemDelivery({
     required String title,
-    required int categoryId,
+    required dynamic categoryId,
     required String date,
     required int originAddressId,
     required int destinationAddressId,
@@ -306,18 +306,19 @@ class MainCubit extends Cubit<MainCubitStates>{
         emit(MainCreateDeliveryItemsErrorState());
       }
     }).catchError((e){
+      log(e.toString());
       emit(MainCreateDeliveryItemsErrorState());
     });
   }
 
-  void cancelOrder(int id){
+  void cancelOrder(String id){
     emit(MainCancelOrderLoadingState());
     DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.cancel}').then((value){
       emit(MainCancelOrderSuccessState());
     });
   }
 
-  void sendReporting(int id, int experienceRating, int deliveryTimeRating, int deliveryAgentRating, String description){
+  void sendReporting(String id, int experienceRating, int deliveryTimeRating, int deliveryAgentRating, String description){
     emit(MainSendReportingLoadingState());
     DioHelper.postData(
       url: '${EndPoints.orders}/$id/${EndPoints.rate}',

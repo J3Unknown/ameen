@@ -89,7 +89,7 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
     });
   }
 
-  void changeOutForDeliveryStatus(int id){
+  void changeOutForDeliveryStatus(String id){
     emit(RepresentativeChangeOutForDeliveryStatusLoadingState());
     DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.outForDelivery}').then((value){
       getNewOrders();
@@ -97,7 +97,7 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
     });
   }
 
-  void changeDeliveredStatus(int id){
+  void changeDeliveredStatus(String id){
     emit(RepresentativeChangeDeliveredStatusLoadingState());
     DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.delivered}').then((value){
       if(value.data[KeysManager.success]){
@@ -108,7 +108,7 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
     });
   }
 
-  void cancelItem(int id){
+  void cancelItem(String id){
     emit(RepresentativeCancelOrderLoadingState());
     DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.cancel}').then((value){
       emit(RepresentativeCancelOrderSuccessState());

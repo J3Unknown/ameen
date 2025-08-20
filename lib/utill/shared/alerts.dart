@@ -221,7 +221,9 @@ class LoginAlert extends StatelessWidget {
       content: Text(AppLocalizations.translate(StringsManager.loginAlert), style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center,),
       backgroundColor: ColorsManager.WHITE,
       actions: [
-        DefaultButton(title: StringsManager.login, onPressed: (){}), //TODO: Link with login action
+        DefaultButton(title: StringsManager.login, onPressed: (){
+          navigateToAuth(context, route: Routes.languageScreen);
+        }),
         SizedBox(height: AppSizesDouble.s20,),
         DefaultButton(
           title: StringsManager.cancel,
@@ -395,6 +397,25 @@ class SahlVerificationAlert extends StatelessWidget {
             borderColor: ColorsManager.WHITE,
             foregroundColor: ColorsManager.DARK_GREY,
             onPressed: () => Navigator.pop(context)
+        )
+      ],
+    );
+  }
+}
+
+class ComingSoonAlert extends StatelessWidget {
+  const ComingSoonAlert({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      icon: SvgPicture.asset(AssetsManager.alertIcon),
+      content: Text(AppLocalizations.translate(StringsManager.comingSoon), style: Theme.of(context).textTheme.headlineLarge, textAlign: TextAlign.center,),
+      backgroundColor: ColorsManager.WHITE,
+      actions: [
+        DefaultButton(
+          title: StringsManager.understand,
+          onPressed: () => Navigator.pop(context)
         )
       ],
     );

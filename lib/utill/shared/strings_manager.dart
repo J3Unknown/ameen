@@ -38,6 +38,7 @@ class StringsManager{
   static const String passwordLengthMessage = 'Password must be at least 8 characters';
   static const String passwordFormatMessage = 'Password Must Contain: 1 upper-case, 1 lower-case, 1 number, and 1 special character';
   static const String invalidPasswordFormat = 'Invalid Password Format';
+  static const String understand = 'I understand';
 
   //*Order Cancellation Screen
   static const String orderCancellation = 'Order Cancellation';
