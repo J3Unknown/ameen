@@ -55,6 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           SizedBox(height: AppSizesDouble.s50,),
           Form(
+            key: _formKey,
             child: Column(
               children: [
                 DefaultTextInputField(

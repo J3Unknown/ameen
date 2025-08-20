@@ -161,7 +161,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             DefaultButton(
               title: StringsManager.confirm,
               onPressed: (){
-                Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.paymentResult, arguments: PaymentResultArguments(false))));
+                Navigator.pushReplacement(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.paymentResult, arguments: PaymentResultArguments(true))));
               }
             )
           ],

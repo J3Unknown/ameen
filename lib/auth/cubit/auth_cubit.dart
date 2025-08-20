@@ -8,7 +8,6 @@ import 'package:ameen/utill/network/dio.dart';
 import 'package:ameen/utill/network/end_points.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../utill/shared/values_manager.dart';
@@ -72,8 +71,10 @@ class AuthCubit extends Cubit<AuthCubitStates>{
     ).then((value){
       if(value.data[KeysManager.success]){
         Repo.profileDataModel = ProfileDataModel.fromJson(value.data[KeysManager.result]);
+        emit(AuthLoginSuccessState(Repo.profileDataModel!));
+      } else {
+        emit(AuthLoginErrorState());
       }
-      emit(AuthLoginSuccessState(Repo.profileDataModel!));
     });
   }
 
@@ -92,8 +93,10 @@ class AuthCubit extends Cubit<AuthCubitStates>{
     ).then((value){
       if(value.data[KeysManager.success]){
         Repo.profileDataModel = ProfileDataModel.fromJson(value.data[KeysManager.result]);
+        emit(AuthRegisterSuccessState(Repo.profileDataModel!));
+      } else {
+        emit(AuthRegisterErrorState());
       }
-      emit(AuthRegisterSuccessState(Repo.profileDataModel!));
     });
   }
 
@@ -101,7 +104,7 @@ class AuthCubit extends Cubit<AuthCubitStates>{
   void sendOtpRegister(String phone){
     emit(AuthSendOtpLoadingState());
     DioHelper.postData(
-      url: 'send_otp_register',
+      url: EndPoints.otpRegister,
       data: {
         KeysManager.phone: int.parse(phone),
       }
@@ -122,6 +125,25 @@ class AuthCubit extends Cubit<AuthCubitStates>{
       }
     ).then((value){
       emit(AuthSendOtpSuccessState());
+    });
+  }
+
+  void representativeLogin(String phone, String password){
+    emit(AuthLoginLoadingState());
+    DioHelper.postData(
+      isDelivery: true,
+      url: EndPoints.login,
+      data: {
+        KeysManager.phone:phone,
+        KeysManager.password:password
+      }
+    ).then((value){
+      if(value.data[KeysManager.success]){
+        Repo.profileDataModel = ProfileDataModel.fromJson(value.data[KeysManager.result]);
+        emit(AuthLoginSuccessState(Repo.profileDataModel!));
+      } else {
+        emit(AuthLoginErrorState());
+      }
     });
   }
 }

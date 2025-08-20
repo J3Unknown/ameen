@@ -6,6 +6,6 @@ class PairOfIdAndName{
 
   PairOfIdAndName.fromJson(Map<String, dynamic> json){
     id = json['id'];
-    id = json['name'];
+    name = json['name'];
   }
 }

@@ -3,3 +3,27 @@ abstract class RepresentativeCubitStates{}
 final class RepresentativeInitStates extends RepresentativeCubitStates{}
 
 final class RepresentativeChangeScreenStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetNewOrdersLoadingStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetNewOrdersSuccessStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetNewOrdersErrorStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetDeliveredOrdersLoadingStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetDeliveredOrdersSuccessStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetDeliveredOrdersErrorStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetCancelledOrdersLoadingStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetCancelledOrdersSuccessStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetCancelledOrdersErrorStates extends RepresentativeCubitStates{}
+
+final class RepresentativeGetProfileLoadingState extends RepresentativeCubitStates{}
+
+final class RepresentativeGetProfileSuccessState extends RepresentativeCubitStates{}
+
+final class RepresentativeGetProfileErrorState extends RepresentativeCubitStates{}

@@ -1,3 +1,4 @@
+import 'package:ameen/home_layout/cubit/main_cubit.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
@@ -24,9 +25,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
           SizedBox(height: AppSizesDouble.s10,),
           Expanded(
             child: ListView.separated(
-              itemBuilder: (context, index) => DefaultItemCard(index: index),
+              itemBuilder: (context, index) => DefaultItemCard(item: MainCubit.get(context).itemsDataModel!.items[index],),
               separatorBuilder: (context, index) => SizedBox(height: AppSizesDouble.s15,),
-              itemCount: 10
+              itemCount: MainCubit.get(context).itemsDataModel!.items.length
             )
           )
         ],

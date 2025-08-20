@@ -1,8 +1,11 @@
+import 'package:ameen/Repo/pair_of_id_and_name.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppConstants{
   static const String imagePath = 'assets/image/';
   static const String baseUrl = 'https://ameenkw.com/ameen/public/api/';
+  static const String baseDeliveryUrl = 'https://ameenkw.com/ameen/public/driver/';
+  static const String baseImageUrl = 'https://ameenkw.com/ameen/public/';
 
   static const String basePlaceholderImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHnKw8zTPIFvZRGE-bMtIlRXjsUW2BDyw9Pw&s';
   static Size screenSize(context) => MediaQuery.of(context).size;
@@ -10,23 +13,18 @@ class AppConstants{
   static RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
   static const List<String> supportedImageFormats = ['jpg', 'jpeg', 'png', 'webp'];
-  static const List<Map<String, String>> items = [
-    {'title':'nigga'},
-    {'title':'bitch'},
-    {'title':'asshole'},
-  ];
 
-  static const List<Map<String, String>> numberItems = [
-    {'title':'1'},
-    {'title':'2'},
-    {'title':'3'},
-    {'title':'4'},
-    {'title':'5'},
-    {'title':'6'},
-    {'title':'7'},
-    {'title':'8'},
-    {'title':'9'},
-    {'title':'10'},
+  static final List<PairOfIdAndName> numberItems = [
+    PairOfIdAndName(1, '1'),
+    PairOfIdAndName(2, '2'),
+    PairOfIdAndName(3, '3'),
+    PairOfIdAndName(4, '4'),
+    PairOfIdAndName(5, '5'),
+    PairOfIdAndName(6, '6'),
+    PairOfIdAndName(7, '7'),
+    PairOfIdAndName(8, '8'),
+    PairOfIdAndName(9, '9'),
+    PairOfIdAndName(10, '10'),
   ];
 
 
@@ -35,6 +33,8 @@ class AppConstants{
   static bool isRepresentativeAuthenticated = false;
   static bool isGuest = true;
   static String locale = 'EN';
+  static String representativePhone = '';
+  static String representativePassword = '';
 
   static String token = '';
 }

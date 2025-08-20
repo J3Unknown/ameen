@@ -31,7 +31,7 @@ class _MoreScreenState extends State<MoreScreen> {
       listener: (context, state) {
         if(state is MainLogoutSuccessState){
           clearCaches();
-          Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
+          Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.languageScreen)), (route) => false);
         }
       },
       child: Scaffold(
@@ -51,7 +51,7 @@ class _MoreScreenState extends State<MoreScreen> {
                 if(AppConstants.isGuest)
                 DefaultButton(
                   title: StringsManager.login,
-                  onPressed: () => navigateToAuth(context),
+                  onPressed: () => navigateToAuth(context, route: Routes.languageScreen),
                   borderRadius: AppSizesDouble.s11,
                 ),
                 if(AppConstants.isAuthenticated || AppConstants.isRepresentativeAuthenticated)

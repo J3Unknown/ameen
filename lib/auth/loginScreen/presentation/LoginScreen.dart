@@ -44,13 +44,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: ColorsManager.GREY1,
       body: BlocConsumer<AuthCubit, AuthCubitStates>(
-        listener: (context, state){
+        listener: (context, state) async{
           if(state is AuthLoginSuccessState){
             if(isUser){
-              saveCaches(isAuthenticated: true, token: state.profileDataModel.token!);
+              await saveCaches(isAuthenticated: true, token: state.profileDataModel.token!);
               Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
             } else {
-              saveCaches(isRepresentative: true, token: state.profileDataModel.token!);
+              await saveCaches(isRepresentative: true, token: state.profileDataModel.token!, representativePhone: _phoneNumberController.text, representativePassword: _passwordController.text);
               Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeHome)), (route) => false);
             }
           }
@@ -157,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Align(
                               alignment: AlignmentDirectional.centerEnd,
                               child: TextButton(
-                                onPressed: () => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.forgotPassword)), (route) => false), //TODO: create forgot password screen
+                                onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.forgotPassword)),),
                                 child: Text(AppLocalizations.translate(StringsManager.forgotPassword), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ColorsManager.COLUMBIA_BLUE),)
                               ),
                             ),
@@ -165,10 +165,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               title: StringsManager.login,
                               onPressed: () async{
                                 if(_formKey.currentState!.validate()) {
-                                  AuthCubit.get(context).login(_phoneNumberController.text, _passwordController.text);
+                                  if(isUser){
+                                    AuthCubit.get(context).login(_phoneNumberController.text, _passwordController.text);
+                                  } else {
+                                    AuthCubit.get(context).representativeLogin(_phoneNumberController.text, _passwordController.text);
+                                  }
                                 }
                               },
-                              isLoading: false,
+                              isLoading: state is AuthLoginLoadingState,
                             ),
                             if(isUser)
                             DefaultTextWithTextButton(

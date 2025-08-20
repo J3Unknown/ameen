@@ -1,7 +1,7 @@
 class ProfileDataModel{
-  late int id;
+  late final int id;
   late String name;
-  late String email;
+  String? email;
   late String phone;
   String? token;
 

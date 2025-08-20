@@ -1,7 +1,8 @@
-import 'package:ameen/utill/local/localization/localization_helper.dart';
+import 'package:ameen/utill/local/localization/locale_changer.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import '../../utill/local/localization/app_localization.dart';
 import '../../utill/shared/BaseComponent.dart';
 import '../../utill/shared/assets_manager.dart';
@@ -20,12 +21,14 @@ class LanguagePage extends StatefulWidget {
 }
 
 class _LanguagePageState extends State<LanguagePage> {
+  late LocaleChanger localeModel;
   late String locale;
 
   @override
-  void initState() {
-    locale = AppConstants.locale;
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+      localeModel = Provider.of<LocaleChanger>(context);
+      locale = localeModel.getLanguage;
   }
   @override
   Widget build(BuildContext context) {
@@ -61,26 +64,27 @@ class _LanguagePageState extends State<LanguagePage> {
                       SizedBox(height: AppSizesDouble.s15,),
                       DefaultRadioTile(
                         title: StringsManager.arabic,
-                        value: 'SA',
+                        value: 'ar',
                         groupValue: locale,
+                        isSvg: false,
                         onChanged: (value){
                           setState(() {
-                            locale = 'SA';
+                            locale = 'ar';
                           });
-                          setLocale('SA');
+                          localeModel!.changeLocale(locale);
                         },
-                        icon: AssetsManager.arabic, //TODO: get the arabic logo
+                        icon: AssetsManager.arabic,
                       ),
                       SizedBox(height: AppSizesDouble.s35,),
                       DefaultRadioTile(
                         title: StringsManager.english,
-                        value: 'EN',
+                        value: 'en',
                         groupValue: locale,
                         onChanged: (value){
                           setState(() {
-                            locale = 'EN';
+                            locale = 'en';
                           });
-                          setLocale('EN');
+                          localeModel!.changeLocale(locale);
                         },
                         icon: AssetsManager.english,
                       ),

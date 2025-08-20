@@ -1,3 +1,5 @@
+import 'package:ameen/item_delivery_screen/data/address_data_model.dart';
+
 abstract class MainCubitStates{}
 
 final class MainInitState extends MainCubitStates{}
@@ -25,3 +27,49 @@ final class MainDeleteAccountLoadingState extends MainCubitStates{}
 final class MainDeleteAccountSuccessState extends MainCubitStates{}
 
 final class MainDeleteAccountErrorState extends MainCubitStates{}
+
+final class MainGetCitiesLoadingState extends MainCubitStates{}
+
+final class MainGetCitiesSuccessState extends MainCubitStates{}
+
+final class MainGetCitiesErrorState extends MainCubitStates{}
+
+final class MainGetRegionsLoadingState extends MainCubitStates{}
+
+final class MainGetRegionsSuccessState extends MainCubitStates{}
+
+final class MainGetRegionsErrorState extends MainCubitStates{}
+
+final class MainGetHomeLoadingState extends MainCubitStates{}
+
+final class MainGetHomeSuccessState extends MainCubitStates{}
+
+final class MainGetCategoriesLoadingState extends MainCubitStates{}
+
+final class MainGetCategoriesSuccessState extends MainCubitStates{}
+
+
+final class MainCreateAddressLoadingState extends MainCubitStates{}
+
+final class MainCreateAddressSuccessState extends MainCubitStates{
+  Address address;
+  MainCreateAddressSuccessState(this.address);
+}
+
+final class MainCreateAddressErrorState extends MainCubitStates{}
+
+final class MainGetDeliveryItemsLoadingState extends MainCubitStates{}
+
+final class MainGetDeliveryItemsSuccessState extends MainCubitStates{}
+
+final class MainCreateDeliveryItemsLoadingState extends MainCubitStates{}
+
+final class MainCreateDeliveryItemsSuccessState extends MainCubitStates{}
+
+final class MainCreateDeliveryItemsErrorState extends MainCubitStates{}
+
+final class MainCancelOrderLoadingState extends MainCubitStates{}
+
+final class MainCancelOrderSuccessState extends MainCubitStates{}
+
+final class MainCancelOrderErrorState extends MainCubitStates{}

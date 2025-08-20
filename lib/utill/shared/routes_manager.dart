@@ -4,6 +4,7 @@ import 'package:ameen/about_and_support/presentation/support_screen.dart';
 import 'package:ameen/about_and_support/presentation/terms_and_conditions.dart';
 import 'package:ameen/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:ameen/home_layout/presentation/home_layout.dart';
+import 'package:ameen/item_delivery_screen/data/items_data_model.dart';
 import 'package:ameen/item_delivery_screen/presentation/item_delivery_screen.dart';
 import 'package:ameen/languagePage/presentation/LanguagePage.dart';
 import 'package:ameen/order_details_screens/presentation/order_cancellation_screen.dart';
@@ -76,7 +77,7 @@ class RoutesGenerator{
       case Routes.orderReporting:
         return  MaterialPageRoute(builder: (_) => OrderReportingScreen());
       case Routes.orderCancellation:
-        return  MaterialPageRoute(builder: (_) => OrderCancellationScreen());
+        return  MaterialPageRoute(builder: (_) => OrderCancellationScreen(item: settings.arguments! as DeliveryItem,));
       case Routes.profile:
         return  MaterialPageRoute(builder: (_) => ProfileScreen());
       case Routes.support:

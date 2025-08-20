@@ -1,4 +1,6 @@
+import 'package:ameen/Repo/repo.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -39,7 +41,11 @@ class _RepresentativeHomeState extends State<RepresentativeHome> {
                 )
               ],
             ),
-            Align(alignment: AlignmentDirectional.centerStart, child: Text('${AppLocalizations.translate(StringsManager.hello)} nigga')),
+            ConditionalBuilder(
+              condition: Repo.profileDataModel != null,
+              fallback: (context) => Center(child: CircularProgressIndicator(),),
+              builder: (context) => Align(alignment: AlignmentDirectional.centerStart, child: Text('${AppLocalizations.translate(StringsManager.hello)} ${Repo.profileDataModel!.name}'))
+            ),
             Align(alignment: AlignmentDirectional.centerStart, child: Text(AppLocalizations.translate(StringsManager.welcomeToAmeen))),
             SizedBox(height: AppSizesDouble.s20,),
             Padding(

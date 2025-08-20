@@ -33,7 +33,9 @@ class DioHelper{
     required String path,
     Map<String, dynamic>? data,
     Map<String, dynamic>? query,
+    bool isDelivery = false
   }) async {
+    dio.options.baseUrl = isDelivery? AppConstants.baseDeliveryUrl : AppConstants.baseUrl;
     dio.options.headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -44,12 +46,13 @@ class DioHelper{
   }
 
   static Future<Response> putData({
-   required String url,
-   Map<String, dynamic>? query,
-   required Map<String, dynamic> data,
-  Options? options,
+    required String url,
+    Map<String, dynamic>? query,
+    required Map<String, dynamic> data,
+    Options? options,
+    bool isDelivery = false
   }) async{
-
+    dio.options.baseUrl = isDelivery? AppConstants.baseDeliveryUrl : AppConstants.baseUrl;
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': AppConstants.locale,
@@ -65,8 +68,10 @@ class DioHelper{
       Map<String, dynamic>? query,
       Map<String, dynamic>? data,
       Options? options,
+      bool isDelivery = false
     }) async
   {
+    dio.options.baseUrl = isDelivery? AppConstants.baseDeliveryUrl : AppConstants.baseUrl;
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': AppConstants.locale,
@@ -80,7 +85,9 @@ class DioHelper{
     required String url,
     Map<String, dynamic>? data,
     Map<String, dynamic>? query,
+    bool isDelivery = false
   }) async {
+    dio.options.baseUrl = isDelivery? AppConstants.baseDeliveryUrl : AppConstants.baseUrl;
     dio.options.headers = {
       'Content-Type': 'application/json',
       'lang': AppConstants.locale,

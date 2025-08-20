@@ -1,5 +1,6 @@
 class PaymentResultArguments{
   bool isSuccess;
+  String? orderNo;
 
-  PaymentResultArguments(this.isSuccess);
+  PaymentResultArguments(this.isSuccess, {this.orderNo});
 }

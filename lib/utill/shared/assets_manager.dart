@@ -6,11 +6,12 @@ class AssetsManager{
   // static const String forgotPasswordImage = '${AppConstants.imagePath}forgotPasswordScreen.svg';
   static const String forgotPasswordImage = '${AppConstants.imagePath}forgotPasswordScreen.png';
   static const String otpImage = '${AppConstants.imagePath}otpImage.svg';
-  static const String logo = '${AppConstants.imagePath}logo.svg';
+  static const String logo = '${AppConstants.imagePath}appIcon.png';
   static const String languageImage = '${AppConstants.imagePath}languagePageImage.svg';
   static const String deliveryMotorcycle = '${AppConstants.imagePath}DeliveryMotorcycle.svg';
   static const String splashScreenImage = '${AppConstants.imagePath}splashScreen.png';
-  static const String arabic = '${AppConstants.imagePath}arabic.svg';
+  // static const String arabic = '${AppConstants.imagePath}arabic.svg';
+  static const String arabic = '${AppConstants.imagePath}arabic.png';
   static const String english = '${AppConstants.imagePath}english.svg';
   static const String home = '${AppConstants.imagePath}home.svg';
   static const String orders = '${AppConstants.imagePath}orders.svg';

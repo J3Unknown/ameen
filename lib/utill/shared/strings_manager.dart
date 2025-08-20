@@ -32,6 +32,9 @@ class StringsManager{
   static const String loginAlert = 'You have to login first before proceeding into this action';
   static const String cancel = 'Cancel';
   static const String yes = 'Yes';
+  static const String requiredField = 'This Field is Required';
+  static const String comingSoon = 'Coming Soon';
+  static const String tapToDelete = 'Tap on the image to delete';
 
   //*Order Cancellation Screen
   static const String orderCancellation = 'Order Cancellation';
@@ -75,7 +78,7 @@ class StringsManager{
 
   //*update
   static const String update = 'Update';
-  static const String deleteAccount = 'DeleteAccount';
+  static const String deleteAccount = 'Delete Account';
 
   //*Support
   static const String message = 'Message';
@@ -98,6 +101,7 @@ class StringsManager{
   static const String changingOrderStateMessage = 'Are You ready to change order status to';
   static const String deliveryTime = 'Delivery Time';
   static const String representativeLogin = 'representative login';
+  static const String cancellationReason = 'Cancellation Reason';
 
   //*payment
   static const String orderDetails = 'Order Details';
@@ -124,13 +128,16 @@ class StringsManager{
   static const String now = 'Now';
   static const String later = 'Later';
   static const String title = 'Title';
-  static const String imagePickingWarning = 'The maximum file size accepted is 2MB, \nand the accepted formats are JPG, PNG, and WEBP.\n\nNote: the first image is the Main Preview Image.';
+  static const String imagePickingWarning = 'The maximum file size accepted is 2MB, \nand the accepted formats are JPG, PNG, and WEBP.';
   static const String theImage = 'The Image:';
   static const String greaterThanOneMB = 'is greater than 2 MB';
   static const String unsupportedFormat = 'has an unsupported format!';
   static const String addOriginAddress = 'Add Origin Address';
   static const String addDestinationAddress = 'Add Destination Address';
   static const String notes = 'Notes';
+  static const String imagesLimit = 'You reached your image limit which is 5 images only';
+  static const String accountUpdatedSuccessfully = 'Account Updated Successfully';
+  static const String noOrdersYet = 'No Orders Yet!';
 
   //*Auth
   static const String whatsappNumber = 'Whatsapp number';
@@ -176,6 +183,16 @@ class KeysManager{
   static const String otpUCode = 'otp_code';
   static const String type = 'type';
   static const String id = 'id';
+  static const String blockNo = 'block_no';
+  static const String street = 'street';
+  static const String buildingNo = 'building_no';
+  static const String floorNo = 'floor_no';
+  static const String flatNo = 'flat_no';
+  static const String notes = 'notes';
+  static const String data = 'data';
+  static const String page = 'page';
+  static const String landmark = 'landmark';
+  static const String tab = 'tab';
 
   //*Cache
   static const String isAuthenticated = 'isAuthenticated';
@@ -183,4 +200,6 @@ class KeysManager{
   static const String isGuest = 'isGuest';
   static const String token = 'token';
   static const String locale = 'locale';
+  static const String representativePhone = 'representativePhone';
+  static const String representativePassword = 'representativePassword';
 }

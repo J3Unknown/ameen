@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:ameen/Repo/repo.dart';
+import 'package:ameen/item_delivery_screen/data/items_data_model.dart';
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
+import 'package:ameen/utill/shared/alerts.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
@@ -8,6 +12,8 @@ import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../home_layout/cubit/main_cubit.dart';
 import 'assets_manager.dart';
@@ -200,12 +206,13 @@ class DefaultTextWithTextButton extends StatelessWidget {
 }
 
 class DefaultRadioTile extends StatelessWidget {
-  const DefaultRadioTile({super.key, this.borderRadius = 35, this.icon, required this.title, required this.value, required this.groupValue, required this.onChanged});
+  const DefaultRadioTile({super.key, this.isSvg = true, this.borderRadius = 35, this.icon, required this.title, required this.value, required this.groupValue, required this.onChanged});
   final ValueChanged onChanged;
   final dynamic groupValue;
   final dynamic value;
   final String title;
   final String? icon;
+  final bool isSvg;
   final double borderRadius;
 
   @override
@@ -219,8 +226,10 @@ class DefaultRadioTile extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: AppPaddings.p10, horizontal: AppPaddings.p15),
       child: Row(
         children: [
-          if(icon != null)
+          if(icon != null && isSvg)
           SvgPicture.asset(icon!, fit: BoxFit.contain, width: AppSizesDouble.s35,),
+          if(icon != null && !isSvg)
+          Image.asset(icon!, fit: BoxFit.contain, width: AppSizesDouble.s35,),
           if(icon != null)
           SizedBox(width: AppSizesDouble.s10,),
           Text(title, style: Theme.of(context).textTheme.labelLarge,),
@@ -265,7 +274,11 @@ class CustomNavbar extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: ColorsManager.BLACK,
         onTap: (index){
-          cubit.changeBottomNavBarIndex(index);
+          if(AppConstants.isGuest && (index == 1 || index == 2)){
+            showDialog(context: context, builder: (context) => LoginAlert());
+          } else {
+            cubit.changeBottomNavBarIndex(index);
+          }
         },
         selectedIconTheme: IconThemeData(color: ColorsManager.BLACK),
         unselectedItemColor: Colors.grey,
@@ -373,8 +386,8 @@ void showSnackBar(context, String message){
 
 
 class DefaultItemCard extends StatefulWidget {
-  const DefaultItemCard({super.key, required this.index});
-  final int index;
+  const DefaultItemCard({super.key, required this.item});
+  final DeliveryItem item;
 
   @override
   State<DefaultItemCard> createState() => _DefaultItemCardState();
@@ -383,67 +396,76 @@ class DefaultItemCard extends StatefulWidget {
 class _DefaultItemCardState extends State<DefaultItemCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(AppPaddings.p10),
-      decoration: BoxDecoration(
-        color: ColorsManager.GREY1,
-        borderRadius: BorderRadius.circular(AppSizesDouble.s15)
-      ),
-      width: double.infinity,
-      height: AppSizesDouble.s150,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SvgPicture.asset(AssetsManager.itemIcon),
-          SizedBox(width: AppSizesDouble.s5,),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('This is a very big title which has to reach the end of the item', style: Theme.of(context).textTheme.labelLarge, maxLines: AppSizes.s2, overflow: TextOverflow.ellipsis,),
-                SizedBox(height: AppSizesDouble.s10,),
-                Text('${AppLocalizations.translate(StringsManager.deliveryDate)}: ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.now())}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
-                Text('${AppLocalizations.translate(StringsManager.orderFee)}: 12 ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
-                Row(
-                  children: [
-                    Text(AppLocalizations.translate(StringsManager.status), style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
-                    SizedBox(width: AppSizesDouble.s10,),
-                    Text('Received', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.YELLOW)), //TODO: Change into the received Status
-                  ],
-                ),
-              ],
+    return IntrinsicHeight(
+      child: Container(
+        padding: EdgeInsets.all(AppPaddings.p10),
+        decoration: BoxDecoration(
+          color: ColorsManager.GREY1,
+          borderRadius: BorderRadius.circular(AppSizesDouble.s15)
+        ),
+        width: double.infinity,
+        constraints:BoxConstraints(
+          maxHeight: AppSizesDouble.s150,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SvgPicture.asset(AssetsManager.itemIcon),
+            SizedBox(width: AppSizesDouble.s5,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.item.title!, style: Theme.of(context).textTheme.labelLarge, maxLines: AppSizes.s2, overflow: TextOverflow.ellipsis,),
+                  SizedBox(height: AppSizesDouble.s10,),
+                  Text('${AppLocalizations.translate(StringsManager.deliveryDate)}: ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.parse(widget.item.deliveryTime!))}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
+                  Text('${AppLocalizations.translate(StringsManager.orderFee)}: ${widget.item.fee} ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+                  Row(
+                    children: [
+                      Text(AppLocalizations.translate(StringsManager.status), style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+                      SizedBox(width: AppSizesDouble.s10,),
+                      Text(widget.item.status??'pending', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.YELLOW)),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(width: AppSizesDouble.s5,),
-          getIcon(widget.index % 2 == 0? 'Received':widget.index % 3 == 0?'Delivered':'Out for Delivery') //TODO: also Send Status Here
-        ],
+            SizedBox(width: AppSizesDouble.s5,),
+            getIcon(widget.item.status??'pending')
+          ],
+        ),
       ),
     );
   }
 
   DefaultRoundedIconButton getIcon(String status){
     if(status == 'Received') {
-      return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation))));
+      return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation, arguments: widget.item.orderNumber))));
     } else if(status == 'Delivered'){
       return DefaultRoundedIconButton(isSvg: true, svgIcon: AssetsManager.deliveredIcon, hasBorder: false, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting))));
     } else if(status == 'Delivery Guy'){
-      return DefaultRoundedIconButton(icon: IconsManager.rightArrow, hasBorder: true, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting)))); //TODO: change this to delivery Guy Details Screen
+      return DefaultRoundedIconButton(icon: IconsManager.rightArrow, hasBorder: true, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting))));
+    } else if(status == 'pending'){
+      return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation, arguments: widget.item.orderNumber))));
     }
     return DefaultRoundedIconButton(icon: IconsManager.location, filled: true, backgroundColor: ColorsManager.GREEN, hasBorder: false, iconColor: ColorsManager.WHITE, onPressed: (){});
   }
 }
 
-void navigateToAuth(context) async{
+void navigateToAuth(context, {String route = Routes.login}) async{
   await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: false);
   await CacheHelper.saveData(key: KeysManager.isGuest, value: false);
   AppConstants.isAuthenticated = false;
   AppConstants.isGuest = false;
-  Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
+  Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: route)), (route) => false);
 }
 
-Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false, String token = ''}) async{
+Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false, String token = '', String representativePassword = '', String representativePhone = ''}) async{
+  assert(isRepresentative && representativePassword.isNotEmpty && representativePhone.isNotEmpty);
   await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
   await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
+  await CacheHelper.saveData(key: KeysManager.representativePhone, value: '');
+  await CacheHelper.saveData(key: KeysManager.representativePassword, value: '');
   await CacheHelper.saveData(key: KeysManager.isGuest, value: isGuest);
   await CacheHelper.saveData(key: KeysManager.token, value: token);
   AppConstants.isAuthenticated = isAuthenticated;
@@ -455,11 +477,24 @@ Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, boo
 Future<void> clearCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false}) async{
   await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
   await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
+  await CacheHelper.saveData(key: KeysManager.representativePhone, value: '');
+  await CacheHelper.saveData(key: KeysManager.representativePassword, value: '');
   await CacheHelper.saveData(key: KeysManager.isGuest, value: isGuest);
   await CacheHelper.saveData(key: KeysManager.token, value: '');
   AppConstants.isAuthenticated = isAuthenticated;
   AppConstants.token = '';
   AppConstants.isGuest = isGuest;
   AppConstants.isRepresentativeAuthenticated = isRepresentative;
+  AppConstants.representativePassword = '';
+  AppConstants.representativePhone = '';
   Repo.profileDataModel = null;
+}
+
+
+Future<void> launchUrl(String url) async {
+  if (!await canLaunchUrl(Uri.parse(url))) {
+    throw Exception('Could not launch $url');
+  } else {
+    launchUrlString(url);
+  }
 }

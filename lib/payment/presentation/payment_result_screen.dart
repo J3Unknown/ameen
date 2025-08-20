@@ -3,6 +3,7 @@ import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:ameen/utill/shared/assets_manager.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +49,7 @@ class _PaymentResultScreenState extends State<PaymentResultScreen> {
                   DefaultButton(
                     title: AppLocalizations.translate(StringsManager.home),
                     onPressed: (){
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
                     }
                   ),
                   SizedBox(height: AppSizesDouble.s20,),
@@ -84,8 +84,7 @@ class _PaymentResultScreenState extends State<PaymentResultScreen> {
                   DefaultButton(
                     title: AppLocalizations.translate(StringsManager.home),
                     onPressed: (){
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
                     }
                   ),
                   SizedBox(height: AppSizesDouble.s20,),

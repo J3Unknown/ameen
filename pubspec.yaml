@@ -26,6 +26,8 @@ dependencies:
   dotted_border: ^2.1.0
   image_picker: ^1.1.2
   conditional_builder_null_safety: ^0.0.6
+  provider: ^6.1.5
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:
