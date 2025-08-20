@@ -418,7 +418,7 @@ class _DefaultItemCardState extends State<DefaultItemCard> {
                 children: [
                   Text(widget.item.title!, style: Theme.of(context).textTheme.labelLarge, maxLines: AppSizes.s2, overflow: TextOverflow.ellipsis,),
                   SizedBox(height: AppSizesDouble.s10,),
-                  Text('${AppLocalizations.translate(StringsManager.deliveryDate)}: ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.parse(widget.item.deliveryTime!))}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
+                  Text('${AppLocalizations.translate(StringsManager.deliveryDate)}: ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.parse(widget.item.deliveryTime??'${DateTime.now()}'))}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
                   Text('${AppLocalizations.translate(StringsManager.orderFee)}: ${widget.item.fee} ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
                   Row(
                     children: [
@@ -439,12 +439,12 @@ class _DefaultItemCardState extends State<DefaultItemCard> {
   }
 
   DefaultRoundedIconButton getIcon(String status){
-    if(status == 'Received') {
+    if(status == 'received') {
       return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation, arguments: widget.item.orderNumber))));
-    } else if(status == 'Delivered'){
-      return DefaultRoundedIconButton(isSvg: true, svgIcon: AssetsManager.deliveredIcon, hasBorder: false, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting))));
+    } else if(status == 'delivered'){
+      return DefaultRoundedIconButton(isSvg: true, svgIcon: AssetsManager.deliveredIcon, hasBorder: false, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting, arguments: widget.item))));
     } else if(status == 'Delivery Guy'){
-      return DefaultRoundedIconButton(icon: IconsManager.rightArrow, hasBorder: true, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting))));
+      return DefaultRoundedIconButton(icon: IconsManager.rightArrow, hasBorder: true, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting, arguments: widget.item))));
     } else if(status == 'pending'){
       return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation, arguments: widget.item.orderNumber))));
     }
@@ -461,7 +461,6 @@ void navigateToAuth(context, {String route = Routes.login}) async{
 }
 
 Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false, String token = '', String representativePassword = '', String representativePhone = ''}) async{
-  assert(isRepresentative && representativePassword.isNotEmpty && representativePhone.isNotEmpty);
   await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
   await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
   await CacheHelper.saveData(key: KeysManager.representativePhone, value: '');

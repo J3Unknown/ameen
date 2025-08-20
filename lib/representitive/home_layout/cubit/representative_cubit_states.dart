@@ -27,3 +27,15 @@ final class RepresentativeGetProfileLoadingState extends RepresentativeCubitStat
 final class RepresentativeGetProfileSuccessState extends RepresentativeCubitStates{}
 
 final class RepresentativeGetProfileErrorState extends RepresentativeCubitStates{}
+
+final class RepresentativeChangeOutForDeliveryStatusLoadingState extends RepresentativeCubitStates{}
+
+final class RepresentativeChangeOutForDeliveryStatusSuccessState extends RepresentativeCubitStates{}
+
+final class RepresentativeChangeDeliveredStatusLoadingState extends RepresentativeCubitStates{}
+
+final class RepresentativeChangeDeliveredStatusSuccessState extends RepresentativeCubitStates{}
+
+final class RepresentativeCancelOrderLoadingState extends RepresentativeCubitStates{}
+
+final class RepresentativeCancelOrderSuccessState extends RepresentativeCubitStates{}

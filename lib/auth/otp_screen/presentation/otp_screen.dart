@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:ameen/Repo/otp_reason_interface.dart';
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
-import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,6 +51,7 @@ class _OtpScreenState extends State<OtpScreen> {
     _otpController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = AppConstants.screenSize(context).height;
@@ -78,7 +78,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   padding: EdgeInsets.all(AppPaddings.p20),
                   child: SizedBox(
                     height: screenHeight / AppSizesDouble.s1_8,
-                    child: Center(child: SvgPicture.asset(AssetsManager.otpImage, fit: BoxFit.contain, width: AppSizesDouble.s270,)) //TODO: get the OTP image
+                    child: Center(child: Image.asset(AssetsManager.otpImage, fit: BoxFit.contain, width: AppSizesDouble.s270,)) //TODO: get the OTP image
                   ),
                 ),
                 Align(

@@ -146,4 +146,11 @@ class AuthCubit extends Cubit<AuthCubitStates>{
       }
     });
   }
+
+  void logout({bool isDelivery = false}){
+    emit(AuthLogoutLoadingState());
+    DioHelper.getData(isDelivery: isDelivery, path: EndPoints.logout).then((value){
+      emit(AuthLogoutSuccessState());
+    });
+  }
 }

@@ -82,7 +82,9 @@ class DeliveryItem{
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deliveryFee = json['delivery_fee'];
-    user = User.fromJson(json['user']);
+    if(json['user'] != null){
+      user = User.fromJson(json['user']);
+    }
   }
 }
 

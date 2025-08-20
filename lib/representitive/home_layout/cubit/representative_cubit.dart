@@ -87,4 +87,25 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
       }
     });
   }
+
+  void changeOutForDeliveryStatus(int id){
+    emit(RepresentativeChangeOutForDeliveryStatusLoadingState());
+    DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.outForDelivery}').then((value){
+      emit(RepresentativeChangeOutForDeliveryStatusSuccessState());
+    });
+  }
+
+  void changeDeliveredStatus(int id){
+    emit(RepresentativeChangeDeliveredStatusLoadingState());
+    DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.delivered}').then((value){
+      emit(RepresentativeChangeDeliveredStatusSuccessState());
+    });
+  }
+
+  void cancelItem(int id){
+    emit(RepresentativeCancelOrderLoadingState());
+    DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.cancel}').then((value){
+      emit(RepresentativeCancelOrderSuccessState());
+    });
+  }
 }

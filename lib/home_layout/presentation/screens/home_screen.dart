@@ -200,8 +200,7 @@ class DefaultDeliveryItemCard extends StatelessWidget {
               children: [
                 Text(item.title??'', maxLines: AppSizes.s3, overflow: TextOverflow.ellipsis,),
                 SizedBox(height: AppSizesDouble.s10,),
-                //TODO: change this into date once edited
-                Text(DateFormat('EEE dd, MMM, yyyy').format(DateTime.parse(item.date!)), style: Theme.of(context).textTheme.titleMedium!.copyWith(color: ColorsManager.DARK_GREY),),
+                Text(DateFormat('EEE dd, MMM, yyyy').format(DateTime.parse(item.deliveryTime??'${DateTime.now()}')), style: Theme.of(context).textTheme.titleMedium!.copyWith(color: ColorsManager.DARK_GREY),),
               ],
             ),
           ),

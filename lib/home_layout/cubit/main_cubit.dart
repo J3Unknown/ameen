@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:ameen/Repo/about_us_and_support_data_model.dart';
 import 'package:ameen/Repo/cities_and_regions_data_model.dart';
 import 'package:ameen/Repo/pair_of_id_and_name.dart';
 import 'package:ameen/Repo/profile_data_model.dart';
@@ -95,12 +96,7 @@ class MainCubit extends Cubit<MainCubitStates>{
     }
   }
 
-  void logout(){
-    emit(MainLogoutLoadingState());
-    DioHelper.getData(path: EndPoints.logout).then((value){
-      emit(MainLogoutSuccessState());
-    });
-  }
+
 
   CitiesAndRegionsDataModel? cities;
   void getCities(){
@@ -318,6 +314,30 @@ class MainCubit extends Cubit<MainCubitStates>{
     emit(MainCancelOrderLoadingState());
     DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.cancel}').then((value){
       emit(MainCancelOrderSuccessState());
+    });
+  }
+
+  void sendReporting(int id, int experienceRating, int deliveryTimeRating, int deliveryAgentRating, String description){
+    emit(MainSendReportingLoadingState());
+    DioHelper.postData(
+      url: '${EndPoints.orders}/$id/${EndPoints.rate}',
+      data: {
+        KeysManager.rateExperience:experienceRating,
+        KeysManager.rateDeliveryTime:deliveryTimeRating,
+        KeysManager.rateAgent:deliveryAgentRating,
+        KeysManager.rateDescription:description
+      }
+    ).then((value){
+      emit(MainSendReportingSuccessState());
+      getDeliveryItems();
+    });
+  }
+
+  void getAboutUs(){
+    emit(MainGetAboutUsLoadingState());
+    DioHelper.getData(path: EndPoints.aboutUs).then((value){
+      Repo.aboutUsAndSupportDataModel = AboutUsAndSupportDataModel.fromJson(value.data[KeysManager.result]);
+      emit(MainGetAboutUsSuccessState());
     });
   }
 }

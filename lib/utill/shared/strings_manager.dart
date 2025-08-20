@@ -35,6 +35,9 @@ class StringsManager{
   static const String requiredField = 'This Field is Required';
   static const String comingSoon = 'Coming Soon';
   static const String tapToDelete = 'Tap on the image to delete';
+  static const String passwordLengthMessage = 'Password must be at least 8 characters';
+  static const String passwordFormatMessage = 'Password Must Contain: 1 upper-case, 1 lower-case, 1 number, and 1 special character';
+  static const String invalidPasswordFormat = 'Invalid Password Format';
 
   //*Order Cancellation Screen
   static const String orderCancellation = 'Order Cancellation';
@@ -54,6 +57,7 @@ class StringsManager{
   static const String deliveryAgentRate = 'Rate our delivery agent';
   static const String describeYourExperience = 'Describe you experience with order';
   static const String sendRating = 'Send Rating';
+  static const String ratingWasSent = 'Rating was sent';
 
   //*sahl Screen
   static const String licenseDelivery = 'License Delivery';
@@ -102,6 +106,8 @@ class StringsManager{
   static const String deliveryTime = 'Delivery Time';
   static const String representativeLogin = 'representative login';
   static const String cancellationReason = 'Cancellation Reason';
+  static const String updatingStatus = 'Updating Order Status';
+  static const String statusChanged = 'Order Status Updated Successfully';
 
   //*payment
   static const String orderDetails = 'Order Details';
@@ -161,7 +167,7 @@ class StringsManager{
   static const String sendAgain = 'Send Again';
   static const String validOtpMessage = 'Please enter a valid OTP';
   static const String phoneNumberRangeError = 'Please enter an 8 digits Phone Number';
-  static const String emailFormatWarning = 'Email Must Follow this format: ';
+  static const String emailFormatWarning = 'Email Must Follow this format';
   static const String emailPlaceholder = 'user@example.com';
   static const String theOtpCodeIsIncorrect = 'The otp code is Incorrect';
 
@@ -193,6 +199,10 @@ class KeysManager{
   static const String page = 'page';
   static const String landmark = 'landmark';
   static const String tab = 'tab';
+  static const String rateExperience = 'rate_experience';
+  static const String rateDeliveryTime = 'rate_delivery_time';
+  static const String rateAgent = 'rate_agent';
+  static const String rateDescription = 'rate_description';
 
   //*Cache
   static const String isAuthenticated = 'isAuthenticated';

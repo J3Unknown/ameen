@@ -21,7 +21,6 @@ import 'package:ameen/sahl/presentation/verification_screen/sahl_verification_sc
 import 'package:flutter/material.dart';
 
 import '../../auth/loginScreen/presentation/LoginScreen.dart';
-import '../../auth/otp_screen/data/otp_arguments.dart';
 import '../../auth/otp_screen/presentation/otp_screen.dart';
 import '../../auth/register/presentation/register_screen.dart';
 import '../../splashScreen/presentation/SplashScreen.dart';
@@ -75,7 +74,7 @@ class RoutesGenerator{
       case Routes.paymentResult:
         return  MaterialPageRoute(builder: (_) => PaymentResultScreen(arguments: settings.arguments! as PaymentResultArguments,));
       case Routes.orderReporting:
-        return  MaterialPageRoute(builder: (_) => OrderReportingScreen());
+        return  MaterialPageRoute(builder: (_) => OrderReportingScreen(item: settings.arguments! as DeliveryItem,));
       case Routes.orderCancellation:
         return  MaterialPageRoute(builder: (_) => OrderCancellationScreen(item: settings.arguments! as DeliveryItem,));
       case Routes.profile:

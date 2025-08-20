@@ -304,8 +304,9 @@ class _LanguageAlertState extends State<LanguageAlert> {
 }
 
 class DefaultRepresentativeChangeState extends StatelessWidget {
-  const DefaultRepresentativeChangeState({super.key, required this.state});
+  const DefaultRepresentativeChangeState({super.key, required this.state, required this.action});
   final String state;
+  final VoidCallback action;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -315,9 +316,13 @@ class DefaultRepresentativeChangeState extends StatelessWidget {
       actions: [
         DefaultButton(
           title: StringsManager.yes,
-          onPressed: (){},
+          onPressed: (){
+            action;
+            showSnackBar(context, StringsManager.updatingStatus);
+            Navigator.pop(context);
+          },
           backgroundColor: ColorsManager.RED,
-        ), //TODO: Link with apply action
+        ),
         SizedBox(height: AppSizesDouble.s20,),
         DefaultButton(
           title: StringsManager.cancel,

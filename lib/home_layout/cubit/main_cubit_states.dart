@@ -73,3 +73,11 @@ final class MainCancelOrderLoadingState extends MainCubitStates{}
 final class MainCancelOrderSuccessState extends MainCubitStates{}
 
 final class MainCancelOrderErrorState extends MainCubitStates{}
+
+final class MainSendReportingLoadingState extends MainCubitStates{}
+
+final class MainSendReportingSuccessState extends MainCubitStates{}
+
+final class MainGetAboutUsLoadingState extends MainCubitStates{}
+
+final class MainGetAboutUsSuccessState extends MainCubitStates{}

@@ -11,6 +11,11 @@ class EndPoints{
   static const String cities = 'cities';
   static const String regions = 'regions';
   static const String banners = 'banners';
+  static const String aboutUs = 'about_us';
+
+  //*representative
+  static const String outForDelivery = 'out-for-delivery';
+  static const String delivered = 'delivered';
 
   //*profile
   static const String editProfile = 'edit_profile';
@@ -20,5 +25,6 @@ class EndPoints{
   static const String categories = 'main_categories';
   static const String orders = 'orders';
   static const String cancel = 'cancel';
+  static const String rate = 'rate';
 
 }

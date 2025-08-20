@@ -115,5 +115,20 @@
   "Call": "اتصل",
   "Client Details": "بيانات العميل",
   "Delivery Date": "تاريخ التوصيل",
-  "Order Fee": "ضريبة الشحنة"
+  "Order Fee": "ضريبة الشحنة",
+  "Out For Delivery": "في طريقه للتوصيل",
+  "Order Delivered": "تم توصيل الشحنة",
+  "Destination Address": "عنوان الوجهة",
+  "Origin Address": "عنوان الأصل",
+  "Order": "الشحنة",
+  "Are You ready to change order status to": "هل أنت مستعد لتغيير حالة الشحنة الى",
+  "Delivery Time": "وقت التوصيل",
+  "representative login": "تسجيل دخول ممثل الخدمة",
+  "The otp code is Incorrect": "رقم التحقق غير صحيح",
+  "Email Must Follow this format": "البريد الإلكتروني يجب ان يتبع تنسيق",
+  "Password must be at least 8 characters": "كلمة المرور يجب ان تنكون من 8 أحرف على الأقل",
+  "Password Must Contain: 1 upper-case, 1 lower-case, 1 number, and 1 special character": "كلمة المرور يجب أن تحتوي على: حرف كبير على الأقل، حرف صغير على الأقل، رقم واحد على الأقل، ورموز خاصة",
+  "Invalid Password Format": "كلمة المرور تحتوي على تنسيق غير صالح",
+  "Rating was sent": "تم إرسال التقييم",
+  "Updating Order Status": "يتم تحديث حالة الشحنة"
 }

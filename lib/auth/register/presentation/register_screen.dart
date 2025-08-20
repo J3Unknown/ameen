@@ -135,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if(value == null || value.isEmpty){
                                   return AppLocalizations.translate(StringsManager.emptyFieldMessage);
                                 } else if(!value.contains(AppConstants.emailRegex)){
-                                  return '${AppLocalizations.translate(StringsManager.emailFormatWarning)} ${StringsManager.emailPlaceholder}';
+                                  return '${AppLocalizations.translate(StringsManager.emailFormatWarning)}: ${StringsManager.emailPlaceholder}';
                                 }
                                 return null;
                               },
@@ -156,6 +156,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               validator: (value) {
                                 if(value == null || value.isEmpty){
                                   return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                                } else if(!value.contains(AppConstants.passwordRegex)){
+                                  showSnackBar(context, StringsManager.passwordFormatMessage);
+                                  return AppLocalizations.translate(StringsManager.invalidPasswordFormat);
+                                } else if(value.length < AppSizes.s8){
+                                  return AppLocalizations.translate(StringsManager.passwordLengthMessage);
                                 }
                                 return null;
                               },

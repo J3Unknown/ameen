@@ -13,7 +13,9 @@ class ForgotPasswordOtp implements OtpReasonInterface{
 
 
   @override
-  void onSuccess(BuildContext context, {String? token}) => Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
+  void onSuccess(BuildContext context, {String? token}) {
+    Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
+  }
 
   @override
   Future<void> request(BuildContext context) async => AuthCubit.get(context).sendOtpForgotPassword(otpArguments!.phone!);

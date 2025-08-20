@@ -1,3 +1,6 @@
+import 'package:ameen/auth/otp_screen/data/forgot_password_otp.dart';
+import 'package:ameen/auth/otp_screen/data/otp_arguments.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../utill/local/localization/app_localization.dart';
@@ -88,8 +91,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           title: StringsManager.next,
                           onPressed: () {
                             if(_formKey.currentState!.validate()){
-                              //TODO: link with otp send action
-
+                              Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: ForgotPasswordOtp(OtpArguments(phone: _phoneNumberController.text)))));
                             }
                           },
                           isLoading: false,

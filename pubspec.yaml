@@ -28,6 +28,7 @@ dependencies:
   conditional_builder_null_safety: ^0.0.6
   provider: ^6.1.5
   url_launcher: ^6.3.2
+  flutter_phone_direct_caller: ^2.2.1
 
 dev_dependencies:
   flutter_test:

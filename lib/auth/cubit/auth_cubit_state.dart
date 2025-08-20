@@ -36,3 +36,9 @@ final class AuthSendOtpLoadingState extends AuthCubitStates{}
 final class AuthSendOtpSuccessState extends AuthCubitStates{}
 
 final class AuthSendOtpErrorState extends AuthCubitStates{}
+
+final class AuthLogoutLoadingState extends AuthCubitStates{}
+
+final class AuthLogoutSuccessState extends AuthCubitStates{}
+
+final class AuthLogoutErrorState extends AuthCubitStates{}

@@ -11,6 +11,7 @@ class AppConstants{
   static Size screenSize(context) => MediaQuery.of(context).size;
 
   static RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  static RegExp passwordRegex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).+$');
 
   static const List<String> supportedImageFormats = ['jpg', 'jpeg', 'png', 'webp'];
 

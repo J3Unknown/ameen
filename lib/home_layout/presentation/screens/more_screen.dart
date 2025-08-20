@@ -1,6 +1,7 @@
 import 'package:ameen/Repo/repo.dart';
+import 'package:ameen/auth/cubit/auth_cubit.dart';
+import 'package:ameen/auth/cubit/auth_cubit_state.dart';
 import 'package:ameen/home_layout/cubit/main_cubit.dart';
-import 'package:ameen/home_layout/cubit/main_cubit_states.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:ameen/utill/shared/alerts.dart';
 import 'package:ameen/utill/shared/assets_manager.dart';
@@ -27,9 +28,9 @@ class _MoreScreenState extends State<MoreScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener(
-      bloc: MainCubit.get(context),
+      bloc: AuthCubit.get(context),
       listener: (context, state) {
-        if(state is MainLogoutSuccessState){
+        if(state is AuthLogoutSuccessState){
           clearCaches();
           Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.languageScreen)), (route) => false);
         }
@@ -58,7 +59,7 @@ class _MoreScreenState extends State<MoreScreen> {
                 DefaultButton(
                   title: StringsManager.logout,
                   onPressed: (){
-                    MainCubit.get(context).logout();
+                    AuthCubit.get(context).logout(isDelivery: AppConstants.isAuthenticated?false:true);
                   },
                   borderRadius: AppSizesDouble.s11,
                   hasBorder: true,

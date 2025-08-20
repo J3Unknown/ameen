@@ -115,5 +115,20 @@
   "Call": "Call",
   "Client Details": "Client Details",
   "Delivery Date": "Delivery Date",
-  "Order Fee": "Order Fee"
+  "Order Fee": "Order Fee",
+  "Out For Delivery": "Out For Delivery",
+  "Order Delivered": "Order Delivered",
+  "Destination Address": "Destination Address",
+  "Origin Address": "Origin Address",
+  "Order": "Order",
+  "Are You ready to change order status to": "Are You ready to change order status to",
+  "Delivery Time": "Delivery Time",
+  "representative login": "representative login",
+  "The otp code is Incorrect": "The otp code is Incorrect",
+  "Email Must Follow this format": "Email Must Follow this format",
+  "Password must be at least 8 characters": "Password must be at least 8 characters",
+  "Password Must Contain: 1 upper-case, 1 lower-case, 1 number, and 1 special character": "Password Must Contain: 1 upper-case, 1 lower-case, 1 number, and 1 special character",
+  "Invalid Password Format": "Invalid Password Format",
+  "Rating was sent": "Rating was sent",
+  "Updating Order Status": "Updating Order Status"
 }

@@ -5,7 +5,8 @@ class AssetsManager{
   static const String registerImage = '${AppConstants.imagePath}registerImage.svg';
   // static const String forgotPasswordImage = '${AppConstants.imagePath}forgotPasswordScreen.svg';
   static const String forgotPasswordImage = '${AppConstants.imagePath}forgotPasswordScreen.png';
-  static const String otpImage = '${AppConstants.imagePath}otpImage.svg';
+  // static const String otpImage = '${AppConstants.imagePath}otpImage.svg';
+  static const String otpImage = '${AppConstants.imagePath}OtpScreenImage.png';
   static const String logo = '${AppConstants.imagePath}appIcon.png';
   static const String languageImage = '${AppConstants.imagePath}languagePageImage.svg';
   static const String deliveryMotorcycle = '${AppConstants.imagePath}DeliveryMotorcycle.svg';
