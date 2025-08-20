@@ -92,6 +92,7 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
   void changeOutForDeliveryStatus(int id){
     emit(RepresentativeChangeOutForDeliveryStatusLoadingState());
     DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.outForDelivery}').then((value){
+      getNewOrders();
       emit(RepresentativeChangeOutForDeliveryStatusSuccessState());
     });
   }
