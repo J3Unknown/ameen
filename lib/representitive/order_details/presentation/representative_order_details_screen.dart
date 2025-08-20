@@ -36,18 +36,19 @@ class _RepresentativeOrderDetailsScreenState extends State<RepresentativeOrderDe
     return BlocConsumer<RepresentativeCubit, RepresentativeCubitStates>(
       listener: (context, state) {
         if(state is RepresentativeCancelOrderSuccessState){
-          showSnackBar(context, StringsManager.statusChanged);
           RepresentativeCubit.get(context).cancelledOrdersDataModel!.items.add(widget.item);
           RepresentativeCubit.get(context).newOrdersDataModel!.items.removeWhere((e) => e.id == widget.item.id);
           Navigator.pop(context);
         }
         if(state is RepresentativeChangeOutForDeliveryStatusSuccessState){
-          isOutForDelivery = !isOutForDelivery;
-          showSnackBar(context, StringsManager.statusChanged);
+          setState(() {
+            isOutForDelivery = !isOutForDelivery;
+          });
         }
         if(state is RepresentativeChangeDeliveredStatusSuccessState){
-          isDelivered = !isDelivered;
-          showSnackBar(context, StringsManager.statusChanged);
+          setState(() {
+            isDelivered = !isDelivered;
+          });
           RepresentativeCubit.get(context).deliveredOrdersDataModel!.items.add(widget.item);
           RepresentativeCubit.get(context).newOrdersDataModel!.items.removeWhere((e) => e.id == widget.item.id);
           Navigator.pop(context);

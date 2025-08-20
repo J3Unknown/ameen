@@ -127,9 +127,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               validator: (value) {
                                 if(value == null || value.isEmpty){
                                   return AppLocalizations.translate(StringsManager.emptyFieldMessage);
-                                } else if(value.length < AppSizes.s8){
-                                  return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
                                 }
+                                // else if(value.length < AppSizes.s8){
+                                //   return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
+                                // }
                                 return null;
                               },
                               maxLength: AppSizes.s8,

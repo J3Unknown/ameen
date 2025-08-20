@@ -25,9 +25,6 @@ class _RepresentativeCancelledScreenState extends State<RepresentativeCancelledS
   void initState() {
     super.initState();
     _cubit = context.read<RepresentativeCubit>();
-    if(_cubit.cancelledOrdersDataModel == null){
-      _cubit.getCancelledOrders();
-    }
   }
 
   @override

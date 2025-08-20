@@ -34,9 +34,6 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
   void initState() {
     super.initState();
     _cubit = context.read<RepresentativeCubit>();
-    if(_cubit.newOrdersDataModel == null){
-      _cubit.getNewOrders();
-    }
   }
 
   @override

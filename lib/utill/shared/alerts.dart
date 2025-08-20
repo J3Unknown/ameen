@@ -317,8 +317,7 @@ class DefaultRepresentativeChangeState extends StatelessWidget {
         DefaultButton(
           title: StringsManager.yes,
           onPressed: (){
-            action;
-            showSnackBar(context, StringsManager.updatingStatus);
+            action();
             Navigator.pop(context);
           },
           backgroundColor: ColorsManager.RED,

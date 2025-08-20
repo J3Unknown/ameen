@@ -22,6 +22,23 @@ class RepresentativeHome extends StatefulWidget {
 }
 
 class _RepresentativeHomeState extends State<RepresentativeHome> {
+
+  late RepresentativeCubit _cubit;
+  @override
+  void initState() {
+    super.initState();
+    _cubit = context.read<RepresentativeCubit>();
+    if(_cubit.newOrdersDataModel == null){
+      _cubit.getNewOrders();
+    }
+    if(_cubit.deliveredOrdersDataModel == null){
+      _cubit.getDeliveredOrders();
+    }
+    if(_cubit.cancelledOrdersDataModel == null){
+      _cubit.getCancelledOrders();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     RepresentativeCubit cubit = RepresentativeCubit.get(context);
@@ -33,7 +50,7 @@ class _RepresentativeHomeState extends State<RepresentativeHome> {
           children: [
             Row(
               children: [
-                SvgPicture.asset(AssetsManager.logo, width: AppSizesDouble.s80,),
+                Image.asset(AssetsManager.logo, width: AppSizesDouble.s80,),
                 Spacer(),
                 DefaultRoundedIconButton(
                   onPressed: (){},

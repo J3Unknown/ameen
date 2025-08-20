@@ -24,9 +24,6 @@ class _RepresentativeDeliveredScreenState extends State<RepresentativeDeliveredS
   @override
   void initState() {
     _cubit = context.read<RepresentativeCubit>();
-    if(_cubit.deliveredOrdersDataModel == null){
-      _cubit.getDeliveredOrders();
-    }
     super.initState();
   }
 
