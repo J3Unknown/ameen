@@ -59,7 +59,7 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
           itemBuilder: (context, index) => IntrinsicHeight(
             child: InkWell(
               onTap: (){
-                Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeOrderDetails)));
+                Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeOrderDetails, arguments: _cubit.newOrdersDataModel!.items[index])));
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: AppPaddings.p10, vertical: AppPaddings.p15),
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                           ),
                         ),
                         SizedBox(width: AppSizesDouble.s5,),
-                        Center(child: DefaultRoundedIconButton(onPressed: () =>  Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeOrderDetails))), icon: IconsManager.rightArrow,))
+                        Center(child: DefaultRoundedIconButton(onPressed: () =>  Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeOrderDetails, arguments: _cubit.newOrdersDataModel!.items[index]))), icon: IconsManager.rightArrow,))
                       ],
                     ),
                     Row(

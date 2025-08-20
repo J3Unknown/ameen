@@ -94,7 +94,7 @@ class RoutesGenerator{
       case Routes.representativeHome:
         return  MaterialPageRoute(builder: (_) => RepresentativeHomeLayout());
       case Routes.representativeOrderDetails:
-        return  MaterialPageRoute(builder: (_) => RepresentativeOrderDetailsScreen());
+        return  MaterialPageRoute(builder: (_) => RepresentativeOrderDetailsScreen(item: settings.arguments! as DeliveryItem,));
       default:
         return unDefinedRoute();
     }

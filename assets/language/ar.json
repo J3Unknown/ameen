@@ -130,5 +130,6 @@
   "Password Must Contain: 1 upper-case, 1 lower-case, 1 number, and 1 special character": "كلمة المرور يجب أن تحتوي على: حرف كبير على الأقل، حرف صغير على الأقل، رقم واحد على الأقل، ورموز خاصة",
   "Invalid Password Format": "كلمة المرور تحتوي على تنسيق غير صالح",
   "Rating was sent": "تم إرسال التقييم",
-  "Updating Order Status": "يتم تحديث حالة الشحنة"
+  "Updating Order Status": "يتم تحديث حالة الشحنة",
+  "Order Status Updated Successfully": "تم تحديث حالة الشحنة بنجاح"
 }
