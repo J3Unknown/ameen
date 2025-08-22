@@ -403,14 +403,15 @@ class SahlVerificationAlert extends StatelessWidget {
   }
 }
 
-class ComingSoonAlert extends StatelessWidget {
-  const ComingSoonAlert({super.key});
+class NoteDialog extends StatelessWidget {
+  const NoteDialog({super.key, required this.note});
+  final String note;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       icon: SvgPicture.asset(AssetsManager.alertIcon),
-      content: Text(AppLocalizations.translate(StringsManager.comingSoon), style: Theme.of(context).textTheme.headlineLarge, textAlign: TextAlign.center,),
+      content: Text(AppLocalizations.translate(note), style: Theme.of(context).textTheme.headlineLarge, textAlign: TextAlign.center,),
       backgroundColor: ColorsManager.WHITE,
       actions: [
         DefaultButton(

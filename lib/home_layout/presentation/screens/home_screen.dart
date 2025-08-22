@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: StringsManager.sahlRequest,
                   image: AssetsManager.sahlRequest,
                   onTap: () {
-                    showDialog(context: context, builder: (context) => ComingSoonAlert());
+                    showDialog(context: context, builder: (context) => NoteDialog(note: StringsManager.comingSoon));
                     // if(AppConstants.isAuthenticated){
                     //   // if(false){
                     //   //   //TODO: get the condition to switch between the routes

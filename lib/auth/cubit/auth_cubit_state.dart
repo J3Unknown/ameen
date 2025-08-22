@@ -29,7 +29,10 @@ final class AuthRegisterSuccessState extends AuthCubitStates{
   AuthRegisterSuccessState(this.profileDataModel);
 }
 
-final class AuthRegisterErrorState extends AuthCubitStates{}
+final class AuthRegisterErrorState extends AuthCubitStates{
+  final String message;
+  AuthRegisterErrorState(this.message);
+}
 
 final class AuthSendOtpLoadingState extends AuthCubitStates{}
 

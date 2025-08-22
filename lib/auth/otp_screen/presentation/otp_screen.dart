@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:ameen/Repo/otp_reason_interface.dart';
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
+import 'package:ameen/utill/shared/alerts.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -61,6 +62,8 @@ class _OtpScreenState extends State<OtpScreen> {
         listener: (context, state) {
           if(state is AuthRegisterSuccessState){
             otpReasonInterface.onSuccess(context, token: state.profileDataModel.token);
+          } else if(state is AuthRegisterErrorState){
+            showDialog(context: context, builder: (context) => NoteDialog(note: state.message));
           }
         },
         builder: (context, state) => SafeArea(

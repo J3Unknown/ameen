@@ -6,7 +6,6 @@ import 'package:ameen/Repo/repo.dart';
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
 import 'package:ameen/utill/network/dio.dart';
 import 'package:ameen/utill/network/end_points.dart';
-import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -95,7 +94,7 @@ class AuthCubit extends Cubit<AuthCubitStates>{
         Repo.profileDataModel = ProfileDataModel.fromJson(value.data[KeysManager.result]);
         emit(AuthRegisterSuccessState(Repo.profileDataModel!));
       } else {
-        emit(AuthRegisterErrorState());
+        emit(AuthRegisterErrorState(value.data['msg']));
       }
     });
   }
