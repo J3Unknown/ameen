@@ -12,14 +12,22 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<MainCubit>().getDeliveryItems();
+  }
   @override
   Widget build(BuildContext context) {
     MainCubit cubit = MainCubit.get(context);
-    return BlocBuilder(
-      bloc: cubit,
-      builder:(context, state) => Scaffold(
-        body: SafeArea(child: cubit.screens[cubit.screenIndex]),
-        bottomNavigationBar: CustomNavbar(cubit: cubit)
+    return SafeArea(
+      child: BlocBuilder(
+        bloc: cubit,
+        builder:(context, state) => Scaffold(
+          body: SafeArea(child: cubit.screens[cubit.screenIndex]),
+          bottomNavigationBar: CustomNavbar(cubit: cubit)
+        ),
       ),
     );
   }

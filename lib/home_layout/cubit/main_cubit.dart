@@ -38,7 +38,7 @@ class MainCubit extends Cubit<MainCubitStates>{
   List<Widget> screens = [
     HomeScreen(),
     OrdersScreen(),
-    WalletScreen(),
+   // WalletScreen(),
     MoreScreen()
   ];
 
@@ -125,7 +125,7 @@ class MainCubit extends Cubit<MainCubitStates>{
   }
 
   void updateAccount(BuildContext context, String name, String phone, {String? email, String? password}){
-    emit(MainDeleteAccountLoadingState());
+    emit(MainUpdateAccountLoadingState());
     DioHelper.postData(
       url: EndPoints.editProfile,
       data: {
@@ -135,8 +135,11 @@ class MainCubit extends Cubit<MainCubitStates>{
         if(password != null)KeysManager.password:password,
       }
     ).then((value){
-      showSnackBar(context, StringsManager.accountUpdatedSuccessfully);
-      emit(MainDeleteAccountSuccessState());
+      if(value.data[KeysManager.success]){
+        emit(MainUpdateAccountSuccessState());
+      } else {
+        emit(MainUpdateAccountErrorState());
+      }
     });
   }
 

@@ -7,6 +7,7 @@ import 'package:ameen/home_layout/presentation/home_layout.dart';
 import 'package:ameen/item_delivery_screen/data/items_data_model.dart';
 import 'package:ameen/item_delivery_screen/presentation/item_delivery_screen.dart';
 import 'package:ameen/languagePage/presentation/LanguagePage.dart';
+import 'package:ameen/notifications_screen/presentation/notifications_screen.dart';
 import 'package:ameen/order_details_screens/presentation/order_cancellation_screen.dart';
 import 'package:ameen/order_details_screens/presentation/order_reporting_screen.dart';
 import 'package:ameen/payment/data/payment_result_arguments.dart';
@@ -48,6 +49,7 @@ class Routes{
   static const String termsAndConditions = '/termsAndConditions';
   static const String representativeHome = '/representativeHome';
   static const String representativeOrderDetails = '/representativeOrderDetails';
+  static const String notifications = '/notificationsScreen';
 }
 
 class RoutesGenerator{
@@ -93,6 +95,8 @@ class RoutesGenerator{
         return  MaterialPageRoute(builder: (_) => SahlVerificationScreen());
       case Routes.representativeHome:
         return  MaterialPageRoute(builder: (_) => RepresentativeHomeLayout());
+      case Routes.notifications:
+        return  MaterialPageRoute(builder: (_) => NotificationsScreen());
       case Routes.representativeOrderDetails:
         return  MaterialPageRoute(builder: (_) => RepresentativeOrderDetailsScreen(item: settings.arguments! as DeliveryItem,));
       default:

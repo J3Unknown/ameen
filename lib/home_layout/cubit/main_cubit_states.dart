@@ -16,17 +16,17 @@ final class MainGetProfileSuccessState extends MainCubitStates{}
 
 final class MainGetProfileErrorState extends MainCubitStates{}
 
-final class MainLogoutLoadingState extends MainCubitStates{}
-
-final class MainLogoutSuccessState extends MainCubitStates{}
-
-final class MainLogoutErrorState extends MainCubitStates{}
-
 final class MainDeleteAccountLoadingState extends MainCubitStates{}
 
 final class MainDeleteAccountSuccessState extends MainCubitStates{}
 
 final class MainDeleteAccountErrorState extends MainCubitStates{}
+
+final class MainUpdateAccountLoadingState extends MainCubitStates{}
+
+final class MainUpdateAccountSuccessState extends MainCubitStates{}
+
+final class MainUpdateAccountErrorState extends MainCubitStates{}
 
 final class MainGetCitiesLoadingState extends MainCubitStates{}
 

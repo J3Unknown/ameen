@@ -2,6 +2,7 @@ import 'package:ameen/Repo/repo.dart';
 import 'package:ameen/auth/cubit/auth_cubit.dart';
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
 import 'package:ameen/home_layout/cubit/main_cubit.dart';
+import 'package:ameen/home_layout/cubit/main_cubit_states.dart';
 import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:ameen/utill/shared/alerts.dart';
 import 'package:ameen/utill/shared/assets_manager.dart';
@@ -27,15 +28,16 @@ class MoreScreen extends StatefulWidget {
 class _MoreScreenState extends State<MoreScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
-      bloc: AuthCubit.get(context),
+    return BlocConsumer<AuthCubit, AuthCubitStates>(
       listener: (context, state) {
         if(state is AuthLogoutSuccessState){
           clearCaches();
+          context.read<MainCubit>().screenIndex = 0;
+          context.read<MainCubit>().itemsDataModel = null;
           Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.languageScreen)), (route) => false);
         }
       },
-      child: Scaffold(
+      builder: (context, state) => Scaffold(
         body: Padding(
           padding: EdgeInsets.all(AppPaddings.p15),
           child: SingleChildScrollView(
@@ -52,12 +54,16 @@ class _MoreScreenState extends State<MoreScreen> {
                 if(AppConstants.isGuest)
                 DefaultButton(
                   title: StringsManager.login,
-                  onPressed: () => navigateToAuth(context, route: Routes.languageScreen),
+                  onPressed: () {
+                    context.read<MainCubit>().screenIndex = 0;
+                    navigateToAuth(context, route: Routes.languageScreen);
+                  },
                   borderRadius: AppSizesDouble.s11,
                 ),
                 if(AppConstants.isAuthenticated || AppConstants.isRepresentativeAuthenticated)
                 DefaultButton(
                   title: StringsManager.logout,
+                  isLoading: state is AuthLogoutLoadingState,
                   onPressed: (){
                     AuthCubit.get(context).logout(isDelivery: AppConstants.isAuthenticated?false:true);
                   },

@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               await saveCaches(isAuthenticated: true, token: state.profileDataModel.token!);
               Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.home)), (route) => false);
             } else {
-              await saveCaches(isRepresentative: true, token: state.profileDataModel.token!, representativePhone: _phoneNumberController.text, representativePassword: _passwordController.text);
+              await saveCaches(isRepresentative: true, token: state.profileDataModel.token!);
               Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.representativeHome)), (route) => false);
             }
           }
@@ -127,10 +127,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               validator: (value) {
                                 if(value == null || value.isEmpty){
                                   return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                                } else if(value.length < AppSizes.s8){
+                                  return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
                                 }
-                                // else if(value.length < AppSizes.s8){
-                                //   return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
-                                // }
                                 return null;
                               },
                               maxLength: AppSizes.s8,
@@ -151,6 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               validator: (value) {
                                 if(value == null || value.isEmpty){
                                   return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                                } if(value.length < AppSizes.s8){
+                                  return AppLocalizations.translate(StringsManager.passwordLengthMessage);
                                 }
                                 return null;
                               },

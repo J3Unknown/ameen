@@ -24,7 +24,6 @@ class AddAddressAlert extends StatefulWidget {
   @override
   State<AddAddressAlert> createState() => _AddAddressAlertState();
 }
-
 class _AddAddressAlertState extends State<AddAddressAlert> {
   int? selectedGovernance;
   int? selectedCity;
@@ -221,9 +220,13 @@ class LoginAlert extends StatelessWidget {
       content: Text(AppLocalizations.translate(StringsManager.loginAlert), style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center,),
       backgroundColor: ColorsManager.WHITE,
       actions: [
-        DefaultButton(title: StringsManager.login, onPressed: (){
-          navigateToAuth(context, route: Routes.languageScreen);
-        }),
+        DefaultButton(
+          title: StringsManager.login,
+          onPressed: (){
+            context.read<MainCubit>().screenIndex = 0;
+            navigateToAuth(context, route: Routes.languageScreen);
+          }
+        ),
         SizedBox(height: AppSizesDouble.s20,),
         DefaultButton(
           title: StringsManager.cancel,
@@ -245,7 +248,6 @@ class LanguageAlert extends StatefulWidget {
   @override
   State<LanguageAlert> createState() => _LanguageAlertState();
 }
-
 class _LanguageAlertState extends State<LanguageAlert> {
   late LocaleChanger localeModel;
   late String selectedLang;
@@ -347,12 +349,12 @@ class DefaultDeleteAccountAlert extends StatelessWidget {
       listener: (context, state) {
         if(state is MainDeleteAccountSuccessState){
           clearCaches();
-          Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.login)), (route) => false);
+          Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.languageScreen)), (route) => false);
         }
       },
       child: AlertDialog(
         icon: SvgPicture.asset(AssetsManager.alertIcon),
-        content: Text(AppLocalizations.translate('Are you Sure you want to DELETE your account!!'), style: Theme.of(context).textTheme.displaySmall,),
+        content: Text(AppLocalizations.translate(StringsManager.deleteAccount), style: Theme.of(context).textTheme.displaySmall,),
         actions: [
           DefaultButton(
             title: StringsManager.deleteAccount,

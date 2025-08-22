@@ -254,9 +254,9 @@ class CustomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: AppMargins.m16, left: AppMargins.m16, right: AppMargins.m16),
+      margin: EdgeInsets.only(bottom: AppMargins.m10, left: AppMargins.m16, right: AppMargins.m16),
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      padding: EdgeInsets.symmetric(horizontal: AppPaddings.p12, vertical: AppPaddings.p8),
+      padding: EdgeInsets.only(left: AppPaddings.p12, right: AppPaddings.p12, top: AppPaddings.p8),
       decoration: BoxDecoration(
         border: Border.all(color: ColorsManager.BLACK, width: AppSizesDouble.s2),
         borderRadius: BorderRadius.circular(AppSizesDouble.s35),
@@ -266,15 +266,15 @@ class CustomNavbar extends StatelessWidget {
         items: [
           BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.home, colorFilter: ColorFilter.mode(getColor(AppSizes.s0, cubit.screenIndex), BlendMode.srcIn),), label: StringsManager.home,),
           if(!AppConstants.isRepresentativeAuthenticated)BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.orders, colorFilter: ColorFilter.mode(getColor(AppSizes.s1, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.orders,),
-          if(!AppConstants.isRepresentativeAuthenticated)BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.wallet, colorFilter: ColorFilter.mode(getColor(AppSizes.s2, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.wallet,),
-          BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.more, colorFilter: ColorFilter.mode(getColor(AppSizes.s3, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.more,),
+         // if(!AppConstants.isRepresentativeAuthenticated)BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.wallet, colorFilter: ColorFilter.mode(getColor(AppSizes.s2, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.wallet,),
+          BottomNavigationBarItem(icon: SvgPicture.asset(AssetsManager.more, colorFilter: ColorFilter.mode(getColor(AppSizes.s2, cubit.screenIndex), BlendMode.srcIn)), label: StringsManager.more,),
         ],
         backgroundColor: ColorsManager.TRANSPARENT,
         elevation: AppSizesDouble.s0,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: ColorsManager.BLACK,
         onTap: (index){
-          if(AppConstants.isGuest && (index == 1 || index == 2)){
+          if(AppConstants.isGuest && (index == 1)){ // TODO: add this once wallet is ready => || index == 2
             showDialog(context: context, builder: (context) => LoginAlert());
           } else {
             cubit.changeBottomNavBarIndex(index);
@@ -460,11 +460,9 @@ void navigateToAuth(context, {String route = Routes.login}) async{
   Navigator.pushAndRemoveUntil(context, RoutesGenerator.getRoute(RouteSettings(name: route)), (route) => false);
 }
 
-Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false, String token = '', String representativePassword = '', String representativePhone = ''}) async{
+Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false, String token = ''}) async{
   await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
   await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
-  await CacheHelper.saveData(key: KeysManager.representativePhone, value: '');
-  await CacheHelper.saveData(key: KeysManager.representativePassword, value: '');
   await CacheHelper.saveData(key: KeysManager.isGuest, value: isGuest);
   await CacheHelper.saveData(key: KeysManager.token, value: token);
   AppConstants.isAuthenticated = isAuthenticated;
@@ -476,16 +474,12 @@ Future<void> saveCaches({bool isAuthenticated = false, bool isGuest = false, boo
 Future<void> clearCaches({bool isAuthenticated = false, bool isGuest = false, bool isRepresentative = false}) async{
   await CacheHelper.saveData(key: KeysManager.isAuthenticated, value: isAuthenticated);
   await CacheHelper.saveData(key: KeysManager.isRepresentativeAuthenticated, value: isRepresentative);
-  await CacheHelper.saveData(key: KeysManager.representativePhone, value: '');
-  await CacheHelper.saveData(key: KeysManager.representativePassword, value: '');
   await CacheHelper.saveData(key: KeysManager.isGuest, value: isGuest);
   await CacheHelper.saveData(key: KeysManager.token, value: '');
   AppConstants.isAuthenticated = isAuthenticated;
   AppConstants.token = '';
   AppConstants.isGuest = isGuest;
   AppConstants.isRepresentativeAuthenticated = isRepresentative;
-  AppConstants.representativePassword = '';
-  AppConstants.representativePhone = '';
   Repo.profileDataModel = null;
 }
 

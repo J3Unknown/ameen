@@ -29,8 +29,6 @@ void main() async{
   LocaleChanger localeChanger = LocaleChanger();
   localeChanger.initializeLocale();
   await loadLocalizations(localeChanger);
-  await CacheHelper.removeData(key: KeysManager.representativePhone,);
-  await CacheHelper.removeData(key: KeysManager.representativePassword,);
   _loadCaches();
 
   runApp(

@@ -34,8 +34,6 @@ class AppConstants{
   static bool isRepresentativeAuthenticated = false;
   static bool isGuest = true;
   static String locale = 'EN';
-  static String representativePhone = '';
-  static String representativePassword = '';
 
   static String token = '';
 }

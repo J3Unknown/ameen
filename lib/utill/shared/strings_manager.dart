@@ -39,6 +39,7 @@ class StringsManager{
   static const String passwordFormatMessage = 'Password Must Contain: 1 upper-case, 1 lower-case, 1 number, and 1 special character';
   static const String invalidPasswordFormat = 'Invalid Password Format';
   static const String understand = 'I understand';
+  static const String notifications = 'Notifications';
 
   //*Order Cancellation Screen
   static const String orderCancellation = 'Order Cancellation';
@@ -83,6 +84,8 @@ class StringsManager{
 
   //*update
   static const String update = 'Update';
+  static const String profileUpdated = 'Profile updated Successfully';
+  static const String deleteAccountWarning = 'Are you Sure you want to DELETE your account!!';
   static const String deleteAccount = 'Delete Account';
 
   //*Support
@@ -211,6 +214,4 @@ class KeysManager{
   static const String isGuest = 'isGuest';
   static const String token = 'token';
   static const String locale = 'locale';
-  static const String representativePhone = 'representativePhone';
-  static const String representativePassword = 'representativePassword';
 }

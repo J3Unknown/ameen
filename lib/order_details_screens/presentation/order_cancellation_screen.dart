@@ -62,7 +62,7 @@ class _OrderCancellationScreenState extends State<OrderCancellationScreen> {
                     child: DefaultDropDownMenu(
                       value: cancellationValue,
                       hint: StringsManager.reason,
-                      items: AppConstants.numberItems, //TODO: adjust it to be the data model list
+                      items: AppConstants.numberItems, //TODO: adjust it to hold the reason list
                       onChanged: (value){
                         setState(() {
                           cancellationValue = value;

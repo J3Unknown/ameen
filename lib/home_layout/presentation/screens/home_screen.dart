@@ -40,12 +40,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 Image.asset(AssetsManager.logo, width: AppSizesDouble.s80,),
                 Spacer(),
                 DefaultRoundedIconButton(
-                  onPressed: (){},
+                  onPressed: () {
+                    if(AppConstants.isGuest){
+                      showDialog(context: context, builder: (context) => LoginAlert());
+                    } else {
+                      Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.notifications)));
+                    }
+                  },
                   icon: IconsManager.notificationIcon,
                 )
               ],
             ),
-            if(AppConstants.isAuthenticated)
+          if(AppConstants.isAuthenticated)
           ConditionalBuilder(
             condition: Repo.profileDataModel != null,
             fallback: (context) => Center(child: CircularProgressIndicator(),),
@@ -148,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ConditionalBuilder(
                         condition: MainCubit.get(context).itemsDataModel != null && MainCubit.get(context).itemsDataModel!.items.isNotEmpty,
                         fallback: (context) {
-                          if(MainCubit.get(context).itemsDataModel != null && MainCubit.get(context).itemsDataModel!.items.isEmpty){
+                          if((MainCubit.get(context).itemsDataModel != null && MainCubit.get(context).itemsDataModel!.items.isEmpty) || AppConstants.isGuest){
                             return Center(child: Text(AppLocalizations.translate(StringsManager.noOrdersYet)),);
                           }
                           return Center(child: CircularProgressIndicator(backgroundColor: ColorsManager.GREY1,),);

@@ -132,5 +132,8 @@
   "Rating was sent": "تم إرسال التقييم",
   "Updating Order Status": "يتم تحديث حالة الشحنة",
   "Order Status Updated Successfully": "تم تحديث حالة الشحنة بنجاح",
-  "I understand": "أتفهم ذلك"
+  "I understand": "أتفهم ذلك",
+  "Profile updated Successfully": "تم تحديث الحساب الشخصي بنجاح",
+  "Are you Sure you want to DELETE your account!!": "هل أنت متأكد انك تريد حذف حسابك!!",
+  "Notifications": "الاشعارات"
 }
