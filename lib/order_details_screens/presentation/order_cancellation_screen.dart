@@ -22,6 +22,7 @@ class OrderCancellationScreen extends StatefulWidget {
 class _OrderCancellationScreenState extends State<OrderCancellationScreen> {
 
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _reasonController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
   int? cancellationValue;
   @override
@@ -45,31 +46,42 @@ class _OrderCancellationScreenState extends State<OrderCancellationScreen> {
               children: [
                 Text('${AppLocalizations.translate(StringsManager.yourOrderCode)} #${widget.item.orderNumber}', style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: ColorsManager.DARK_GREY),),
                 SizedBox(height: AppSizesDouble.s30,),
-                FormField(
-                  initialValue: cancellationValue,
+                // FormField(
+                //   initialValue: cancellationValue,
+                //   validator: (value){
+                //     if(value == null){
+                //       return AppLocalizations.translate(StringsManager.requiredField);
+                //     }
+                //     return null;
+                //   },
+                //   builder: (state) => InputDecorator(
+                //     decoration: InputDecoration(
+                //       border: InputBorder.none,
+                //       errorText: state.errorText,
+                //       contentPadding: EdgeInsets.zero
+                //     ),
+                //     child: DefaultDropDownMenu(
+                //       value: cancellationValue,
+                //       hint: StringsManager.reason,
+                //       items: AppConstants.numberItems, //TODO: adjust it to hold the reason list
+                //       onChanged: (value){
+                //         setState(() {
+                //           cancellationValue = value;
+                //         });
+                //       }
+                //     ),
+                //   ),
+                // ),
+                DefaultTextInputField(
+                  controller: _reasonController,
+                  hint: StringsManager.description,
+                  isRequired: true,
                   validator: (value){
-                    if(value == null){
-                      return AppLocalizations.translate(StringsManager.requiredField);
+                    if(value == null || value.isEmpty){
+                      return AppLocalizations.translate(StringsManager.emptyFieldMessage);
                     }
                     return null;
                   },
-                  builder: (state) => InputDecorator(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      errorText: state.errorText,
-                      contentPadding: EdgeInsets.zero
-                    ),
-                    child: DefaultDropDownMenu(
-                      value: cancellationValue,
-                      hint: StringsManager.reason,
-                      items: AppConstants.numberItems, //TODO: adjust it to hold the reason list
-                      onChanged: (value){
-                        setState(() {
-                          cancellationValue = value;
-                        });
-                      }
-                    ),
-                  ),
                 ),
                 SizedBox(height: AppSizesDouble.s30,),
                 DefaultTextInputField(

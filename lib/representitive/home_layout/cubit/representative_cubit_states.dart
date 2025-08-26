@@ -1,3 +1,5 @@
+import 'package:ameen/item_delivery_screen/data/items_data_model.dart';
+
 abstract class RepresentativeCubitStates{}
 
 final class RepresentativeInitStates extends RepresentativeCubitStates{}
@@ -44,3 +46,14 @@ final class RepresentativeChangeDeliveredStatusErrorState extends Representative
 final class RepresentativeCancelOrderLoadingState extends RepresentativeCubitStates{}
 
 final class RepresentativeCancelOrderSuccessState extends RepresentativeCubitStates{}
+
+final class RepresentativeGetOrderDetailsLoadingState extends RepresentativeCubitStates{}
+
+final class RepresentativeGetOrderDetailsSuccessState extends RepresentativeCubitStates{
+  DeliveryItem item;
+  RepresentativeGetOrderDetailsSuccessState(this.item);
+}
+
+final class RepresentativePingLoadingState extends RepresentativeCubitStates{}
+
+final class RepresentativePingSuccessState extends RepresentativeCubitStates{}

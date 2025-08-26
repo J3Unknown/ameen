@@ -1,5 +1,6 @@
 import 'package:ameen/Repo/repo.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +54,7 @@ class _RepresentativeHomeState extends State<RepresentativeHome> {
                 Image.asset(AssetsManager.logo, width: AppSizesDouble.s80,),
                 Spacer(),
                 DefaultRoundedIconButton(
-                  onPressed: (){},
+                  onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.notifications))),
                   icon: IconsManager.notificationIcon,
                 )
               ],

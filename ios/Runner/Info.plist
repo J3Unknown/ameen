@@ -14,6 +14,10 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>ameen</string>
+	<key>GMSApiKey</key>
+    <string>AIzaSyC9oZuZt-1eu5ttC_ZX_ihutTiqFowFiSo</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs your location to set the initial map position.</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

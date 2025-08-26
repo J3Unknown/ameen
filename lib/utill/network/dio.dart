@@ -74,6 +74,7 @@ class DioHelper{
     dio.options.baseUrl = isDelivery? AppConstants.baseDeliveryUrl : AppConstants.baseUrl;
     dio.options.headers = {
       'Content-Type': 'application/json',
+      'Accept':'application/json',
       'lang': AppConstants.locale,
       'Authorization': 'Bearer ${AppConstants.token}',
     };

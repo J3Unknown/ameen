@@ -1,3 +1,4 @@
+import 'package:ameen/google_map_services/data/location_result.dart';
 import 'package:ameen/home_layout/cubit/main_cubit.dart';
 import 'package:ameen/home_layout/cubit/main_cubit_states.dart';
 import 'package:ameen/item_delivery_screen/data/add_address_requests_model/address_base_model.dart';
@@ -32,7 +33,11 @@ class _AddAddressAlertState extends State<AddAddressAlert> {
   late final TextEditingController _buildingController;
   late final TextEditingController _floorController;
   late final TextEditingController _landMarkController;
+  late final TextEditingController _placePickerController;
   late final GlobalKey<FormState> _formKey = GlobalKey();
+
+  double? longitude;
+  double? latitude;
 
   @override
   void initState() {
@@ -42,8 +47,11 @@ class _AddAddressAlertState extends State<AddAddressAlert> {
     _streetController = TextEditingController(text: widget.editingAddress?.street);
     _buildingController = TextEditingController(text: widget.editingAddress?.buildingNo);
     _landMarkController = TextEditingController(text: widget.editingAddress?.landmark);
+    _placePickerController = TextEditingController();
     selectedGovernance = widget.editingAddress?.city!.id;
     selectedCity = widget.editingAddress?.region!.id;
+    longitude = widget.requestModel.long;
+    latitude = widget.requestModel.lat;
     if(context.read<MainCubit>().cities == null){
       context.read<MainCubit>().getCities();
     }
@@ -54,7 +62,7 @@ class _AddAddressAlertState extends State<AddAddressAlert> {
     return BlocConsumer<MainCubit, MainCubitStates>(
       listener: (context, state) {
         if(state is MainCreateAddressSuccessState){
-          Navigator.pop(context);
+          Navigator.pop(context, '$longitude, $latitude');
         }
       },
       builder: (context, state) => AlertDialog(
@@ -200,6 +208,37 @@ class _AddAddressAlertState extends State<AddAddressAlert> {
                     }
                     return null;
                   },
+                ),
+                SizedBox(height: AppSizesDouble.s10,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DefaultTextInputField(
+                        controller: _placePickerController,
+                        hint: StringsManager.pickALocation,
+                        isRequired: true,
+                        validator: (value){
+                          if(value == null || value.isEmpty){
+                            return AppLocalizations.translate(StringsManager.emptyFieldMessage);
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    DefaultRoundedIconButton(
+                      icon: IconsManager.location,
+                      onPressed: () async{
+                        final result = await Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.placePick)));
+                        if(result != null){
+                          longitude = result.longitude;
+                          latitude = result.latitude;
+                          setState(() {
+                            _placePickerController.text = '${result.longitude}, ${result.latitude}';
+                          });
+                        }
+                      },
+                    )
+                  ],
                 ),
               ],
             ),
@@ -382,9 +421,10 @@ class SahlVerificationAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Row(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          DefaultRoundedIconButton(onPressed: null, icon: IconsManager.check,),
+          DefaultRoundedIconButton(onPressed: null, icon: IconsManager.check, hasBorder: false,),
           Text(AppLocalizations.translate(StringsManager.sahlVerificationCheckMessage), style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center,),
         ],
       ),

@@ -37,7 +37,7 @@ class _PaymentResultScreenState extends State<PaymentResultScreen> {
                 children: [
                   FittedBox(child: Text(AppLocalizations.translate(StringsManager.orderConfirmationMessage), style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: ColorsManager.DARK_GREEN),)),
                   SizedBox(height: AppSizesDouble.s10,),
-                  Text('${AppLocalizations.translate(StringsManager.yourOrderCode)} #2342342', style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.DARK_GREY),),
+                  Text('${AppLocalizations.translate(StringsManager.yourOrderCode)} #${widget.arguments.orderNo}', style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.DARK_GREY),),
                   Text(AppLocalizations.translate(StringsManager.thanksMessage), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorsManager.DARK_GREY)),
                 ],
               ),

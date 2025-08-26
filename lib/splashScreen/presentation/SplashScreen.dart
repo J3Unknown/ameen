@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsManager.DEEP_BLUE,
-      body: SizedBox.expand(child: SvgPicture.asset(AssetsManager.logo, fit: BoxFit.cover, width: 400,),) //TODO: get the logo
+      body: SizedBox.expand(child: Image.asset(AssetsManager.splashLogo, fit: BoxFit.contain, width: double.infinity,),)
     );
   }
 }

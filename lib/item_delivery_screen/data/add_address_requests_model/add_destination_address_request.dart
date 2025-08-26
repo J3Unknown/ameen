@@ -8,5 +8,12 @@ class AddDestinationAddressRequest implements AddressBaseModel{
   void request(BuildContext context, int regionId, int cityId, String block, String building, String floor, String landmark, String street) {
     MainCubit.get(context).createDestinationAddress(regionId: regionId, cityId: cityId, blockNo: block, street: street, buildingNo: building, floorNo: floor, landmark: landmark);
   }
+
+  AddDestinationAddressRequest({this.lat, this.long});
+  @override
+  double? lat;
+
+  @override
+  double? long;
   
 }

@@ -44,7 +44,7 @@
   "Category": "الفئة",
   "Delivery Date:": "تاريخ التوصيل:",
   "Order Fee:": "رسوم الشحنة:",
-  "Status:": "الحالة:",
+  "Status": "الحالة",
   "Order Cancellation": "الغاء الشحنة",
   "Confirm Cancellation": "تأكيد الالغاء",
   "Reason": "السبب",
@@ -135,5 +135,6 @@
   "I understand": "أتفهم ذلك",
   "Profile updated Successfully": "تم تحديث الحساب الشخصي بنجاح",
   "Are you Sure you want to DELETE your account!!": "هل أنت متأكد انك تريد حذف حسابك!!",
-  "Notifications": "الاشعارات"
+  "Notifications": "الاشعارات",
+  "Pick a Location": "اختر عنوانا"
 }

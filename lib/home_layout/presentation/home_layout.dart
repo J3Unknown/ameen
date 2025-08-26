@@ -17,6 +17,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   void initState() {
     super.initState();
     context.read<MainCubit>().getDeliveryItems();
+    context.read<MainCubit>().getHome();
   }
   @override
   Widget build(BuildContext context) {

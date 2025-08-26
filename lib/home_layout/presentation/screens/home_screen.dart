@@ -79,17 +79,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: StringsManager.sahlRequest,
                   image: AssetsManager.sahlRequest,
                   onTap: () {
-                    showDialog(context: context, builder: (context) => NoteDialog(note: StringsManager.comingSoon));
-                    // if(AppConstants.isAuthenticated){
-                    //   // if(false){
-                    //   //   //TODO: get the condition to switch between the routes
-                    //   //   Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.sahl)));
-                    //   // } else {
-                    //   //   Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.civilIdCheck)));
-                    //   // }
-                    // } else {
-                    //   showDialog(context: context, builder: (context) => LoginAlert());
-                    // }
+                   // showDialog(context: context, builder: (context) => NoteDialog(note: StringsManager.comingSoon));
+                    if(AppConstants.isAuthenticated){
+                      if(Repo.profileDataModel!.sahl!){
+                        Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.sahl)));
+                      } else {
+                        Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.civilIdCheck)));
+                      }
+                    } else {
+                      showDialog(context: context, builder: (context) => LoginAlert());
+                    }
                   },
                 ),
               ],

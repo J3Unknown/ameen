@@ -422,15 +422,16 @@ class _DefaultItemCardState extends State<DefaultItemCard> {
                   Text('${AppLocalizations.translate(StringsManager.orderFee)}: ${widget.item.fee} ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
                   Row(
                     children: [
-                      Text(AppLocalizations.translate(StringsManager.status), style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
-                      SizedBox(width: AppSizesDouble.s10,),
+                      Text('${AppLocalizations.translate(StringsManager.status)}: ', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
                       Text(widget.item.status??'pending', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.YELLOW)),
                     ],
                   ),
                 ],
               ),
             ),
+            if(widget.item.status != 'cancelled')
             SizedBox(width: AppSizesDouble.s5,),
+            if(widget.item.status != 'cancelled')
             getIcon(widget.item.status??'pending')
           ],
         ),
@@ -440,15 +441,13 @@ class _DefaultItemCardState extends State<DefaultItemCard> {
 
   DefaultRoundedIconButton getIcon(String status){
     if(status == 'received') {
-      return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation, arguments: widget.item.orderNumber))));
+      return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation, arguments: widget.item))));
     } else if(status == 'delivered'){
       return DefaultRoundedIconButton(isSvg: true, svgIcon: AssetsManager.deliveredIcon, hasBorder: false, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting, arguments: widget.item))));
-    } else if(status == 'Delivery Guy'){
-      return DefaultRoundedIconButton(icon: IconsManager.rightArrow, hasBorder: true, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderReporting, arguments: widget.item))));
     } else if(status == 'pending'){
-      return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation, arguments: widget.item.orderNumber))));
+      return DefaultRoundedIconButton(icon: IconsManager.close, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderCancellation, arguments: widget.item))));
     }
-    return DefaultRoundedIconButton(icon: IconsManager.location, filled: true, backgroundColor: ColorsManager.GREEN, hasBorder: false, iconColor: ColorsManager.WHITE, onPressed: (){});
+    return DefaultRoundedIconButton(icon: IconsManager.location, filled: true, backgroundColor: ColorsManager.GREEN, hasBorder: false, iconColor: ColorsManager.WHITE, onPressed: () => Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.orderTracking, arguments: widget.item))));
   }
 }
 

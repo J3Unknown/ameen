@@ -78,7 +78,7 @@ class _RepresentativeDeliveredScreenState extends State<RepresentativeDeliveredS
             ),
           ),
           separatorBuilder: (context, state) => SizedBox(height: AppSizesDouble.s20,),
-          itemCount: 5
+          itemCount: _cubit.deliveredOrdersDataModel!.items.length
         ),
       ),
     );

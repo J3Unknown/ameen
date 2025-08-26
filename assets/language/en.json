@@ -44,7 +44,7 @@
   "Category": "Category",
   "Delivery Date:": "Delivery Date:",
   "Order Fee:": "Order Fee:",
-  "Status:": "Status:",
+  "Status": "Status",
   "Order Cancellation": "Order Cancellation",
   "Confirm Cancellation": "Confirm Cancellation",
   "Reason": "Reason",
@@ -135,5 +135,6 @@
   "I understand": "I understand",
   "Profile updated Successfully": "Profile updated Successfully",
   "Are you Sure you want to DELETE your account!!": "Are you Sure you want to DELETE your account!!",
-  "Notifications": "Notifications"
+  "Notifications": "Notifications",
+  "Pick a Location": "Pick a Location"
 }

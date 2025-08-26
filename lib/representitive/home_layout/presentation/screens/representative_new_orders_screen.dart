@@ -1,6 +1,8 @@
 import 'package:ameen/Repo/repo.dart';
 import 'package:ameen/auth/cubit/auth_cubit.dart';
 import 'package:ameen/auth/cubit/auth_cubit_state.dart';
+import 'package:ameen/google_map_services/data/map_screen_arguments.dart';
+import 'package:ameen/item_delivery_screen/data/items_data_model.dart';
 import 'package:ameen/representitive/home_layout/cubit/representative_cubit.dart';
 import 'package:ameen/representitive/home_layout/cubit/representative_cubit_states.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
@@ -13,6 +15,7 @@ import 'package:ameen/utill/shared/values_manager.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
@@ -30,6 +33,9 @@ class RepresentativeNewOrdersScreen extends StatefulWidget {
 class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
 
   late RepresentativeCubit _cubit;
+  int? navigationId;
+
+  bool isOrigin = false;
   @override
   void initState() {
     super.initState();
@@ -38,8 +44,15 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-      bloc: _cubit,
+    return BlocConsumer<RepresentativeCubit, RepresentativeCubitStates>(
+      listener: (context, state) {
+        if(state is RepresentativeGetOrderDetailsSuccessState){
+          if(navigationId == int.parse(state.item.id!)){
+            navigationId = null;
+            Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.deliveryDestinationTracking, arguments: MapScreenArguments(state.item, isOrigin: isOrigin))));
+          }
+        }
+      },
       builder: (context, state) => ConditionalBuilder(
         fallback: (context) {
           if(_cubit.newOrdersDataModel != null && _cubit.newOrdersDataModel!.items.isEmpty){
@@ -84,6 +97,12 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                               Text('${AppLocalizations.translate(StringsManager.clientDetails)}: ${_cubit.newOrdersDataModel!.items[index].user!.name}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
                               Text('${AppLocalizations.translate(StringsManager.deliveryDate)}: ${DateFormat('EEE dd, MMM, yyyy').format(_cubit.newOrdersDataModel!.items[index].deliveryTime != null?DateTime.parse(_cubit.newOrdersDataModel!.items[index].deliveryTime!):DateTime.now())}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
                               Text('${AppLocalizations.translate(StringsManager.orderFee)}: ${_cubit.newOrdersDataModel!.items[index].fee} ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+                              Row(
+                                children: [
+                                  Text('${AppLocalizations.translate(StringsManager.status)}: ', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
+                                  Text(_cubit.newOrdersDataModel!.items[index].status!.replaceAll('_', ' '), style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.YELLOW)),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -95,7 +114,7 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: (){},
+                            onPressed: () async => await FlutterPhoneDirectCaller.callNumber(_cubit.newOrdersDataModel!.items[index].user!.phone),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: ColorsManager.COLUMBIA_BLUE,
                               shape: RoundedRectangleBorder(),
@@ -104,8 +123,13 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                           ),
                         ),
                         Expanded(
-                          child: ElevatedButton(
-                            onPressed: (){},
+                          child: state is RepresentativeGetOrderDetailsLoadingState && isOrigin && navigationId != null && navigationId == int.parse(_cubit.newOrdersDataModel!.items[index].id!)? Center(child: CircularProgressIndicator(backgroundColor: ColorsManager.GREY1),):
+                          ElevatedButton(
+                            onPressed: () {
+                              isOrigin = true;
+                              navigationId = int.parse(_cubit.newOrdersDataModel!.items[index].id!);
+                              context.read<RepresentativeCubit>().getOrderDetails(navigationId!);
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: ColorsManager.SOFT_GREEN,
                               shape: RoundedRectangleBorder(),
@@ -114,8 +138,13 @@ class _HomeScreenState extends State<RepresentativeNewOrdersScreen> {
                           ),
                         ),
                         Expanded(
-                          child: ElevatedButton(
-                            onPressed: (){},
+                          child: state is RepresentativeGetOrderDetailsLoadingState && !isOrigin && navigationId != null && navigationId == int.parse(_cubit.newOrdersDataModel!.items[index].id!)?Center(child: CircularProgressIndicator(backgroundColor: ColorsManager.GREY1,),):
+                          ElevatedButton(
+                            onPressed: () {
+                              isOrigin = false;
+                              navigationId = int.parse(_cubit.newOrdersDataModel!.items[index].id!);
+                              context.read<RepresentativeCubit>().getOrderDetails(navigationId!);
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: ColorsManager.SOFT_RED,
                               shape: RoundedRectangleBorder(),

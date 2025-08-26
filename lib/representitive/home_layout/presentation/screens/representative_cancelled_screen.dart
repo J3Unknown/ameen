@@ -72,7 +72,7 @@ class _RepresentativeCancelledScreenState extends State<RepresentativeCancelledS
             ),
           ),
           separatorBuilder: (context, state) => SizedBox(height: AppSizesDouble.s20,),
-          itemCount: 5
+          itemCount: _cubit.cancelledOrdersDataModel!.items.length
         ),
       ),
     );

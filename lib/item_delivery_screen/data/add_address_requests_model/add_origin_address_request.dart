@@ -9,4 +9,11 @@ class AddOriginAddressRequest implements AddressBaseModel{
     MainCubit.get(context).createOriginAddress(regionId: regionId, cityId: cityId, blockNo: block, street: street, buildingNo: building, floorNo: floor, landmark: landmark);
   }
 
+  AddOriginAddressRequest({this.lat, this.long});
+  @override
+  double? lat;
+
+  @override
+  double? long;
+
 }

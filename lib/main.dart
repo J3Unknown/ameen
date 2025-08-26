@@ -16,6 +16,7 @@ import 'package:ameen/utill/shared/themes_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,7 @@ void main() async{
   LocaleChanger localeChanger = LocaleChanger();
   localeChanger.initializeLocale();
   await loadLocalizations(localeChanger);
+  await dotenv.load(fileName: ".env");
   _loadCaches();
 
   runApp(

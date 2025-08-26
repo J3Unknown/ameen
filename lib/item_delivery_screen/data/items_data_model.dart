@@ -1,3 +1,4 @@
+import 'package:ameen/item_delivery_screen/data/address_data_model.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 
 class ItemsDataModel {
@@ -44,6 +45,8 @@ class DeliveryItem{
   String? updatedAt;
   String? deliveryFee;
   User? user;
+  Addresses? originAddress;
+  Addresses? destinationAddress;
 
 
   DeliveryItem.fromJson(Map<String, dynamic> json){
@@ -82,6 +85,12 @@ class DeliveryItem{
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deliveryFee = json['delivery_fee'].toString();
+    if(json['origin_address'] != null){
+      originAddress = Addresses.fromJson(json['origin_address']);
+    }
+    if(json['destination_address'] != null){
+      destinationAddress = Addresses.fromJson(json['destination_address']);
+    }
     if(json['user'] != null){
       user = User.fromJson(json['user']);
     }
@@ -97,5 +106,23 @@ class User{
     id = json['id'];
     name = json['name'];
     phone = json['phone'];
+  }
+}
+
+class Addresses{
+  late int id;
+  late String floorNo;
+  late String buildingNo;
+  late String blockNo;
+  late String street;
+  String? notes;
+
+  Addresses.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    floorNo = json['floor_no'];
+    buildingNo = json['building_no'];
+    blockNo = json['block_no'];
+    street = json['street'];
+    notes = json['notes'];
   }
 }

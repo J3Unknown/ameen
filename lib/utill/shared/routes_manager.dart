@@ -3,6 +3,10 @@ import 'package:ameen/about_and_support/presentation/about_ameen.dart';
 import 'package:ameen/about_and_support/presentation/support_screen.dart';
 import 'package:ameen/about_and_support/presentation/terms_and_conditions.dart';
 import 'package:ameen/forgot_password/presentation/forgot_password_screen.dart';
+import 'package:ameen/google_map_services/data/map_screen_arguments.dart';
+import 'package:ameen/google_map_services/presentation/delivery_map.dart';
+import 'package:ameen/google_map_services/presentation/order_tracking.dart';
+import 'package:ameen/google_map_services/presentation/pick_location.dart';
 import 'package:ameen/home_layout/presentation/home_layout.dart';
 import 'package:ameen/item_delivery_screen/data/items_data_model.dart';
 import 'package:ameen/item_delivery_screen/presentation/item_delivery_screen.dart';
@@ -20,6 +24,7 @@ import 'package:ameen/sahl/presentation/sahl_requests.dart';
 import 'package:ameen/sahl/presentation/sahl_reuest_screen.dart';
 import 'package:ameen/sahl/presentation/verification_screen/sahl_verification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../auth/loginScreen/presentation/LoginScreen.dart';
 import '../../auth/otp_screen/presentation/otp_screen.dart';
@@ -38,6 +43,8 @@ class Routes{
   static const String payment = '/payment';
   static const String paymentResult = '/payment/result';
   static const String orderTracking = '/orderTracking';
+  static const String deliveryDestinationTracking = '/DeliveryDestinationTracking';
+  static const String placePick = '/placePick';
   static const String orderCancellation = '/orderCancellation';
   static const String orderReporting = '/orderReporting';
   static const String profile = '/profile';
@@ -71,6 +78,12 @@ class RoutesGenerator{
         return  MaterialPageRoute(builder: (_) => HomeLayout());
       case Routes.itemDelivery:
         return  MaterialPageRoute(builder: (_) => ItemDeliveryScreen());
+      case Routes.placePick:
+        return  MaterialPageRoute(builder: (_) => PickLocation());
+      case Routes.deliveryDestinationTracking:
+        return  MaterialPageRoute(builder: (_) => DeliveryMap(arguments: settings.arguments! as MapScreenArguments));
+      case Routes.orderTracking:
+        return  MaterialPageRoute(builder: (_) => OrderTracking(item: settings.arguments! as DeliveryItem));
       case Routes.payment:
         return  MaterialPageRoute(builder: (_) => PaymentScreen());
       case Routes.paymentResult:

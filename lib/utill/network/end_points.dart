@@ -4,6 +4,7 @@ class EndPoints{
   static const String register = 'register';
   static const String otpRegister = 'send_otp_register';
   static const String otpForgotPassword = 'send_otp_password';
+  static const String sendSahlOtp = 'sendOtpSahl';
 
   //*home
   static const String profile = 'profile';
@@ -16,6 +17,8 @@ class EndPoints{
   //*representative
   static const String outForDelivery = 'out-for-delivery';
   static const String delivered = 'delivered';
+  static const String pingLocation = 'ping-location';
+  static const String polyline = 'polyline';
 
   //*profile
   static const String editProfile = 'edit_profile';

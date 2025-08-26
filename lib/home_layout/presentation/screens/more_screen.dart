@@ -10,6 +10,7 @@ import 'package:ameen/utill/shared/colors_manager.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/icons_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,7 +50,10 @@ class _MoreScreenState extends State<MoreScreen> {
                 if(AppConstants.isGuest)
                 Center(child: Text(AppLocalizations.translate(StringsManager.welcomeGuest), style: Theme.of(context).textTheme.headlineSmall,)),
                 if(AppConstants.isAuthenticated || AppConstants.isRepresentativeAuthenticated)
-                Center(child: Text('${AppLocalizations.translate(StringsManager.welcome)} ${Repo.profileDataModel!.name}', style: Theme.of(context).textTheme.headlineSmall,)),
+                ConditionalBuilder(
+                  condition: Repo.profileDataModel != null,
+                  fallback: (context) => Center(child: CircularProgressIndicator(),),
+                  builder: (context) => Center(child: Text('${AppLocalizations.translate(StringsManager.welcome)} ${Repo.profileDataModel!.name}', style: Theme.of(context).textTheme.headlineSmall,))),
                 SizedBox(height: AppSizesDouble.s20,),
                 if(AppConstants.isGuest)
                 DefaultButton(

@@ -8,6 +8,7 @@ class AssetsManager{
   // static const String otpImage = '${AppConstants.imagePath}otpImage.svg';
   static const String otpImage = '${AppConstants.imagePath}OtpScreenImage.png';
   static const String logo = '${AppConstants.imagePath}appIcon.png';
+  static const String splashLogo = '${AppConstants.imagePath}appLogo.png';
   static const String languageImage = '${AppConstants.imagePath}languagePageImage.svg';
   static const String deliveryMotorcycle = '${AppConstants.imagePath}DeliveryMotorcycle.svg';
   static const String splashScreenImage = '${AppConstants.imagePath}splashScreen.png';

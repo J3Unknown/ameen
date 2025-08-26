@@ -1,6 +1,8 @@
+import 'package:ameen/auth/otp_screen/data/sahl_screen_otp_model.dart';
 import 'package:ameen/utill/shared/alerts.dart';
 import 'package:ameen/utill/shared/assets_manager.dart';
 import 'package:ameen/utill/shared/colors_manager.dart';
+import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,12 +12,23 @@ import '../../../utill/shared/BaseComponent.dart';
 import '../../../utill/shared/constants_manager.dart';
 import '../../../utill/shared/values_manager.dart';
 
-class SahlVerificationScreen extends StatelessWidget {
-  SahlVerificationScreen({super.key});
+class SahlVerificationScreen extends StatefulWidget {
+  const SahlVerificationScreen({super.key});
+
+  @override
+  State<SahlVerificationScreen> createState() => _SahlVerificationScreenState();
+}
+
+class _SahlVerificationScreenState extends State<SahlVerificationScreen> {
   final TextEditingController _idController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey();
 
+  @override
+  void dispose() {
+    _idController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final screenHeight = AppConstants.screenSize(context).height;
@@ -33,7 +46,7 @@ class SahlVerificationScreen extends StatelessWidget {
               padding: EdgeInsets.all(AppPaddings.p20),
               child: SizedBox(
                 height: screenWidth,
-                child: Center(child: SvgPicture.asset(AssetsManager.forgotPasswordImage, fit: BoxFit.contain,))
+                child: Center(child: Image.asset(AssetsManager.forgotPasswordImage, fit: BoxFit.contain,))
               ),
             ),
             Align(
@@ -62,22 +75,24 @@ class SahlVerificationScreen extends StatelessWidget {
                           validator: (value) {
                             if(value == null || value.isEmpty){
                               return AppLocalizations.translate(StringsManager.emptyFieldMessage);
-                            } else if(value.length < AppSizes.s10){
-                              return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
                             }
+                            // else if(value.length < AppSizes.s10){
+                            //   return AppLocalizations.translate(StringsManager.phoneNumberRangeError);
+                            // }
                             return null;
                           },
-                          maxLength: AppSizes.s10,
+                          // maxLength: AppSizes.s10,
                         ),
                         SizedBox(height: AppSizesDouble.s20,),
                         DefaultButton(
                           title: StringsManager.send,
                           onPressed: () async{
                             if(_formKey.currentState!.validate()) {
-                              showDialog(
-                                context: context,
-                                builder: (context) => SahlVerificationAlert()
-                              );
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (context) => SahlVerificationAlert()
+                              // );
+                              Navigator.push(context, RoutesGenerator.getRoute(RouteSettings(name: Routes.otp, arguments: SahlScreenOtpModel())));
                             }
                           },
                           isLoading: false,

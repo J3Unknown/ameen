@@ -6,6 +6,8 @@ class AppConstants{
   static const String baseUrl = 'https://ameenkw.com/ameen/public/api/';
   static const String baseDeliveryUrl = 'https://ameenkw.com/ameen/public/driver/';
   static const String baseImageUrl = 'https://ameenkw.com/ameen/public/';
+  static const String webSocketBaseUrl = 'wss://ameenkw.com/app/e05uicuo1ydjihhvoxxe?protocol=7&client=js&version=8.2.1';
+  static const String webSocketBaseAuthUrl = 'https://ameenkw.com/ameen/public/broadcasting/auth';
 
   static const String basePlaceholderImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHnKw8zTPIFvZRGE-bMtIlRXjsUW2BDyw9Pw&s';
   static Size screenSize(context) => MediaQuery.of(context).size;

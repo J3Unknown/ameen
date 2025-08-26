@@ -22,6 +22,7 @@ import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../utill/shared/constants_manager.dart';
@@ -278,6 +279,7 @@ class MainCubit extends Cubit<MainCubitStates>{
       'title':title,
       'category_id':categoryId,
       'delivery_date_description':date,
+      'delivery_fee':'50',
       'origin_address_id':originAddressId,
       'destination_address_id':destinationAddressId,
       'origin_address_lat':originAddressLat,
@@ -344,4 +346,25 @@ class MainCubit extends Cubit<MainCubitStates>{
       emit(MainGetAboutUsSuccessState());
     });
   }
+
+  Future<String>? getSocketAuth(String socketId, int id) async{
+    emit(MainGetAboutUsLoadingState());
+    final response = await DioHelper.dio.post(
+      AppConstants.webSocketBaseAuthUrl,
+      data: {
+        'socket_id': socketId,
+        'channel_name': 'private-orders.$id'
+      },
+    );
+
+    return response.data['auth'];
+  }
+
+
+  Future<LatLng>? getDeliveryLocation(int id) async {
+    emit(MainGetAboutUsLoadingState());
+    final response = await DioHelper.getData(path: '${EndPoints.orders}/$id/${EndPoints.polyline}',);
+    return LatLng(response.data[KeysManager.result]['latest']['lat'], response.data[KeysManager.result]['latest']['lng']);
+  }
+
 }

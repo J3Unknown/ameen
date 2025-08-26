@@ -28,7 +28,7 @@ class StringsManager{
   static const String apply = 'Apply';
   static const String dateFormat = 'dd - MMM - yyyy';
   static const String orderFee = 'Order Fee';
-  static const String status = 'Status:';
+  static const String status = 'Status';
   static const String loginAlert = 'You have to login first before proceeding into this action';
   static const String cancel = 'Cancel';
   static const String yes = 'Yes';
@@ -40,6 +40,9 @@ class StringsManager{
   static const String invalidPasswordFormat = 'Invalid Password Format';
   static const String understand = 'I understand';
   static const String notifications = 'Notifications';
+
+  //* Maps Screens
+  static const String pickALocation = 'Pick a Location';
 
   //*Order Cancellation Screen
   static const String orderCancellation = 'Order Cancellation';

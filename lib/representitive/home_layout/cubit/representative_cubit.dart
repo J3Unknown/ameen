@@ -13,6 +13,7 @@ import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../presentation/screens/representative_home.dart';
 import '../presentation/screens/representative_new_orders_screen.dart';
@@ -89,9 +90,16 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
     });
   }
 
-  void changeOutForDeliveryStatus(String id){
+  void changeOutForDeliveryStatus(String id, LatLng currentLocation){
     emit(RepresentativeChangeOutForDeliveryStatusLoadingState());
-    DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.outForDelivery}').then((value){
+    DioHelper.postData(
+      isDelivery: true,
+      url: '${EndPoints.orders}/$id/${EndPoints.outForDelivery}',
+      data: {
+        'lat':currentLocation.latitude,
+        'lng':currentLocation.longitude
+      }
+    ).then((value){
       getNewOrders();
       emit(RepresentativeChangeOutForDeliveryStatusSuccessState());
     });
@@ -99,7 +107,7 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
 
   void changeDeliveredStatus(String id){
     emit(RepresentativeChangeDeliveredStatusLoadingState());
-    DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.delivered}').then((value){
+    DioHelper.postData(isDelivery: true, url: '${EndPoints.orders}/$id/${EndPoints.delivered}').then((value){
       if(value.data[KeysManager.success]){
         emit(RepresentativeChangeDeliveredStatusSuccessState());
       } else {
@@ -110,8 +118,23 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
 
   void cancelItem(String id){
     emit(RepresentativeCancelOrderLoadingState());
-    DioHelper.postData(url: '${EndPoints.orders}/$id/${EndPoints.cancel}').then((value){
+    DioHelper.postData(isDelivery: true, url: '${EndPoints.orders}/$id/${EndPoints.cancel}').then((value){
       emit(RepresentativeCancelOrderSuccessState());
+    });
+  }
+
+  void getOrderDetails(int id){
+    emit(RepresentativeGetOrderDetailsLoadingState());
+    DioHelper.getData(isDelivery: true, path: '${EndPoints.orders}/$id').then((value){
+      DeliveryItem item = DeliveryItem.fromJson(value.data[KeysManager.result]);
+      emit(RepresentativeGetOrderDetailsSuccessState(item));
+    });
+  }
+
+  void ping(LatLng location, int id){
+    emit(RepresentativePingLoadingState());
+    DioHelper.postData(isDelivery: true, url: '${EndPoints.orders}/$id/${EndPoints.pingLocation}').then((value){
+      emit(RepresentativePingSuccessState());
     });
   }
 }

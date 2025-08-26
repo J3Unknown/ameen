@@ -152,4 +152,16 @@ class AuthCubit extends Cubit<AuthCubitStates>{
       emit(AuthLogoutSuccessState());
     });
   }
+
+  void getSahlOtp(){
+    emit(AuthSendOtpLoadingState());
+    DioHelper.postData(url: EndPoints.sendSahlOtp).then((value){
+      if(value.data[KeysManager.success]){
+        otpCode = value.data[KeysManager.result][KeysManager.otpUCode];
+        emit(AuthSendOtpLoadingState());
+      } else {
+        emit(AuthSendOtpErrorState());
+      }
+    });
+  }
 }

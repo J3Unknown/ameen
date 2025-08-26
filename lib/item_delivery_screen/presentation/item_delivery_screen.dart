@@ -38,6 +38,10 @@ class _ItemDeliveryScreenState extends State<ItemDeliveryScreen> {
   int? selectedCategory;
   int? originId;
   int? destinationId;
+  double? originLat;
+  double? originLong;
+  double? destinationLong;
+  double? destinationLat;
 
   @override
   void initState() {
@@ -254,18 +258,18 @@ class _ItemDeliveryScreenState extends State<ItemDeliveryScreen> {
                                   children: [
                                     Text(AppLocalizations.translate(StringsManager.addOriginAddress), style: Theme.of(context).textTheme.labelMedium),
                                     Spacer(),
-                                    DefaultRoundedIconButton(icon: IconsManager.addIcon, onPressed: (){
-                                     showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.addOriginAddress, requestModel: AddOriginAddressRequest(),));
+                                    DefaultRoundedIconButton(icon: IconsManager.addIcon, onPressed: () async{
+                                      final String? result = await showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.addOriginAddress, requestModel: AddOriginAddressRequest(),));
+                                      if(result != null){
+                                        originLat = double.parse(result.split(',').first);
+                                        originLong = double.parse(result.split(',').last);
+                                      }
                                     })
                                   ],
                                 ),
                               )
                             ),
                           ),
-                          // SizedBox(width: AppSizesDouble.s15,),
-                          // DefaultRoundedIconButton(icon: IconsManager.location, iconColor: ColorsManager.WHITE, onPressed: (){
-                          //   showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.addOriginAddress, requestModel: AddOriginAddressRequest(),));
-                          // }, hasBorder: false, filled: true, backgroundColor: ColorsManager.GREEN,)
                         ],
                       ),
                     ),
@@ -284,7 +288,13 @@ class _ItemDeliveryScreenState extends State<ItemDeliveryScreen> {
                         Expanded(child: Text('${MainCubit.get(context).originAddress!.city!.name} - ${MainCubit.get(context).originAddress!.region!.name} - ${MainCubit.get(context).originAddress!.blockNo} - ${MainCubit.get(context).originAddress!.street} - ${MainCubit.get(context).originAddress!.buildingNo} - ${MainCubit.get(context).originAddress!.landmark}', maxLines: 1, overflow: TextOverflow.ellipsis,)),
                         DefaultRoundedIconButton(
                           icon: IconsManager.edit,
-                          onPressed: () => showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.originAddress, requestModel: AddOriginAddressRequest(), editingAddress: MainCubit.get(context).originAddress,)),
+                          onPressed: () async {
+                            final String? result = await showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.originAddress, requestModel: AddOriginAddressRequest(lat: destinationLat, long: destinationLong), editingAddress: MainCubit.get(context).originAddress,));
+                            if(result != null){
+                              originLat = double.parse(result.split(',').first);
+                              originLong = double.parse(result.split(',').last);
+                            }
+                          },
                         )
                       ],
                     ),
@@ -324,17 +334,17 @@ class _ItemDeliveryScreenState extends State<ItemDeliveryScreen> {
                                   children: [
                                     Expanded(child: Text(AppLocalizations.translate(StringsManager.addDestinationAddress), style: Theme.of(context).textTheme.labelMedium)),
                                     DefaultRoundedIconButton(icon: IconsManager.addIcon, onPressed: () async{
-                                      showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.addDestinationAddress, requestModel: AddDestinationAddressRequest(),));
+                                      final String? result = await showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.addDestinationAddress, requestModel: AddDestinationAddressRequest(),));
+                                      if(result != null){
+                                        destinationLat = double.parse(result.split(',').first);
+                                        destinationLong = double.parse(result.split(',').last);
+                                      }
                                     })
                                   ],
                                 ),
                               )
                             ),
                           ),
-                          // SizedBox(width: AppSizesDouble.s15,),
-                          // DefaultRoundedIconButton(icon: IconsManager.location, iconColor: ColorsManager.WHITE, onPressed: () async{
-                          //   showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.addDestinationAddress, requestModel: AddOriginAddressRequest(),));
-                          // }, hasBorder: false, filled: true, backgroundColor: ColorsManager.RED,)
                         ],
                       ),
                     ),
@@ -353,7 +363,13 @@ class _ItemDeliveryScreenState extends State<ItemDeliveryScreen> {
                         Expanded(child: Text('${MainCubit.get(context).destinationAddress!.city!.name} - ${MainCubit.get(context).destinationAddress!.region!.name} - ${MainCubit.get(context).destinationAddress!.blockNo} - ${MainCubit.get(context).destinationAddress!.street} - ${MainCubit.get(context).destinationAddress!.buildingNo} - ${MainCubit.get(context).destinationAddress!.landmark}', maxLines: 1, overflow: TextOverflow.ellipsis,)),
                         DefaultRoundedIconButton(
                           icon: IconsManager.edit,
-                          onPressed: () => showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.destination, requestModel: AddDestinationAddressRequest(), editingAddress: MainCubit.get(context).destinationAddress,)),
+                          onPressed: () async{
+                            final result = await showDialog(context: context, builder: (context) => AddAddressAlert(title: StringsManager.destination, requestModel: AddDestinationAddressRequest(lat: destinationLat, long: destinationLong), editingAddress: MainCubit.get(context).destinationAddress,));
+                            if(result != null){
+                              destinationLat = double.parse(result.split(',').first);
+                              destinationLong = double.parse(result.split(',').last);
+                            }
+                          },
                         )
                       ],
                     ),
@@ -466,10 +482,10 @@ class _ItemDeliveryScreenState extends State<ItemDeliveryScreen> {
                           categoryId: selectedCategory!,
                           date: !isLater?DateFormat(StringsManager.dateFormat).format(DateTime.now()):_dateController.text,
                           note: _notesController.text,
-                          destinationAddressLat: 30.0,
-                          originAddressLat: 30.0,
-                          destinationAddressLong: 40.0,
-                          originAddressLong: 40.0,
+                          destinationAddressLat: destinationLat!,
+                          originAddressLat: destinationLong!,
+                          destinationAddressLong: destinationLong!,
+                          originAddressLong: destinationLong!,
                           destinationAddressId: MainCubit.get(context).destinationAddress!.id!,
                           originAddressId: MainCubit.get(context).originAddress!.id!,
                         );
