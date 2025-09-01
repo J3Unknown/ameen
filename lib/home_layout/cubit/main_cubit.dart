@@ -125,9 +125,10 @@ class MainCubit extends Cubit<MainCubitStates>{
     });
   }
 
-  void updateAccount(BuildContext context, String name, String phone, {String? email, String? password}){
+  void updateAccount(BuildContext context, bool isDriver, String name, String phone, {String? email, String? password}){
     emit(MainUpdateAccountLoadingState());
     DioHelper.postData(
+      isDelivery: isDriver,
       url: EndPoints.editProfile,
       data: {
         KeysManager.name:name,
@@ -137,10 +138,15 @@ class MainCubit extends Cubit<MainCubitStates>{
       }
     ).then((value){
       if(value.data[KeysManager.success]){
+        Repo.profileDataModel!.name = name;
+        Repo.profileDataModel!.phone = phone;
+        Repo.profileDataModel!.email = email;
         emit(MainUpdateAccountSuccessState());
       } else {
         emit(MainUpdateAccountErrorState());
       }
+    }).catchError((e){
+      emit(MainUpdateAccountErrorState());
     });
   }
 
@@ -157,7 +163,7 @@ class MainCubit extends Cubit<MainCubitStates>{
 
   CategoriesDataModel? categoriesDataModel;
   void getCategories(){
-      emit(MainGetCategoriesLoadingState());
+    emit(MainGetCategoriesLoadingState());
     DioHelper.getData(path: EndPoints.categories).then((value){
       categoriesDataModel = CategoriesDataModel.fromJson(value.data);
       categoriesDataModel!.category.add(PairOfIdAndName(-1, 'Other'));
@@ -238,12 +244,31 @@ class MainCubit extends Cubit<MainCubitStates>{
     });
   }
 
+
   ItemsDataModel? itemsDataModel;
-  void getDeliveryItems({int page = 1}){
+  int currentPage = 1;
+  bool hasMore = true;
+  void getDeliveryItems({bool loadMore = false}){
     if(AppConstants.isAuthenticated){
-      emit(MainGetDeliveryItemsLoadingState());
-      DioHelper.getData(path: EndPoints.orders, query: {KeysManager.page:page}).then((value){
-        itemsDataModel = ItemsDataModel.fromJson(value.data[KeysManager.result]);
+      if(loadMore){
+        if(!hasMore){
+          currentPage++;
+          emit(MainGetDeliveryItemsLoadingMoreState());
+        }
+      } else {
+        currentPage = 1;
+        hasMore = true;
+        emit(MainGetDeliveryItemsLoadingState());
+      }
+      DioHelper.getData(path: EndPoints.orders, query: {KeysManager.page:currentPage}).then((value){
+        final response = ItemsDataModel.fromJson(value.data[KeysManager.result]??[]);
+        if(loadMore){
+          itemsDataModel?.items.addAll(response.items);
+        } else{
+          itemsDataModel = response;
+        }
+
+        hasMore = (itemsDataModel?.lastPage??0) < currentPage;
         emit(MainGetDeliveryItemsSuccessState());
       });
     }
@@ -364,7 +389,7 @@ class MainCubit extends Cubit<MainCubitStates>{
   Future<LatLng>? getDeliveryLocation(int id) async {
     emit(MainGetAboutUsLoadingState());
     final response = await DioHelper.getData(path: '${EndPoints.orders}/$id/${EndPoints.polyline}',);
-    return LatLng(response.data[KeysManager.result]['latest']['lat'], response.data[KeysManager.result]['latest']['lng']);
+    return LatLng(double.parse(response.data[KeysManager.result]['latest']['lat'].toString()), double.parse(response.data[KeysManager.result]['latest']['lng'].toString()));
   }
 
 }

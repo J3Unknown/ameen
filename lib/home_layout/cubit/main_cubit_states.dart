@@ -60,6 +60,8 @@ final class MainCreateAddressErrorState extends MainCubitStates{}
 
 final class MainGetDeliveryItemsLoadingState extends MainCubitStates{}
 
+final class MainGetDeliveryItemsLoadingMoreState extends MainCubitStates{}
+
 final class MainGetDeliveryItemsSuccessState extends MainCubitStates{}
 
 final class MainCreateDeliveryItemsLoadingState extends MainCubitStates{}

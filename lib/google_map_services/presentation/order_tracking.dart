@@ -59,7 +59,6 @@ class _OrderTrackingState extends State<OrderTracking> {
 
         if(mounted){
           String? authKey = await context.read<MainCubit>().getSocketAuth(socketId, int.parse(widget.item.id!));
-          log(authKey.toString());
           if(authKey != null){
             subscribeToChannel(authKey);
           }
@@ -80,7 +79,7 @@ class _OrderTrackingState extends State<OrderTracking> {
       "event": "pusher:subscribe",
       "data": {
         "auth": authToken,
-        "channel": "private-order-${widget.item.id}"
+        "channel": "private-order.${widget.item.id}"
       }
     };
     channel.sink.add(jsonEncode(subscribeMessage));
@@ -89,7 +88,7 @@ class _OrderTrackingState extends State<OrderTracking> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.translate('Order Tracking')),
+        title: Text(AppLocalizations.translate('Order Tracking'), style: Theme.of(context).textTheme.headlineSmall,),
       ),
       body: ConditionalBuilder(
         condition: !initializing && _deliveryLocation != null,

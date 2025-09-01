@@ -114,22 +114,24 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: AppSizesDouble.s10,),
             Expanded(
               child: Container(
+                margin: EdgeInsets.only(bottom: AppMargins.m10),
                 padding: EdgeInsets.all(AppPaddings.p10),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      ColorsManager.GREY1,
-                      ColorsManager.GREY1,
-                      ColorsManager.GREY1,
-                      ColorsManager.GREY1,
-                      ColorsManager.GREY1.withValues(alpha: 0.7),
-                      ColorsManager.GREY1.withValues(alpha: 0.3),
-                      ColorsManager.GREY1.withValues(alpha: 0.1),
-                    ]
-                  ),
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizesDouble.s11)),
+                  color: ColorsManager.GREY1,
+                  // gradient: LinearGradient(
+                  //   begin: Alignment.topCenter,
+                  //   end: Alignment.bottomCenter,
+                  //   colors: [
+                  //     ColorsManager.GREY1,
+                  //     ColorsManager.GREY1,
+                  //     ColorsManager.GREY1,
+                  //     ColorsManager.GREY1,
+                  //     ColorsManager.GREY1.withValues(alpha: 0.7),
+                  //     ColorsManager.GREY1.withValues(alpha: 0.3),
+                  //     ColorsManager.GREY1.withValues(alpha: 0.1),
+                  //   ]
+                  // ),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizesDouble.s11), bottom: Radius.circular(AppSizesDouble.s11)),
                 ),
                 width: double.infinity,
                 child: Column(
@@ -211,7 +213,7 @@ class DefaultDeliveryItemCard extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppPaddings.p4),
-            child: Text(item.status??'pending', style: Theme.of(context).textTheme.titleSmall,),
+            child: Text(item.status?.replaceAll('_', ' ')??'pending', style: Theme.of(context).textTheme.titleSmall,),
           ),
           Icon(getIcon(item.status??'pending'))
         ],
@@ -223,8 +225,15 @@ class DefaultDeliveryItemCard extends StatelessWidget {
     switch(status.toLowerCase()){
       case 'pending':
         return IconsManager.timer;
+      case 'delivered':
+        return IconsManager.location2;
+      case 'out_for_delivery':
+        return IconsManager.clock;
+      case 'cancelled':
+        return IconsManager.close;
       default:
-        return IconsManager.timer;
+        return IconsManager.downArrow;
+
     }
   }
 }

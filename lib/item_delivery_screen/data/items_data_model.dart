@@ -1,10 +1,11 @@
-import 'package:ameen/item_delivery_screen/data/address_data_model.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';
 
 class ItemsDataModel {
   List<DeliveryItem> items = [];
+  int? lastPage;
 
   ItemsDataModel.fromJson(Map<String, dynamic> json){
+    lastPage = json['last_page'];
     json[KeysManager.data].forEach((v) => items.add(DeliveryItem.fromJson(v)));
   }
 }

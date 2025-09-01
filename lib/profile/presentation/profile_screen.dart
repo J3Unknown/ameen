@@ -53,15 +53,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: EdgeInsets.all(AppPaddings.p20),
         child: Column(
           children: [
-            SizedBox(
-              height: AppSizesDouble.s120,
-              width: double.infinity,
-              child: InkWell(
-                onTap: (){},
-                child: SvgPicture.asset(AssetsManager.addImageIcon, fit: BoxFit.contain, colorFilter: ColorFilter.mode(ColorsManager.DEEP_BLUE, BlendMode.srcIn),)
-              ),
-            ),
-            SizedBox(height: AppSizesDouble.s50,),
+            // SizedBox(
+            //   height: AppSizesDouble.s120,
+            //   width: double.infinity,
+            //   child: InkWell(
+            //     onTap: (){},
+            //     child: SvgPicture.asset(AssetsManager.addImageIcon, fit: BoxFit.contain, colorFilter: ColorFilter.mode(ColorsManager.DEEP_BLUE, BlendMode.srcIn),)
+            //   ),
+            // ),
+            // SizedBox(height: AppSizesDouble.s50,),
             Form(
               key: _formKey,
               child: Column(
@@ -136,6 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 if(_formKey.currentState!.validate()){
                   MainCubit.get(context).updateAccount(
                     context,
+                    AppConstants.isRepresentativeAuthenticated,
                     _nameController.text,
                     _phoneController.text,
                     email: _emailController.text,

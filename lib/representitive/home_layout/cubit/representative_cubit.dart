@@ -133,7 +133,14 @@ class RepresentativeCubit extends Cubit<RepresentativeCubitStates>{
 
   void ping(LatLng location, int id){
     emit(RepresentativePingLoadingState());
-    DioHelper.postData(isDelivery: true, url: '${EndPoints.orders}/$id/${EndPoints.pingLocation}').then((value){
+    DioHelper.postData(
+      isDelivery: true,
+      url: '${EndPoints.orders}/$id/${EndPoints.pingLocation}',
+      data: {
+        'lat':location.latitude,
+        'lng':location.longitude
+      }
+    ).then((value){
       emit(RepresentativePingSuccessState());
     });
   }

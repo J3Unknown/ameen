@@ -416,7 +416,7 @@ class _DefaultItemCardState extends State<DefaultItemCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.item.title!, style: Theme.of(context).textTheme.labelLarge, maxLines: AppSizes.s2, overflow: TextOverflow.ellipsis,),
+                  Text(widget.item.title??'', style: Theme.of(context).textTheme.labelLarge, maxLines: AppSizes.s2, overflow: TextOverflow.ellipsis,),
                   SizedBox(height: AppSizesDouble.s10,),
                   Text('${AppLocalizations.translate(StringsManager.deliveryDate)}: ${DateFormat('EEE dd, MMM, yyyy').format(DateTime.parse(widget.item.deliveryTime??'${DateTime.now()}'))}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)), //TODO: change the date into today's date
                   Text('${AppLocalizations.translate(StringsManager.orderFee)}: ${widget.item.fee} ${AppLocalizations.translate(StringsManager.kwd)}', style: Theme.of(context).textTheme.titleLarge!.copyWith(color: ColorsManager.DARK_GREY)),
