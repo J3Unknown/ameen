@@ -45,6 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: ColorsManager.GREY1,
       body: BlocConsumer<AuthCubit, AuthCubitStates>(
         listener: (context, state) async{
+          if(state is AuthLoginErrorState){
+            showSnackBar(context, 'Check you credentials and sign in again');
+          }
           if(state is AuthLoginSuccessState){
             if(isUser){
               await saveCaches(isAuthenticated: true, token: state.profileDataModel.token!);

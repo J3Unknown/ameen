@@ -137,5 +137,9 @@
   "Are you Sure you want to DELETE your account!!": "هل أنت متأكد انك تريد حذف حسابك!!",
   "Notifications": "الاشعارات",
   "Pick a Location": "اختر عنوانا",
-  "Order Tracking": "تتبع الشحنة"
+  "Order Tracking": "تتبع الشحنة",
+  "Check you credentials and sign in again": "تحقق من البيانات، ثم سجل الدخول مجددا",
+  "Please give the permission, to be able to use maps": "برجاء اعطاء الصلاحية للتكمن من استخدام خدمة الخرائط",
+  "Please give the permission, to be able to proceed in this action": "برجاء اعطاء الصلاحية للتكمن من اكمال هذا الاجراء",
+  "Please Enable Location Service": "برجاء تفعيل خدمة الموقع"
 }

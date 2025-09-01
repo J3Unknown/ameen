@@ -5,6 +5,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../../utill/local/localization/app_localization.dart';
 import '../../../../utill/shared/BaseComponent.dart';
@@ -37,6 +38,50 @@ class _RepresentativeHomeState extends State<RepresentativeHome> {
     }
     if(_cubit.cancelledOrdersDataModel == null){
       _cubit.getCancelledOrders();
+    }
+    _getCurrentLocation();
+  }
+
+  bool locationServiceEnabled = false;
+  bool permissionGranted = false;
+
+  Future<void> _getCurrentLocation() async{
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      showSnackBar(context, 'Please enable the location service');
+      return;
+    } else {
+      setState(() {
+        locationServiceEnabled = true;
+      });
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        showSnackBar(context, 'Please give the permission, to be able to proceed in this action');
+        return;
+      }
+      else{
+        setState(() {
+          permissionGranted = true;
+        });
+      }
+    } else {
+      setState(() {
+        permissionGranted = true;
+      });
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      if(mounted){
+        showSnackBar(context, 'Please give the permission, to be able to use maps');
+      }
+      return;
     }
   }
 
