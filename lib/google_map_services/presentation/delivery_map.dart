@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:ameen/google_map_services/data/map_screen_arguments.dart';
@@ -6,6 +7,7 @@ import 'package:ameen/representitive/home_layout/cubit/representative_cubit.dart
 import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
@@ -64,18 +66,18 @@ class _DeliveryMapState extends State<DeliveryMap> {
   }
 
   Future<void> _getRoutePolyline(LatLng start, LatLng destination) async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      request: PolylineRequest(
-        origin: PointLatLng(start.latitude, start.longitude),
-        destination: PointLatLng(destination.latitude, destination.longitude),
-        mode: TravelMode.driving,
-      ),
-    );
 
-    if (result.points.isNotEmpty) {
-      polylineCoordinates.clear();
-      for (var point in result.points) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+    final url = 'https://maps.googleapis.com/maps/api/directions/json?origin=${_currentPosition?.latitude},${_currentPosition?.longitude}&destination=$originLat,$originLong&mode=driving&key=$apiKey';
+    final response = await http.get(Uri.parse(url));
+    final data = jsonDecode(response.body);
+
+
+    List<LatLng> cords = [];
+    if (data['routes'].isNotEmpty) {
+      final steps = data['routes'][0]['legs'][0]['steps'];
+      for (var step in steps) {
+        String polyline = step['polyline']['points'];
+        cords.addAll(PolylinePoints.decodePolyline(polyline).map((p) => LatLng(p.latitude, p.longitude),));
       }
 
       if(mounted){
@@ -85,7 +87,8 @@ class _DeliveryMapState extends State<DeliveryMap> {
             polylineId: const PolylineId("route"),
             color: Colors.blue,
             width: 6,
-            points: polylineCoordinates,
+            points: cords,
+            jointType: JointType.round
           ),
         );
         setState(() {});
@@ -95,7 +98,7 @@ class _DeliveryMapState extends State<DeliveryMap> {
 
   Future<void> _getCurrentLocation() async{
     final pos = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
+      desiredAccuracy: LocationAccuracy.bestForNavigation,
     );
 
     setState(() {
@@ -109,8 +112,8 @@ class _DeliveryMapState extends State<DeliveryMap> {
   void _trackSelf() {
     Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 5,
+        accuracy: LocationAccuracy.bestForNavigation,
+        distanceFilter: 10,
       ),
     ).listen((pos) {
       final latLng = LatLng(pos.latitude, pos.longitude);
@@ -120,7 +123,9 @@ class _DeliveryMapState extends State<DeliveryMap> {
         });
       }
 
-      _controller?.animateCamera(CameraUpdate.newLatLng(_currentPosition!));
+      if(_controller != null && mounted){
+        _controller?.animateCamera(CameraUpdate.newLatLng(_currentPosition!));
+      }
       _getRoutePolyline(_currentPosition!, LatLng(originLat, originLong));
     });
   }
@@ -154,6 +159,7 @@ class _DeliveryMapState extends State<DeliveryMap> {
             ),
           },
           myLocationEnabled: true,
+          buildingsEnabled: true,
           onMapCreated: (c) => _controller = c,
         ),
       ),
