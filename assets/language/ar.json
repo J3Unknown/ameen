@@ -141,5 +141,7 @@
   "Check you credentials and sign in again": "تحقق من البيانات، ثم سجل الدخول مجددا",
   "Please give the permission, to be able to use maps": "برجاء اعطاء الصلاحية للتكمن من استخدام خدمة الخرائط",
   "Please give the permission, to be able to proceed in this action": "برجاء اعطاء الصلاحية للتكمن من اكمال هذا الاجراء",
-  "Please Enable Location Service": "برجاء تفعيل خدمة الموقع"
+  "Please Enable Location Service": "برجاء تفعيل خدمة الموقع",
+  "Enable Location Service And Give Location Permissions to proceed": "الرجاء تشغيل خدمة الموقع وتفعيل الصلاحة للاستكمال",
+  "Order Delivery": "توصيل الشحنة"
 }

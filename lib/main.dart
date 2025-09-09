@@ -8,7 +8,6 @@ import 'package:ameen/utill/local/localization/locale_changer.dart';
 import 'package:ameen/utill/local/observer.dart';
 import 'package:ameen/utill/local/shared_preferences.dart';
 import 'package:ameen/utill/network/dio.dart';
-import 'package:ameen/utill/shared/BaseComponent.dart';
 import 'package:ameen/utill/shared/constants_manager.dart';
 import 'package:ameen/utill/shared/routes_manager.dart';
 import 'package:ameen/utill/shared/strings_manager.dart';

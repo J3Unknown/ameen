@@ -141,5 +141,7 @@
   "Check you credentials and sign in again": "Check you credentials and sign in again",
   "Please give the permission, to be able to use maps": "Please give the permission, to be able to use maps",
   "Please give the permission, to be able to proceed in this action": "Please give the permission, to be able to proceed in this action",
-  "Please Enable Location Service": "Please Enable Location Service"
+  "Please Enable Location Service": "Please Enable Location Service",
+  "Enable Location Service And Give Location Permissions to proceed": "Enable Location Service And Give Location Permissions to proceed",
+  "Order Delivery": "Order Delivery"
 }

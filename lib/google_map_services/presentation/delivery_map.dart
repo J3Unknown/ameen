@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:ameen/google_map_services/data/map_screen_arguments.dart';
 import 'package:ameen/representitive/home_layout/cubit/representative_cubit.dart';
+import 'package:ameen/utill/local/localization/app_localization.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -30,6 +32,10 @@ class _DeliveryMapState extends State<DeliveryMap> {
 
   String? apiKey;
 
+  late double originLat;
+  late double originLong;
+
+
   final Set<Polyline> _polylines = {};
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
@@ -38,6 +44,8 @@ class _DeliveryMapState extends State<DeliveryMap> {
   void initState() {
     super.initState();
     apiKey = dotenv.env['API_KEY'];
+    originLat = double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLat!:widget.arguments.item.destinationAddressLat!);
+    originLong = double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLong!:widget.arguments.item.destinationAddressLong!);
     polylinePoints = PolylinePoints(apiKey: apiKey!);
     _trackSelf();
     _getCurrentLocation();
@@ -45,12 +53,14 @@ class _DeliveryMapState extends State<DeliveryMap> {
   }
 
   void _updateDriverLocation() {
-    Timer.periodic(Duration(milliseconds: 3500), (timer) async{
-      final pos = await Geolocator.getCurrentPosition();
-      if(mounted){
-        RepresentativeCubit.get(context).ping(LatLng(pos.latitude, pos.longitude), int.parse(widget.arguments.item.id!));
-      }
-    });
+    if(!widget.arguments.isOrigin){
+      Timer.periodic(Duration(milliseconds: 3500), (timer) async{
+        final pos = await Geolocator.getCurrentPosition();
+        if(mounted){
+          RepresentativeCubit.get(context).ping(LatLng(pos.latitude, pos.longitude), int.parse(widget.arguments.item.id!));
+        }
+      });
+    }
   }
 
   Future<void> _getRoutePolyline(LatLng start, LatLng destination) async {
@@ -68,7 +78,7 @@ class _DeliveryMapState extends State<DeliveryMap> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
 
-      setState(() {
+      if(mounted){
         _polylines.clear();
         _polylines.add(
           Polyline(
@@ -78,7 +88,8 @@ class _DeliveryMapState extends State<DeliveryMap> {
             points: polylineCoordinates,
           ),
         );
-      });
+        setState(() {});
+      }
     }
   }
 
@@ -92,14 +103,14 @@ class _DeliveryMapState extends State<DeliveryMap> {
       _currentPosition = LatLng(_position!.latitude, _position!.longitude);
       gettingLocation = false;
     });
-    _getRoutePolyline(_currentPosition!, LatLng(double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLat!:widget.arguments.item.destinationAddressLat!), double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLong!:widget.arguments.item.destinationAddressLong!)));
+    _getRoutePolyline(_currentPosition!, LatLng(originLat, originLong));
   }
 
   void _trackSelf() {
     Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 10,
+        distanceFilter: 5,
       ),
     ).listen((pos) {
       final latLng = LatLng(pos.latitude, pos.longitude);
@@ -110,7 +121,7 @@ class _DeliveryMapState extends State<DeliveryMap> {
       }
 
       _controller?.animateCamera(CameraUpdate.newLatLng(_currentPosition!));
-      _getRoutePolyline(_currentPosition!, LatLng(double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLat!:widget.arguments.item.destinationAddressLat!), double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLong!:widget.arguments.item.destinationAddressLong!)));
+      _getRoutePolyline(_currentPosition!, LatLng(originLat, originLong));
     });
   }
 
@@ -124,7 +135,7 @@ class _DeliveryMapState extends State<DeliveryMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Order Delivery', style: Theme.of(context).textTheme.headlineSmall,),
+        title: Text(AppLocalizations.translate('Order Delivery'), style: Theme.of(context).textTheme.headlineSmall,),
       ),
       body: ConditionalBuilder(
         condition: !gettingLocation,
@@ -132,19 +143,13 @@ class _DeliveryMapState extends State<DeliveryMap> {
         builder: (context) => GoogleMap(
           polylines: _polylines,
           initialCameraPosition: CameraPosition(
-            target: LatLng(double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLat!:widget.arguments.item.destinationAddressLat!), double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLong!:widget.arguments.item.destinationAddressLong!)),
+            target: LatLng(originLat, originLong),
             zoom: 14
           ),
           markers: {
             Marker(
-              markerId: const MarkerId('start'),
-              position: _currentPosition!,
-              infoWindow: const InfoWindow(title: 'start point'),
-              icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-            ),
-            Marker(
               markerId: const MarkerId("destination"),
-              position: LatLng(double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLat!:widget.arguments.item.destinationAddressLat!), double.parse(widget.arguments.isOrigin?widget.arguments.item.originAddressLong!:widget.arguments.item.destinationAddressLong!)),
+              position: LatLng(originLat, originLong),
               infoWindow: const InfoWindow(title: "Delivery Destination"),
             ),
           },
